@@ -9,13 +9,13 @@
             <h1 class="">Leia+</h1>
             <img src="../assets/capivara.svg" alt="">
         </div>
-        <div class="text-3xl flex gap-5 ">
-            <button class="bg-[#F4F4F4] text-[#78C0D9]">Solicite já</button>
-            <button>Entrar</button>
+        <div class="text-3xl flex gap-5">
+            <button class="bg-white text-sky-400 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-400 shadow-md hover:bg-sky-50 transition text-2xl">Solicite já</button>
+            <button class="bg-white text-sky-400 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-400 shadow-md hover:bg-sky-50 transition text-2xl">Entrar</button>
         </div>
     </header>
     <slot></slot>
-    <footer>
-        <h1>teste</h1>
+    <footer class="h-100 bg-[#95e78a]">
+        <h1>Aqui vai ficar o footer da página</h1>
     </footer>
 </template>
