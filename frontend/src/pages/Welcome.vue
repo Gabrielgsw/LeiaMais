@@ -19,25 +19,43 @@
                 alt="Capivara feliz" />
         </div>
     </div>
-    <!--Seção de serviços-->
-    <div class="mx-auto w-5/6 my-14 p-14 bg-[#E0F7FF] rounded-lg shadow-xl flex flex-col items-center">
-        <h2 class="text-[36px] font-semibold text-[#007bff] mb-12">Serviços</h2>
-
+    <!--Seção onde fica os serviços-->
+    <div class="mx-auto w-5/6 my-8 p-14 flex flex-col items-center">
+        <h2 class="text-[36px] font-semibold text-[#007bff] mb-12 text-left w-full">Nossos Serviços</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-3xl p-4">
-            <div class="w-full h-48 bg-emerald-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
-                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            <div
+                class="w-full h-64 bg-emerald-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
+                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 1</h3>
+                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+                    recusandae velit facere facilist dolorem!</p>
             </div>
-            <div class="w-full h-48 bg-amber-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
-                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            <div
+                class="w-full h-64 bg-amber-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
+                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 2</h3>
+                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+                    recusandae velit facere facilist dolorem!</p>
             </div>
-            <div class="w-full h-48 bg-rose-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
-                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            <div
+                class="w-full h-64 bg-rose-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
+                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 3</h3>
+                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+                    recusandae velit facere facilist dolorem!</p>
             </div>
-            <div class="w-full h-48 bg-orange-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
-                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            <div
+                class="w-full h-64 bg-orange-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
+                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 4</h3>
+                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+                    recusandae velit facere facilist dolorem!</p>
             </div>
         </div>
     </div>
+
+    <!--Aqui será a seção onde vai ficar a parte do formulário onde a escola pode se comunicar para adiquirir o nosso software-->
+
 </template>
 
 <style scoped>
