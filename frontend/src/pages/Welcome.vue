@@ -20,8 +20,23 @@
         </div>
     </div>
     <!--Seção de serviços-->
-    <div class="h-180 bg-[#EFFBFF]">
+    <div class="mx-auto w-5/6 my-14 p-14 bg-[#E0F7FF] rounded-lg shadow-xl flex flex-col items-center">
+        <h2 class="text-[36px] font-semibold text-[#007bff] mb-12">Serviços</h2>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-3xl p-4">
+            <div class="w-full h-48 bg-emerald-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
+                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            </div>
+            <div class="w-full h-48 bg-amber-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
+                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            </div>
+            <div class="w-full h-48 bg-rose-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
+                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            </div>
+            <div class="w-full h-48 bg-orange-200 shadow-md rounded-lg flex items-center justify-center text-gray-700 text-xl font-bold p-4">
+                <h4 class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis recusandae velit facere facilist dolorem!</h4>
+            </div>
+        </div>
     </div>
 </template>
 
