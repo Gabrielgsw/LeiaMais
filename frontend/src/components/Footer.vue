@@ -4,7 +4,7 @@
 
             <div class="flex flex-col items-start lg:w-2/5">
                 <div class="flex  items-center">
-                    <h5 class="text-m mb-6 text-white ">Leia+</h5>
+                    <h5 class="text-[30px] mb-6 text-white text- ">Leia+</h5>
                     <img src="../assets/capivara.svg" alt="integre.me logo" class="h-10 mb-6">
                 </div>
 

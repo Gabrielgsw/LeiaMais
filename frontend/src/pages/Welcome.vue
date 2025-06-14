@@ -71,7 +71,7 @@ const handleSubmit = () => {
                         Nome <span class="text-red-500">*</span>
                     </label>
                     <input v-model="form.nome" type="text" placeholder="Seu nome"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        class="w-full px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-400 bg-blue-50"
                         required>
                 </div>
 
@@ -80,7 +80,7 @@ const handleSubmit = () => {
                         E-mail <span class="text-red-500">*</span>
                     </label>
                     <input v-model="form.email" type="email" placeholder="exemplo@email.com"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        class="w-full px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-400 bg-blue-50"
                         required>
                 </div>
 
@@ -89,7 +89,7 @@ const handleSubmit = () => {
                         Número <span class="text-red-500">*</span>
                     </label>
                     <input v-model="form.numero" type="tel" placeholder="(XX) 9-XXXX-XXXX"
-                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        class="w-full px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-400 bg-blue-50"
                         required>
                 </div>
 
@@ -98,7 +98,7 @@ const handleSubmit = () => {
                         Mensagem <span class="text-red-500">*</span>
                     </label>
                     <textarea v-model="form.mensagem" placeholder="Sua mensagem..."
-                        class="w-full border rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring focus:ring-sky-300"
+                        class="w-full px-3 py-2 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-400 bg-blue-50"
                         required></textarea>
                 </div>
 

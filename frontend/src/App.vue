@@ -1,11 +1,12 @@
 <script setup>
-import Welcome from './pages/Welcome.vue'
+
 import Layout from './layouts/Layout.vue'
+import { RouterView } from 'vue-router';
 
 </script>
 
 <template>
   <Layout>
-    <Welcome />
+    <RouterView />
   </Layout>
 </template>
