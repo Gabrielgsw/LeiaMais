@@ -1,5 +1,17 @@
 <script setup>
+import { reactive } from 'vue'
 
+const form = reactive({
+    nome: '',
+    email: '',
+    numero: '',
+    mensagem: ''
+})
+
+const handleSubmit = () => {
+    // Aqui você pode enviar os dados via fetch/axios
+    alert(`Formulário enviado!\nNome: ${form.nome}\nEmail: ${form.email}\nNúmero: ${form.numero}\nMensagem: ${form.mensagem} `)
+}
 </script>
 
 <template>
@@ -19,43 +31,86 @@
                 alt="Capivara feliz" />
         </div>
     </div>
-    <!--Seção onde fica os serviços-->
     <div class="mx-auto w-5/6 my-8 p-14 flex flex-col items-center">
         <h2 class="text-[36px] font-semibold text-[#007bff] mb-12 text-left w-full">Nossos Serviços</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-3xl p-4">
             <div
-                class="w-full h-64 bg-emerald-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
-                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
-                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 1</h3>
-                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-                    recusandae velit facere facilist dolorem!</p>
+                class="w-full bg-emerald-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
+                <img src="../assets/icones-serviço/card01.png" alt="Ícone" class="w-18 h-18 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Descubra o prazer de ler!</h3>
+                <p class="text-base text-center">Desperte nos alunos o amor pela leitura com atividades interativas, histórias envolventes e um ambiente pensado para encantar desde o primeiro clique.</p>
             </div>
             <div
-                class="w-full h-64 bg-amber-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
-                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
-                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 2</h3>
-                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-                    recusandae velit facere facilist dolorem!</p>
+                class="w-full bg-amber-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
+                <img src="../assets/icones-serviço/card02.png" alt="Ícone" class="w-18 h-18 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Ideal para professores e alunos</h3>
+                <p class="text-base text-center">Acompanhe e avalie o progresso de cada aluno com facilidade. Nosso sistema transforma a leitura em uma experiência organizada e eficiente.</p>
             </div>
             <div
-                class="w-full h-64 bg-rose-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
-                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
-                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 3</h3>
-                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-                    recusandae velit facere facilist dolorem!</p>
+                class="w-full bg-rose-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
+                <img src="../assets/icones-serviço/card03.png" alt="Ícone" class="w-18 h-18 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Diversão que educa</h3>
+                <p class="text-base text-center">Com gamificação, pontos e leituras encantadoras, as crianças aprendem brincando. Um jeito leve e estimulante de mergulhar no universo dos livros.</p>
             </div>
             <div
-                class="w-full h-64 bg-orange-200 shadow-md rounded-lg flex flex-col items-center justify-center text-gray-700 p-4">
-                <img src="../assets/icones-serviço/icone-teste-capivara.png" alt="Ícone" class="w-16 h-16 mb-4">
-                <h3 class="text-2xl font-bold mb-2 text-center">Título fofo kk 4</h3>
-                <p class="text-base text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-                    recusandae velit facere facilist dolorem!</p>
+                class="w-full bg-orange-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
+                <img src="../assets/icones-serviço/card04.png" alt="Ícone" class="w-18 h-18 mb-4">
+                <h3 class="text-2xl font-bold mb-2 text-center">Feito para escolas que transformam</h3>
+                <p class="text-base text-center">Leve inovação para a sala de aula com uma plataforma segura, intuitiva e cheia de magia.</p>
             </div>
         </div>
     </div>
 
-    <!--Aqui será a seção onde vai ficar a parte do formulário onde a escola pode se comunicar para adiquirir o nosso software-->
+    <div id="formulario" class=" scroll-mt-[108px] flex justify-center mt-30 mb-50">
+        <div class="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center text-sky-600 mb-6">Solicite já</h2>
 
+            <form @submit.prevent="handleSubmit" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-sky-700 mb-1">
+                        Nome <span class="text-red-500">*</span>
+                    </label>
+                    <input v-model="form.nome" type="text" placeholder="Seu nome"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-sky-700 mb-1">
+                        E-mail <span class="text-red-500">*</span>
+                    </label>
+                    <input v-model="form.email" type="email" placeholder="exemplo@email.com"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-sky-700 mb-1">
+                        Número <span class="text-red-500">*</span>
+                    </label>
+                    <input v-model="form.numero" type="tel" placeholder="(XX) 9-XXXX-XXXX"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-sky-300"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-sky-700 mb-1">
+                        Mensagem <span class="text-red-500">*</span>
+                    </label>
+                    <textarea v-model="form.mensagem" placeholder="Sua mensagem..."
+                        class="w-full border rounded px-3 py-2 h-24 resize-none focus:outline-none focus:ring focus:ring-sky-300"
+                        required></textarea>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit"
+                        class="bg-sky-500 text-white font-medium px-6 py-2 rounded hover:bg-sky-600 transition">
+                        Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
 <style scoped>
