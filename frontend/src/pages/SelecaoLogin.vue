@@ -1,13 +1,52 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref } from 'vue'
+
+const selected = ref('professor')
+
+const toggleRole = () => {
+    selected.value = selected.value === 'professor' ? 'aluno' : 'professor'
+}
+
 </script>
 
 <template>
+    <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
+        <RouterLink to="/">
+            <div class="text-5xl flex ">
+                <h1 class="">Leia+</h1>
+                <img src="../assets/capivara.svg" alt="">
+            </div>
+        </RouterLink>
+
+        <div class="text-3xl flex gap-5">
+            <button @click="scrollToForm"
+                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">Solicite
+                já</button>
+            <RouterLink to="/SelecaoLogin"
+                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">
+                Entrar</RouterLink>
+        </div>
+    </header>
     <div class="flex items-center justify-center min-h-screen bg-blue-100">
         <div class="bg-white bg-opacity-70 p-8 rounded-xl shadow-md w-full max-w-md">
             <h2 class="text-center text-lg font-semibold text-sky-600 mb-6">Digite suas informações</h2>
-
             <form @submit.prevent="handleLogin" class="space-y-4">
+                <div class="flex justify-center mb-4">
+                    <div @click="toggleRole"
+                        class="w-66 h-10 relative flex items-center bg-[#91CFE5] rounded-full overflow-hidden cursor-pointer transition-colors duration-300"
+                        :class="selected === 'professor' ? 'bg-[#91CFE5]' : 'bg-[#91CFE5]'">
+                        <div class="absolute h-8 w-[124px] rounded-full shadow-md text-white font-semibold flex items-center justify-center transition-transform duration-300"
+                            :class="[
+                                selected === 'professor' ? 'translate-x-1 bg-sky-600' : 'translate-x-[135px] bg-sky-600'
+                            ]">
+                            {{ selected === 'professor' ? 'Sou Professor' : 'Sou Aluno' }}
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div>
                     <label class="block text-sm font-medium text-sky-600 mb-1">
                         E-mail <span class="text-red-500">*</span>

@@ -15,6 +15,23 @@ const handleSubmit = () => {
 </script>
 
 <template>
+    <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
+        <RouterLink to="/">
+            <div class="text-5xl flex ">
+                <h1 class="">Leia+</h1>
+                <img src="../assets/capivara.svg" alt="">
+            </div>
+        </RouterLink>
+
+        <div class="text-3xl flex gap-5">
+            <button @click="scrollToForm"
+                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">Solicite
+                já</button>
+            <RouterLink to="/SelecaoLogin"
+                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">
+                Entrar</RouterLink>
+        </div>
+    </header>
     <div class="h-180 bg-[#E0F7FF] flex flex-row items-center justify-around">
         <div>
             <div class="flex flex-col items-center text-[#0084FF] w-200 text-center">
@@ -38,25 +55,29 @@ const handleSubmit = () => {
                 class="w-full bg-emerald-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
                 <img src="../assets/icones-serviço/card01.png" alt="Ícone" class="w-18 h-18 mb-4">
                 <h3 class="text-2xl font-bold mb-2 text-center">Descubra o prazer de ler!</h3>
-                <p class="text-base text-center">Desperte nos alunos o amor pela leitura com atividades interativas, histórias envolventes e um ambiente pensado para encantar desde o primeiro clique.</p>
+                <p class="text-base text-center">Desperte nos alunos o amor pela leitura com atividades interativas,
+                    histórias envolventes e um ambiente pensado para encantar desde o primeiro clique.</p>
             </div>
             <div
                 class="w-full bg-amber-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
                 <img src="../assets/icones-serviço/card02.png" alt="Ícone" class="w-18 h-18 mb-4">
                 <h3 class="text-2xl font-bold mb-2 text-center">Ideal para professores e alunos</h3>
-                <p class="text-base text-center">Acompanhe e avalie o progresso de cada aluno com facilidade. Nosso sistema transforma a leitura em uma experiência organizada e eficiente.</p>
+                <p class="text-base text-center">Acompanhe e avalie o progresso de cada aluno com facilidade. Nosso
+                    sistema transforma a leitura em uma experiência organizada e eficiente.</p>
             </div>
             <div
                 class="w-full bg-rose-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
                 <img src="../assets/icones-serviço/card03.png" alt="Ícone" class="w-18 h-18 mb-4">
                 <h3 class="text-2xl font-bold mb-2 text-center">Diversão que educa</h3>
-                <p class="text-base text-center">Com gamificação, pontos e leituras encantadoras, as crianças aprendem brincando. Um jeito leve e estimulante de mergulhar no universo dos livros.</p>
+                <p class="text-base text-center">Com gamificação, pontos e leituras encantadoras, as crianças aprendem
+                    brincando. Um jeito leve e estimulante de mergulhar no universo dos livros.</p>
             </div>
             <div
                 class="w-full bg-orange-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">
                 <img src="../assets/icones-serviço/card04.png" alt="Ícone" class="w-18 h-18 mb-4">
                 <h3 class="text-2xl font-bold mb-2 text-center">Feito para escolas que transformam</h3>
-                <p class="text-base text-center">Leve inovação para a sala de aula com uma plataforma segura, intuitiva e cheia de magia.</p>
+                <p class="text-base text-center">Leve inovação para a sala de aula com uma plataforma segura, intuitiva
+                    e cheia de magia.</p>
             </div>
         </div>
     </div>
