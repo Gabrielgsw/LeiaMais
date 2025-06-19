@@ -1,6 +1,15 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import whatsappIcon from '../assets/logo-whatsapp.svg';
+
+
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const hideWhatsApp = computed(() => {
+    return route.path === '/InicialSystem';
+});
 
 const showScrollButton = ref(false);
 
@@ -65,7 +74,8 @@ onUnmounted(() => {
                     </path>
                 </svg>
             </button>
-            <a href="https://wa.me/5581983124412?text=Olá! Gostaria de saber mais sobre o Leia Mais Escolar."
+            <a v-if="!hideWhatsApp"
+                href="https://wa.me/5581983124412?text=Olá! Gostaria de saber mais sobre o Leia Mais Escolar."
                 target="_blank" aria-label="WhatsApp"
                 class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-colors flex items-center justify-center">
                 <img :src="whatsappIcon" alt="WhatsApp icon" class="w-6 h-6">

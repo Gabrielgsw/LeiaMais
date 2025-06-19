@@ -6,26 +6,41 @@ import { ref } from 'vue'
 </script>
 
 <template>
-    <div class="min-h-screen bg-blue-100">
-        <!-- Header -->
-        <header class="bg-sky-600 text-white px-6 py-4 flex justify-between items-center">
-            <div class="text-5xl flex ">
-                <h1 class="">Leia+</h1>
-                <img src="../assets/capivara.svg" alt="">
+    <div class="min-h-[90vh] bg-blue-100">
+        <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
+            <RouterLink to="/InicialSystem">
+                <div class="text-5xl flex ">
+                    <h1 class="">Leia+</h1>
+                    <img src="../assets/capivara.svg" alt="">
+                </div>
+            </RouterLink>
+
+            <div class="text-3xl flex gap-5">
+                <nav class="text-center ">
+                    <a href="#" class="no-underline pt-0 pr-[50px] pb-[10px] pl-0 text-[16pt] relative group">
+                        Espaço educacional
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-white rounded-full transition-all duration-300 ease-in-out group-hover:w-[80%]"></span>
+                    </a>
+
+                    <a href="#" class="no-underline pt-0 pr-[50px] pb-[10px] pl-0 text-[16pt] relative group">
+                        Minhas atividades
+                        <span
+                            class="absolute bottom-0 left-0 w-[0px] h-[2px] bg-white rounded-full transition-all duration-300 ease-in-out group-hover:w-[75%]"></span>
+                    </a>
+                </nav>
             </div>
-            <nav class="space-x-6 text-sm">
-                <a href="#" class="hover:underline">Meu perfil</a>
-                <a href="#" class="hover:underline">Espaço educacional</a>
-                <a href="#" class="hover:underline">Minhas atividades</a>
-            </nav>
         </header>
 
-        <!-- Conteúdo principal -->
+        <!-- conteúdo do perfil principal -->
         <main class="p-6">
             <!-- Saudação -->
             <div class="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
-                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                    <img src="../assets/icone-edit.svg" alt="Editar" class="w-6 h-6" />
+                <div class="w-16 h-16 relative rounded-full overflow-hidden">
+                    <img src="../assets/Capivara.png" alt="Fundo" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black mask mask-custom"
+                        style="mask-image: url('../assets/icone-edit.svg'); mask-repeat: no-repeat; mask-position: center; mask-size: 1.5rem;">
+                    </div>
                 </div>
                 <div>
                     <h2 class="text-lg font-bold text-blue-600">Olá, Aécio</h2>
@@ -33,12 +48,15 @@ import { ref } from 'vue'
                 </div>
             </div>
 
-            <!-- Amigos -->
+            <!-- seção de amigos -->
             <section class="mt-6">
                 <h3 class="font-bold text-lg mb-2">Amigos</h3>
                 <div class="bg-blue-200 p-4 rounded-lg overflow-x-auto whitespace-nowrap flex gap-4">
                     <template v-for="n in 10" :key="n">
-                        <div class="w-12 h-12 rounded-full bg-white inline-block"></div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-white inline-flex items-center justify-center overflow-hidden">
+                            <img src="../assets/capivara-icone-amigo.png" alt="Amigo" class="w-10 h-10 object-cover" />
+                        </div>
                     </template>
                 </div>
                 <div class="text-right mt-1">
@@ -46,14 +64,17 @@ import { ref } from 'vue'
                 </div>
             </section>
 
-            <!-- Últimas leituras -->
+            <!-- Seção de últimas leituras -->
             <section class="mt-6">
                 <h3 class="font-bold text-lg mb-2">Últimas leituras</h3>
                 <div class="bg-blue-200 p-4 rounded-lg overflow-x-auto whitespace-nowrap flex gap-4">
                     <template v-for="n in 6" :key="'livro-' + n">
-                        <img src="https://m.media-amazon.com/images/I/71pcJnYvDAL._AC_UF1000,1000_QL80_.jpg"
-                            alt="Capa do livro" class="h-48 rounded shadow" />
+                        <img src="../assets/livros-teste/gameofthrones.webp" alt="Capa do livro"
+                            class="h-48 rounded shadow" />
                     </template>
+                </div>
+                <div class="text-right mt-1">
+                    <button class="text-xs text-blue-600 hover:underline">Ver tudo</button>
                 </div>
             </section>
         </main>
