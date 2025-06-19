@@ -9,9 +9,22 @@ const form = reactive({
 })
 
 const handleSubmit = () => {
-    // Aqui você pode enviar os dados via fetch/axios
     alert(`Formulário enviado!\nNome: ${form.nome}\nEmail: ${form.email}\nNúmero: ${form.numero}\nMensagem: ${form.mensagem} `)
 }
+
+const scrollToFormulario = () => {
+    const target = document.getElementById('formulario')
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' })
+    }
+}
+const scrollToServicos = () => {
+  const target = document.getElementById('servicos')
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
 </script>
 
 <template>
@@ -24,9 +37,21 @@ const handleSubmit = () => {
         </RouterLink>
 
         <div class="text-3xl flex gap-5">
-            <button @click="scrollToForm"
-                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">Solicite
-                já</button>
+            <nav class="text-center ">
+                <a href="#" @click.prevent="scrollToServicos"
+                    class="no-underline pt-0 pr-[50px] pb-[10px] pl-0 text-[16pt] relative group">
+                    Nossos Serviços
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-white rounded-full transition-all duration-300 ease-in-out group-hover:w-[80%]"></span>
+                </a>
+
+                <a href="#" @click.prevent="scrollToFormulario"
+                    class="no-underline pt-0 pr-[50px] pb-[10px] pl-0 text-[16pt] relative group">
+                    Solicite já
+                    <span
+                        class="absolute bottom-0 left-0 w-[0px] h-[2px] bg-white rounded-full transition-all duration-300 ease-in-out group-hover:w-[75%]"></span>
+                </a>
+            </nav>
             <RouterLink to="/SelecaoLogin"
                 class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">
                 Entrar</RouterLink>
@@ -48,8 +73,8 @@ const handleSubmit = () => {
                 alt="Capivara feliz" />
         </div>
     </div>
-    <div class="mx-auto w-5/6 my-8 p-14 flex flex-col items-center">
-        <h2 class="text-[36px] font-semibold text-[#007bff] mb-12 text-left w-full">Nossos Serviços</h2>
+    <div id="servicos"  class="mx-auto w-5/6 my-8 p-14 flex flex-col items-center scroll-mt-[36px]">
+        <h2  class="text-[36px] font-semibold text-[#007bff] mb-12 text-left w-full">Nossos Serviços</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-3xl p-4">
             <div
                 class="w-full bg-emerald-200 shadow-md rounded-lg flex flex-col items-center justify-start text-gray-700 p-6">

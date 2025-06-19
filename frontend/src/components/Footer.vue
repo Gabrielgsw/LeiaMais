@@ -1,3 +1,28 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import whatsappIcon from '../assets/logo-whatsapp.svg';
+
+const showScrollButton = ref(false);
+
+const handleScroll = () => {
+    const scrollThreshold = 200;
+    showScrollButton.value = window.scrollY > scrollThreshold;
+};
+
+const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
+</script>
 <template>
     <footer class="bg-[#0f8ebd] text-gray-300 py-16 px-4 sm:px-8 lg:px-16 relative">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12">
@@ -49,30 +74,6 @@
     </footer>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import whatsappIcon from '../assets/logo-whatsapp.svg';
 
-const showScrollButton = ref(false);
-
-const handleScroll = () => {
-    const scrollThreshold = 200;
-    showScrollButton.value = window.scrollY > scrollThreshold;
-};
-
-const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-
-onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-});
-
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
-</script>
 
 <style scoped></style>

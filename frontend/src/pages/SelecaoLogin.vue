@@ -18,17 +18,8 @@ const toggleRole = () => {
                 <img src="../assets/capivara.svg" alt="">
             </div>
         </RouterLink>
-
-        <div class="text-3xl flex gap-5">
-            <button @click="scrollToForm"
-                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">Solicite
-                já</button>
-            <RouterLink to="/SelecaoLogin"
-                class="bg-white text-sky-600 text-[20px] font-semibold py-2 px-4 rounded-lg border-2 border-sky-600 shadow-sm hover:bg-sky-50 transition text-2xl">
-                Entrar</RouterLink>
-        </div>
     </header>
-    <div class="flex items-center justify-center min-h-screen bg-blue-100">
+    <div class="flex items-center justify-center min-h-screen bg-[#E0F7FF]">
         <div class="bg-white bg-opacity-70 p-8 rounded-xl shadow-md w-full max-w-md">
             <h2 class="text-center text-lg font-semibold text-sky-600 mb-6">Digite suas informações</h2>
             <form @submit.prevent="handleLogin" class="space-y-4">
