@@ -6,6 +6,7 @@ Engenharia de Software
 
 ## Integrantes do grupo
   * Aécio José
+  * Artur Guimarães
   * Gabriel Germano
   * Giovanna Neves
   * Heitor Santana
