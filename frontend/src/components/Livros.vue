@@ -1,6 +1,6 @@
 <script setup>
-import LivroRow from '../components/LivroRow.vue'
 import { ref, computed } from 'vue'
+import LivroRow from '../components/LivroRow.vue'
 import ComboboxLivro from '../components/ComboboxLivro.vue'
 
 const livros = ref([
@@ -14,11 +14,12 @@ const filtro = ref('')
 
 const livrosFiltrados = computed(() => {
     if (!filtro.value) return livros.value
-    return livros.value.filter((livro) =>
+    return livros.value.filter(livro =>
         livro.titulo.toLowerCase().includes(filtro.value.toLowerCase())
     )
 })
 </script>
+
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">
         <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
@@ -40,7 +41,7 @@ const livrosFiltrados = computed(() => {
                 </div>
 
                 <div class="flex gap-2">
-                    <!-- Aqui está o combobox funcionando com filtro -->
+                    
                     <ComboboxLivro @update="filtro = $event" />
                     <button class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
                         Cadastrar livro
