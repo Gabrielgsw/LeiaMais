@@ -2,11 +2,12 @@
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue'
 
+import Turma from '../components/Turma.vue'
+import Livro from '../components/Livro.vue'
 
 </script>
 
-<template>
-    <div class="min-h-[90vh] bg-blue-100">
+<!--<div class="min-h-[90vh] bg-blue-100">
         <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
             <RouterLink to="/InicialSystem">
                 <div class="text-5xl flex ">
@@ -32,9 +33,8 @@ import { ref } from 'vue'
             </div>
         </header>
 
-        <!-- conteúdo do perfil principal -->
+
         <main class="p-6">
-            <!-- Saudação -->
             <div class="bg-white p-6 rounded-lg shadow-md flex items-center gap-4">
                 <div class="w-16 h-16 relative rounded-full overflow-hidden">
                     <img src="../assets/Capivara.png" alt="Fundo" class="w-full h-full object-cover" />
@@ -48,7 +48,7 @@ import { ref } from 'vue'
                 </div>
             </div>
 
-            <!-- seção de amigos -->
+
             <section class="mt-6">
                 <h3 class="font-bold text-lg mb-2">Amigos</h3>
                 <div class="bg-blue-200 p-4 rounded-lg overflow-x-auto whitespace-nowrap flex gap-4">
@@ -58,28 +58,82 @@ import { ref } from 'vue'
                             <img src="../assets/capivara-icone-amigo.png" alt="Amigo" class="w-10 h-10 object-cover" />
                         </div>
                     </template>
-                </div>
-                <div class="text-right mt-1">
-                    <button class="text-xs text-blue-600 hover:underline">Ver mais</button>
-                </div>
-            </section>
+</div>
+<div class="text-right mt-1">
+    <button class="text-xs text-blue-600 hover:underline">Ver mais</button>
+</div>
+</section>
 
-            <!-- Seção de últimas leituras -->
-            <section class="mt-6">
-                <h3 class="font-bold text-lg mb-2">Últimas leituras</h3>
-                <div class="bg-blue-200 p-4 rounded-lg overflow-x-auto whitespace-nowrap flex gap-4">
-                    <template v-for="n in 6" :key="'livro-' + n">
+
+<section class="mt-6">
+    <h3 class="font-bold text-lg mb-2">Últimas leituras</h3>
+    <div class="bg-blue-200 p-4 rounded-lg overflow-x-auto whitespace-nowrap flex gap-4">
+        <template v-for="n in 6" :key="'livro-' + n">
                         <img src="../assets/livros-teste/gameofthrones.webp" alt="Capa do livro"
                             class="h-48 rounded shadow" />
                     </template>
+    </div>
+    <div class="text-right mt-1">
+        <button class="text-xs text-blue-600 hover:underline">Ver tudo</button>
+    </div>
+</section>
+</main>
+</div>-->
+<template>
+    <div class="min-h-screen bg-[#e6f7fa] font-sans">
+        <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
+            <RouterLink to="/">
+                <div class="text-5xl flex ">
+                    <h1>Leia+</h1>
+                    <img src="../assets/capivara.svg" alt="" />
                 </div>
-                <div class="text-right mt-1">
-                    <button class="text-xs text-blue-600 hover:underline">Ver tudo</button>
+            </RouterLink>
+        </header>
+
+        <main class="p-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-20 h-20 bg-gray-300 rounded-full">
+                        <img src="../assets/Capivara.png" alt="Fundo" class="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <p class="text-blue-600 font-bold text-lg">Olá, Coordenador</p>
+                        <p class="text-gray-600">Escola: Educandário São Judas Tadeu</p>
+                    </div>
                 </div>
-            </section>
+
+
+                <div class="flex gap-4 mb-6">
+                    <router-link to="/BookScreen">
+                        <button class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600">Adicionar
+                            Livros</button>
+                    </router-link>
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
+                        usuários</button>
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
+                        turma</button>
+                </div>
+
+
+                <div class="space-y-4 mb-8">
+                    <Turma nome="1º ano - fundamental" />
+                    <Turma nome="2º ano - fundamental" />
+                    <Turma nome="3º ano - fundamental" />
+                    <Turma nome="4º ano - fundamental" />
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
+                    <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
+                        <Livro v-for="n in 7" :key="n" />
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </template>
+
 
 
 <style scoped></style>

@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const hideWhatsApp = computed(() => {
-    return route.path === '/InicialSystem';
+    return route.path === '/InicialSystem' || '/BookScreen';
 });
 
 const showScrollButton = ref(false);

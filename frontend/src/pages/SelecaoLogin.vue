@@ -1,3 +1,4 @@
+<!---->
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
 import { ref, onMounted, nextTick, watch } from 'vue';
@@ -49,6 +50,7 @@ const handleLogin = () => {
 </script>
 
 <template>
+    <!---->
     <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
         <RouterLink to="/">
             <div class="text-5xl flex ">
