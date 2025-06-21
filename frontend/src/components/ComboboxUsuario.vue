@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Check, Search } from 'lucide-vue-next'
-import { cn } from '../lib/utils'
+import { cn } from '../lib/utils' 
 import {
     Combobox,
     ComboboxAnchor,
@@ -15,12 +15,13 @@ import {
 
 const emit = defineEmits(['update'])
 
-const frameworks = [
-    { value: 'next.js', label: 'Next.js' },
-    { value: 'sveltekit', label: 'SvelteKit' },
-    { value: 'nuxt', label: 'Nuxt' },
-    { value: 'remix', label: 'Remix' },
-    { value: 'astro', label: 'Astro' },
+
+const usuarios = [
+    { value: 'joao-silva', label: 'João Silva' },
+    { value: 'maria-souza', label: 'Maria Souza' },
+    { value: 'pedro-santos', label: 'Pedro Santos' },
+    { value: 'ana-costa', label: 'Ana Costa' },
+    { value: 'carlos-pereira', label: 'Carlos Pereira' },
 ]
 
 const selected = ref(null)
@@ -29,29 +30,25 @@ const selected = ref(null)
 <template>
     <Combobox v-model="selected" by="label" @update:model-value="(val) => emit('update', val?.label ?? '')">
         <ComboboxAnchor>
-            <div class="relative w-full max-w-sm items-center bg-[#F5F7FA] rounded-md border border-gray-300 ">
+            <div class="relative w-full max-w-sm items-center">
                 <ComboboxInput
-                    class="w-64 border-gray-300 px-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    :display-value="(val) => val?.label ?? ''" placeholder="Buscar livro..." />
-
-                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
+                    class="w-full rounded-md border border-gray-300 bg-[#F5F7FA] pl-10 pr-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    :display-value="(val) => val?.label ?? ''" placeholder="Buscar usuário..." /> <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
                     <Search class="size-4 text-muted-foreground" />
                 </span>
             </div>
         </ComboboxAnchor>
 
         <ComboboxList class="mt-2 w-64 rounded-md border border-gray-200 bg-white shadow-lg z-50">
-            <ComboboxEmpty class="px-4 py-2 text-sm text-gray-500">Nenhum livro encontrado.</ComboboxEmpty>
-            <ComboboxGroup>
-                <ComboboxItem v-for="framework in frameworks" :key="framework.value" :value="framework"
+            <ComboboxEmpty class="px-4 py-2 text-sm text-gray-500">Nenhum usuário encontrado.</ComboboxEmpty> <ComboboxGroup>
+                <ComboboxItem v-for="usuario in usuarios" :key="usuario.value" :value="usuario"
                     class="px-4 py-2 hover:bg-blue-100 cursor-pointer flex items-center justify-between">
-                    {{ framework.label }}
+                    {{ usuario.label }}
                     <ComboboxItemIndicator>
                         <Check :class="cn('ml-2 h-4 w-4 text-blue-500')" />
                     </ComboboxItemIndicator>
                 </ComboboxItem>
             </ComboboxGroup>
         </ComboboxList>
-
     </Combobox>
 </template>

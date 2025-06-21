@@ -109,8 +109,10 @@ import Livro from '../components/Livro.vue'
                         <button class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600">Adicionar
                             Livros</button>
                     </router-link>
-                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
-                        usuários</button>
+                    <router-link to="/UserScreen"><button
+                            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
+                            usuários</button>
+                    </router-link>
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
                         turma</button>
                 </div>

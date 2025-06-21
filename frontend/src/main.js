@@ -6,12 +6,14 @@ import Welcome from './pages/Welcome.vue'
 import SelecaoLogin from './pages/SelecaoLogin.vue'
 import InicialSystem from './pages/InicialSystem.vue'
 import BookScreen from './pages/BookScreen.vue'
+import UserScreen from './pages/UserScreen.vue'
 
 const routes = [
   { path: '/', component: Welcome },
   { path: '/SelecaoLogin', component: SelecaoLogin },
   { path: '/InicialSystem', component: InicialSystem },
   { path: '/BookScreen', component: BookScreen },
+  { path: '/UserScreen', component: UserScreen },
 ]
 
 const router = createRouter({
