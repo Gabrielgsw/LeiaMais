@@ -1,5 +1,5 @@
-<script setup>
-
+<script setup lang="ts">
+import { ref } from 'vue'; // Importe ref para criar uma variável reativa
 import {
     Dialog,
     DialogContent,
@@ -10,8 +10,15 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-defineProps(['titulo', 'autor', 'editora'])
+defineProps(['id', 'titulo', 'autor', 'editora'])
+const emit = defineEmits<{
+    deleteUser: [id: number];
+}>();
+
+// Crie uma variável reativa para controlar o estado da dialog
+const isDialogOpen = ref(false);
 </script>
+
 <template>
     <div class="grid grid-cols-4 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
         <span>{{ titulo }}</span>
@@ -19,7 +26,7 @@ defineProps(['titulo', 'autor', 'editora'])
         <span>{{ editora }}</span>
         <span class="flex justify-center gap-3">
             <button><img src="../assets/botoes/botao_editar.svg" alt="Editar" /></button>
-            <Dialog>
+            <Dialog v-model:open="isDialogOpen">
                 <DialogTrigger as-child>
                     <button>
                         <img src="/src/assets/botoes/botao_excluir.svg" alt="Excluir" />
@@ -28,10 +35,9 @@ defineProps(['titulo', 'autor', 'editora'])
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
-                            <h1 class="text-[#0084FF] font-bold text-[24px]  mt-2">
+                            <h1 class="text-[#0084FF] font-bold text-[24px] mt-2">
                                 Tem certeza que deseja excluir este livro?
                             </h1>
-
                         </DialogTitle>
                         <div>
                             <p>
@@ -46,16 +52,17 @@ defineProps(['titulo', 'autor', 'editora'])
                     </DialogHeader>
                     <div class="flex items-center justify-between mt-4">
                         <button
-                            class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors">Cancelar</button>
+                            class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
+                            @click="isDialogOpen = false"> Cancelar
+                        </button>
                         <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
                             @click="$emit('deleteUser', id)">
                             Excluir
                         </Button>
                     </div>
-
-
                 </DialogContent>
             </Dialog>
+            
         </span>
     </div>
 </template>
