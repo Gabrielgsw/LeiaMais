@@ -1,4 +1,15 @@
 <script setup>
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
 defineProps(['titulo', 'autor', 'editora'])
 </script>
 <template>
@@ -8,9 +19,43 @@ defineProps(['titulo', 'autor', 'editora'])
         <span>{{ editora }}</span>
         <span class="flex justify-center gap-3">
             <button><img src="../assets/botoes/botao_editar.svg" alt="Editar" /></button>
-            <button><img src="../assets/botoes/botao_excluir.svg" alt="Excluir" /></button>
+            <Dialog>
+                <DialogTrigger as-child>
+                    <button>
+                        <img src="/src/assets/botoes/botao_excluir.svg" alt="Excluir" />
+                    </button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>
+                            <h1 class="text-[#0084FF] font-bold text-[24px]  mt-2">
+                                Tem certeza que deseja excluir este livro?
+                            </h1>
+
+                        </DialogTitle>
+                        <div>
+                            <p>
+                                <span class="font-bold">Título do livro:</span>
+                                {{ titulo }}
+                            </p>
+                            <p>
+                                <span class="font-bold ">Editora:</span>
+                                {{ editora }}
+                            </p>
+                        </div>
+                    </DialogHeader>
+                    <div class="flex items-center justify-between mt-4">
+                        <button
+                            class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors">Cancelar</button>
+                        <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+                            @click="$emit('deleteUser', id)">
+                            Excluir
+                        </Button>
+                    </div>
+
+
+                </DialogContent>
+            </Dialog>
         </span>
     </div>
 </template>
-
-

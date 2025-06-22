@@ -1,13 +1,13 @@
 <script setup>
 import LivroRow from '../components/LivroRow.vue'
 import { ref, computed } from 'vue'
-import ComboboxLivro from '../components/ComboboxLivro.vue'
+import { Search } from 'lucide-vue-next'
 
 const livros = ref([
-    { titulo: 'Next.js', autor: 'Vercel', editora: 'Open Web' },
-    { titulo: 'Remix', autor: 'Remix Team', editora: 'Remix Press' },
-    { titulo: 'Nuxt', autor: 'Nuxt Labs', editora: 'Vue Books' },
-    { titulo: 'Astro', autor: 'Fred K. Schott', editora: 'Astro Editions' },
+    { titulo: '1984', autor: 'George Orwell', editora: 'Companhia das Letras' },
+    { titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', editora: 'Agir' },
+    { titulo: 'Orgulho e Preconceito', autor: 'Jane Austen', editora: 'Martin Claret' },
+    { titulo: 'O Senhor dos Anéis', autor: 'J.R.R. Tolkien', editora: 'HarperCollins Brasil' },
 ])
 
 const filtro = ref('')
@@ -34,14 +34,18 @@ const livrosFiltrados = computed(() => {
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <button @click="$router.back()" class="text-2xl">
-                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" />
+                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8"/>
                     </button>
-                    <h2 class="text-2xl font-bold">Livros</h2>
+                    <h2 class="text-2xl font-bold text-[28px] ">Livros</h2>
                 </div>
 
                 <div class="flex gap-2">
-                    <!-- Aqui está o combobox funcionando com filtro -->
-                    <ComboboxLivro @update="filtro = $event" />
+                    <div class="w-64 pe-2 bg-[#F5F7FA] rounded-md border border-gray-300 flex items-center focus-within:border-blue-600 ">
+                        <div class="px-2">
+                            <Search class="size-4 text-muted-foreground" />      
+                        </div>
+                            <input v-model="filtro" type="text" class="w-full focus:outline-none py-2" placeholder="Pesquisar livro...">
+                    </div>
                     <button class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
                         Cadastrar livro
                     </button>
@@ -57,6 +61,10 @@ const livrosFiltrados = computed(() => {
 
             <LivroRow v-for="(livro, index) in livrosFiltrados" :key="index" :titulo="livro.titulo" :autor="livro.autor"
                 :editora="livro.editora" />
+
+                <div v-if="livrosFiltrados.length === 0" class="text-center text-gray-500 mt-4">
+                    Nenhum livro encontrado.
+                </div>
         </div>
     </div>
 </template>
