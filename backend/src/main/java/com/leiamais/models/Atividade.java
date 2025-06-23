@@ -21,8 +21,6 @@ public class Atividade {
     @Column(nullable = false)
     private String enunciado;
     @Column
-    private float nota;
-    @Column
     private String feedback;
     @OneToOne
     private Resposta resposta;
@@ -31,24 +29,12 @@ public class Atividade {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getEnunciado() {
         return enunciado;
     }
 
     public void setEnunciado(String enunciado) {
         this.enunciado = enunciado;
-    }
-
-    public float getNota() {
-        return nota;
-    }
-
-    public void setNota(float nota) {
-        this.nota = nota;
     }
 
     public String getFeedback() {

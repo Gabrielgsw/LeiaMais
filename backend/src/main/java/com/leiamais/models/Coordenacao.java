@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +18,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Coordenacao extends Usuario {
 
     @Id
@@ -25,5 +26,21 @@ public class Coordenacao extends Usuario {
 
     @OneToMany
     List<Turma> turmasCoordenadas;
+
+    public Coordenacao(String cpf, String nome, String email, String senha, Cargo cargo, Date dataNascimento, UUID id) {
+        super(cpf, nome, email, senha, cargo, dataNascimento);
+        this.id = id;
+        this.turmasCoordenadas = new ArrayList<>();
+    }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public List<Turma> getTurmasCoordenadas() {
+        return turmasCoordenadas;
+    }
+
 
 }

@@ -37,7 +37,5 @@ public class AtividadeService {
         return atividadeRepository.findByEnunciado(enunciado);
     }
     
-    public List<Atividade> buscarPorNota(float nota) {
-        return atividadeRepository.findByNota(nota);
-    }
+
 }

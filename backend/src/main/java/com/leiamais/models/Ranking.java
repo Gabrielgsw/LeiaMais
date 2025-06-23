@@ -23,4 +23,15 @@ public class Ranking {
     @ManyToOne
     private Turma turma;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
 }
