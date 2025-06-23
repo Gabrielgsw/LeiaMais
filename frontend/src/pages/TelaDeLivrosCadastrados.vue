@@ -3,6 +3,7 @@ import LivroRow from '../components/LivroRow.vue'
 import { ref, computed } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
+import { useForm } from 'vee-validate'
 import {
     Dialog,
     DialogContent,
@@ -13,12 +14,12 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 
 const livros = ref([
@@ -51,21 +52,21 @@ const handleDeleteUser = (livroId) => {
 
 
 const cadastrarLivro = async () => {
-  const novoLivro = {
-    titulo: titulo.value,
-    autor: autor.value,
-    editora: editora.value
-  };
+    const novoLivro = {
+        titulo: titulo.value,
+        autor: autor.value,
+        editora: editora.value
+    };
 
-  try {
-    const response = await axios.post('http://localhost:8080/livros', novoLivro);
-    const livroSalvo = response.data;
-    console.log("Livro salvo:", livroSalvo); // Aqui você recebe o ID
-    // Você pode adicionar `livroSalvo` a uma lista de livros reativos
-  } catch (error) {
-    console.error("Erro ao cadastrar:", error);
-  }
-}; 
+    try {
+        const response = await axios.post('http://localhost:8080/livros', novoLivro);
+        const livroSalvo = response.data;
+        console.log("Livro salvo:", livroSalvo); // Aqui você recebe o ID
+        // Você pode adicionar `livroSalvo` a uma lista de livros reativos
+    } catch (error) {
+        console.error("Erro ao cadastrar:", error);
+    }
+};
 
 const isDialogOpen = ref(false);
 </script>
@@ -98,59 +99,54 @@ const isDialogOpen = ref(false);
                         <input v-model="filtro" type="text" class="w-full focus:outline-none py-2"
                             placeholder="Pesquisar livro...">
                     </div>
-                    <Dialog v-model:open="isDialogOpen">
+                    <Dialog v-model:open="isDialogOpen" >
                         <DialogTrigger as-child>
                             <button class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
                                 Cadastrar livro
                             </button>
                         </DialogTrigger>
                         <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>
-                                    <h1 class="text-[#0084FF] font-bold text-[24px] mt-2">
-                                        Cadastrar Livro
-                                    </h1>
-                                </DialogTitle>
-
-                            </DialogHeader>
-                            
-                            <div class="flex flex-col gap-3 mt-6 mb-2 text-start">
-                                <div class="grid grid-cols-4 items-center gap-4 ">
-                                    <Label for="name" class="text-right font-bold">
-                                        Título
-                                        <span class="text-red-500 font-bold">*</span>
-                                    </Label>
-
-                                    <Input id="name"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
-                                </div>
-                                <div class="grid grid-cols-4 items-center gap-4">
-                                    <Label for="isbn" class="text-right font-bold">
-                                        ISBN
-                                        <span class="text-red-500 font-bold">*</span>
-                                    </Label>
-                                    <Input id="isbn"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
-                                </div>
-                                <div class="grid grid-cols-4 items-center gap-4">
-                                    <Label for="autor" class="text-right font-bold">
-                                        Autor
-                                        <span class="text-red-500 font-bold">*</span>
-                                    </Label>
-                                    <Input id="autor"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
-                                </div>
-                                <div class="grid grid-cols-4 items-center gap-4">
-                                    <Label for="editora" class="text-right font-bold">
-                                        Editora
-                                        <span class="text-red-500 font-bold">*</span>
-                                    </Label>
-                                    <Input id="editora"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
-                                </div>
-
-                            </div>
-
+                            <form class="w-2/3 space-y-6" @submit="onSubmit">
+                                <FormField v-slot="{ componentField }" name="username"
+                                    :validate-on-blur="!isFieldDirty">
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            <h1 class="text-[#0084FF] font-bold text-[28px] mt-2">
+                                                Cadastrar Livro
+                                            </h1>
+                                        </DialogTitle>
+                                    </DialogHeader>
+                                    <FormItem>
+                                        <FormLabel>Título <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <Input id="titulo"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Título do livro" />
+                                        </FormControl>
+                                    </FormItem>
+                                    <FormItem>
+                                        <FormLabel>ISBN <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <Input id="isbn"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="ISBN"/>
+                                        </FormControl>
+                                    </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Autor <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <Input id="autor"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Autor do livro" />
+                                        </FormControl>
+                                    </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Editora <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <Input id="editora"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Editora do livro" />
+                                        </FormControl>
+                                    </FormItem>
+                                </FormField>
+                                
+                            </form>
                             <div class="flex items-center justify-between mt-4">
                                 <button
                                     class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"

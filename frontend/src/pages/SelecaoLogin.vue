@@ -20,16 +20,16 @@ const selectRole = (role) => {
 const sliderStyle = ref({ left: '0px', width: '0px' });
 
 const updateSlider = () => {
-  nextTick(() => {
-    const index = roles.indexOf(selected.value);
-    if (buttons.value && buttons.value[index]) {
-      const btn = buttons.value[index];
-      sliderStyle.value = {
-        width: btn.offsetWidth + 'px',
-        left: btn.offsetLeft + 'px',
-      };
-    }
-  });
+    nextTick(() => {
+        const index = roles.indexOf(selected.value);
+        if (buttons.value && buttons.value[index]) {
+            const btn = buttons.value[index];
+            sliderStyle.value = {
+                width: btn.offsetWidth + 'px',
+                left: btn.offsetLeft + 'px',
+            };
+        }
+    });
 };
 
 onMounted(() => {
@@ -64,20 +64,21 @@ const handleLogin = () => {
         <div class="bg-white bg-opacity-70 p-8 rounded-xl shadow-md w-full max-w-md">
             <h2 class="text-center text-lg font-semibold text-sky-600 mb-6">Digite suas informações</h2>
 
-            <div class="relative flex justify-center space-x-6 mb-8 select-none" ref="buttonsContainer">
-                <button v-for="(role, index) in roles" :key="role" @click="selectRole(role)"
-                    :ref="el => buttons[index] = el"
-                    class="relative px-4 pb-2 text-lg font-medium cursor-pointer focus:outline-none text-gray-500 transition-colors duration-300"
-                    :class="{
-                        'text-sky-600': selected === role,
-                    }">
-                    {{ role === 'coordenador' ? 'Coordenador' : role.charAt(0).toUpperCase() +
-                        role.slice(1) }}
-                </button>
+            <div class="relative mb-8 w-full px-4">
+                <div class="grid grid-cols-3 text-center relative" ref="buttonsContainer">
+                    <button v-for="(role, index) in roles" :key="role" @click="selectRole(role)"
+                        :ref="el => buttons[index] = el"
+                        class="py-2 text-lg font-medium cursor-pointer transition-colors duration-300 text-gray-500"
+                        :class="{ 'text-sky-600': selected === role }">
+                        {{ role === 'coordenador' ? 'Coordenador' : role.charAt(0).toUpperCase() + role.slice(1) }}
+                    </button>
 
-                <span class="absolute bottom-0 h-1 bg-sky-600 rounded-full transition-all duration-500 ease-in-out"
-                    :style="sliderStyle"></span>
+                    <!-- Slider -->
+                    <span class="absolute bottom-0 h-1 bg-sky-600 rounded-full transition-all duration-500 ease-in-out"
+                        :style="sliderStyle"></span>
+                </div>
             </div>
+
 
             <form @submit.prevent="handleLogin" class="space-y-4">
                 <div>
