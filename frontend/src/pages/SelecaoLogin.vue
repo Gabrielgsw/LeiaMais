@@ -44,7 +44,7 @@ const handleLogin = () => {
     // Aqui vai a lógica de autenticação
     alert(`Logando como ${selected.value} com email ${email.value}`);
 
-    router.push('/InicialSystem');
+    router.push('/TelaInicial');
 };
 
 </script>

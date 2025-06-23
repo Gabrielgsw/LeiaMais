@@ -4,16 +4,18 @@ import App from './App.vue'
 import { createWebHistory, createRouter } from 'vue-router'
 import Welcome from './pages/BemVindo.vue'
 import SelecaoLogin from './pages/SelecaoLogin.vue'
-import InicialSystem from './pages/TelaInicial.vue'
-import BookScreen from './pages/TelaDeLivrosCadastrados.vue'
-import UserScreen from './pages/TelaDeUsuariosCadastrados.vue'
+import TelaInicial from './pages/TelaInicial.vue'
+import TelaDeLivrosCadastrados from './pages/TelaDeLivrosCadastrados.vue'
+import TelaDeUsuariosCadastrados from './pages/TelaDeUsuariosCadastrados.vue'
+import TelaDeTurma from './pages/TelaDeTurma.vue'
 
 const routes = [
   { path: '/', component: Welcome },
   { path: '/SelecaoLogin', component: SelecaoLogin },
-  { path: '/InicialSystem', component: InicialSystem },
-  { path: '/BookScreen', component: BookScreen },
-  { path: '/UserScreen', component: UserScreen },
+  { path: '/TelaInicial', component: TelaInicial },
+  { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados},
+  { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
+  { path: '/TelaDeTurma', component: TelaDeTurma},
 ]
 
 const router = createRouter({

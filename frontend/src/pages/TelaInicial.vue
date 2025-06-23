@@ -82,7 +82,7 @@ import Livro from '../components/Livro.vue'
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">
         <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
-            <RouterLink to="/">
+            <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
                     <img src="../assets/capivara.svg" alt="" />
@@ -105,11 +105,11 @@ import Livro from '../components/Livro.vue'
 
 
                 <div class="flex gap-4 mb-6">
-                    <router-link to="/BookScreen">
+                    <router-link to="/TelaDeLivrosCadastrados">
                         <button class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600">Adicionar
                             Livros</button>
                     </router-link>
-                    <router-link to="/UserScreen"><button
+                    <router-link to="/TelaDeUsuariosCadastrados"><button
                             class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
                             usuários</button>
                     </router-link>
@@ -119,11 +119,15 @@ import Livro from '../components/Livro.vue'
 
 
                 <div class="space-y-4 mb-8">
-                    <Turma nome="1º ano - fundamental" />
+                    <router-link to="/TelaDeTurma" class="block">
+                        <Turma nome="1º ano - fundamental" />
+                    </router-link>
+
                     <Turma nome="2º ano - fundamental" />
                     <Turma nome="3º ano - fundamental" />
                     <Turma nome="4º ano - fundamental" />
                 </div>
+
 
                 <div>
                     <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>

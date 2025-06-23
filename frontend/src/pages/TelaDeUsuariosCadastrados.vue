@@ -116,7 +116,7 @@ const isDialogOpen = ref(false);
                             </button>
                         </DialogTrigger>
                         <DialogContent>
-                            <form class="w-2/3 space-y-6" @submit="onSubmit">
+                            <form class=" space-y-6" @submit="onSubmit">
                                 <FormField v-slot="{ componentField }" name="username"
                                     :validate-on-blur="!isFieldDirty">
                                     <DialogHeader>

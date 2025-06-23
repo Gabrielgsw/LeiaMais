@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
 import { useForm } from 'vee-validate'
+
 import {
     Dialog,
     DialogContent,
@@ -37,20 +38,6 @@ const livrosFiltrados = computed(() => {
         livro.titulo.toLowerCase().includes(filtro.value.toLowerCase())
     )
 })
-const handleDeleteUser = (livroId) => {
-    // const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário com ID: ${userId}?`);
-
-    // if (confirmDelete) {
-    //     usuarios.value = usuarios.value.filter(usuario => usuario.id !== userId);
-
-    //     console.log(`Usuário com ID ${userId} excluído.`);
-    // } else {
-    //     console.log(`Exclusão do usuário com ID ${userId} cancelada.`);
-    // }
-    console.log(`Livro com o ID ${livroId} excluído.`);
-};
-
-
 const cadastrarLivro = async () => {
     const novoLivro = {
         titulo: titulo.value,
@@ -68,12 +55,27 @@ const cadastrarLivro = async () => {
     }
 };
 
+const handleDeleteUser = (livroId) => {
+    // const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário com ID: ${userId}?`);
+
+    // if (confirmDelete) {
+    //     usuarios.value = usuarios.value.filter(usuario => usuario.id !== userId);
+
+    //     console.log(`Usuário com ID ${userId} excluído.`);
+    // } else {
+    //     console.log(`Exclusão do usuário com ID ${userId} cancelada.`);
+    // }
+    console.log(`Livro com o ID ${livroId} excluído.`);
+};
+
+
+
 const isDialogOpen = ref(false);
 </script>
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">
         <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
-            <RouterLink to="/">
+            <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
                     <img src="../assets/capivara.svg" alt="" />
@@ -106,7 +108,7 @@ const isDialogOpen = ref(false);
                             </button>
                         </DialogTrigger>
                         <DialogContent>
-                            <form class="w-2/3 space-y-6" @submit="onSubmit">
+                            <form class=" space-y-6" @submit="onSubmit">
                                 <FormField v-slot="{ componentField }" name="username"
                                     :validate-on-blur="!isFieldDirty">
                                     <DialogHeader>
@@ -120,7 +122,7 @@ const isDialogOpen = ref(false);
                                         <FormLabel>Título <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
                                             <Input id="titulo"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Título do livro" />
+                                                class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Título do livro" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
