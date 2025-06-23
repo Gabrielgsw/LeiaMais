@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,4 +39,25 @@ public class Turma {
     @OneToMany
     List<Atividade> atividades;
 
+    public Turma(String nome) {
+        this.nome = nome;
+        this.alunosMatriculados = new ArrayList<>();
+        this.professores = new ArrayList<>();
+        this.livros = new ArrayList<>();
+        this.atividades = new ArrayList<>();
+
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

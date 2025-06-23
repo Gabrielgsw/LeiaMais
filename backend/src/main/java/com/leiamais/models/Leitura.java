@@ -25,4 +25,24 @@ public class Leitura {
     @OneToOne
     private Aluno aluno;
 
+    public UUID getId() {
+        return id;
+    }
+
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
 }

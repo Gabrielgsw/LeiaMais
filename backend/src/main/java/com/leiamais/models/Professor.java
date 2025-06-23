@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,4 +23,24 @@ public class Professor extends Usuario {
 
     @Column(nullable = false)
     private Disciplina disciplinaMinistrada;
+
+
+    public Professor(String cpf, String nome, String email, String senha, Cargo cargo, Date dataNascimento, UUID id, Disciplina disciplinaMinistrada) {
+        super(cpf, nome, email, senha, cargo, dataNascimento);
+        this.id = id;
+        this.disciplinaMinistrada = disciplinaMinistrada;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+
+    public Disciplina getDisciplinaMinistrada() {
+        return disciplinaMinistrada;
+    }
+
+    public void setDisciplinaMinistrada(Disciplina disciplinaMinistrada) {
+        this.disciplinaMinistrada = disciplinaMinistrada;
+    }
 }

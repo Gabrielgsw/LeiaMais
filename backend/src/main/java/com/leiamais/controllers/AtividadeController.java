@@ -1,5 +1,6 @@
 package com.leiamais.controllers;
 
+import com.leiamais.models.Aluno;
 import com.leiamais.models.Atividade;
 import com.leiamais.services.AtividadeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,17 @@ public class AtividadeController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Atividade> criar(@RequestBody Atividade atividade) {
+        Atividade salvo = atividadeService.salvar(atividade);
+        return ResponseEntity.ok(salvo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable UUID id) {
+        atividadeService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

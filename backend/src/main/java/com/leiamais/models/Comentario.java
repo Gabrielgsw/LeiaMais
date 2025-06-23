@@ -23,4 +23,24 @@ public class Comentario {
     @ManyToOne
     private Livro livro;
 
+    public UUID getId() {
+        return id;
+    }
+
+
+    public String getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
 }

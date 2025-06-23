@@ -29,5 +29,32 @@ public class Gamificacao {
     @Column
     private int nivel;
 
+    public UUID getId() {
+        return id;
+    }
 
+
+    public int getXpPorLeitura() {
+        return xpPorLeitura;
+    }
+
+    public void setXpPorLeitura(int xpPorLeitura) {
+        this.xpPorLeitura = xpPorLeitura;
+    }
+
+    public int getXpPorAtividade() {
+        return xpPorAtividade;
+    }
+
+    public void setXpPorAtividade(int xpPorAtividade) {
+        this.xpPorAtividade = xpPorAtividade;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
 }
