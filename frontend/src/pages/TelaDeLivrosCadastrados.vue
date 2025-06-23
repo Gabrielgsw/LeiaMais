@@ -2,6 +2,7 @@
 import LivroRow from '../components/LivroRow.vue'
 import { ref, computed } from 'vue'
 import { Search } from 'lucide-vue-next'
+import axios from 'axios';
 import {
     Dialog,
     DialogContent,
@@ -39,6 +40,25 @@ const handleDeleteUser = (livroId) => {
     // }
     console.log(`Livro com o ID ${livroId} excluído.`);
 };
+
+
+const cadastrarLivro = async () => {
+  const novoLivro = {
+    titulo: titulo.value,
+    autor: autor.value,
+    editora: editora.value
+  };
+
+  try {
+    const response = await axios.post('http://localhost:8080/livros', novoLivro);
+    const livroSalvo = response.data;
+    console.log("Livro salvo:", livroSalvo); // Aqui você recebe o ID
+    // Você pode adicionar `livroSalvo` a uma lista de livros reativos
+  } catch (error) {
+    console.error("Erro ao cadastrar:", error);
+  }
+}; 
+
 const isDialogOpen = ref(false);
 </script>
 <template>
