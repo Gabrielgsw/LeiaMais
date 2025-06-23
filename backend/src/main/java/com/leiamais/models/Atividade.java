@@ -27,4 +27,44 @@ public class Atividade {
     @OneToOne
     private Resposta resposta;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getEnunciado() {
+        return enunciado;
+    }
+
+    public void setEnunciado(String enunciado) {
+        this.enunciado = enunciado;
+    }
+
+    public float getNota() {
+        return nota;
+    }
+
+    public void setNota(float nota) {
+        this.nota = nota;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public Resposta getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(Resposta resposta) {
+        this.resposta = resposta;
+    }
+
 }
