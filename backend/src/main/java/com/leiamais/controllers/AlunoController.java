@@ -7,19 +7,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/alunos")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AlunoController {
 
 
     private final AlunoService alunoService;
 
+
     public AlunoController(AlunoService alunoService) {
         this.alunoService = alunoService;
     }
+
+    @PostMapping("/formulario")
+    public ResponseEntity<String> receberFormulario(@RequestBody Map<String, String> form) {
+        String nome = form.get("nome");
+        String email = form.get("email");
+        String numero = form.get("numero");
+        String mensagem = form.get("mensagem");
+
+        System.out.println("Recebido:");
+        System.out.println("Nome: " + nome);
+        System.out.println("Email: " + email);
+        System.out.println("Número: " + numero);
+        System.out.println("Mensagem: " + mensagem);
+
+        return ResponseEntity.ok("Formulário recebido com sucesso!");
+    }
+
 
     @GetMapping
     public ResponseEntity<List<Aluno>> listarTodos() {
