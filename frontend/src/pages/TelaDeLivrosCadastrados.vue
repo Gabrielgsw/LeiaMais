@@ -11,6 +11,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 
 const livros = ref([
     { id: 1, titulo: '1984', autor: 'George Orwell', editora: 'Companhia das Letras' },
@@ -85,7 +93,8 @@ const isDialogOpen = ref(false);
                                 </DialogTitle>
 
                             </DialogHeader>
-                            <div class="flex flex-col gap-3">
+                            
+                            <div class="flex flex-col gap-3 mt-6 mb-2 text-start">
                                 <div class="grid grid-cols-4 items-center gap-4 ">
                                     <Label for="name" class="text-right font-bold">
                                         Título
@@ -93,7 +102,7 @@ const isDialogOpen = ref(false);
                                     </Label>
 
                                     <Input id="name"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-md border border-gray-300" />
+                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
                                 </div>
                                 <div class="grid grid-cols-4 items-center gap-4">
                                     <Label for="isbn" class="text-right font-bold">
@@ -101,7 +110,7 @@ const isDialogOpen = ref(false);
                                         <span class="text-red-500 font-bold">*</span>
                                     </Label>
                                     <Input id="isbn"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-md border border-gray-300" />
+                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
                                 </div>
                                 <div class="grid grid-cols-4 items-center gap-4">
                                     <Label for="autor" class="text-right font-bold">
@@ -109,7 +118,7 @@ const isDialogOpen = ref(false);
                                         <span class="text-red-500 font-bold">*</span>
                                     </Label>
                                     <Input id="autor"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-md border border-gray-300" />
+                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
                                 </div>
                                 <div class="grid grid-cols-4 items-center gap-4">
                                     <Label for="editora" class="text-right font-bold">
@@ -117,7 +126,7 @@ const isDialogOpen = ref(false);
                                         <span class="text-red-500 font-bold">*</span>
                                     </Label>
                                     <Input id="editora"
-                                        class="col-span-3 bg-[#F5F7FA] rounded-md border border-gray-300" />
+                                        class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" />
                                 </div>
 
                             </div>
