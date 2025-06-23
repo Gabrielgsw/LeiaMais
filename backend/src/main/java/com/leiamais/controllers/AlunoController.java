@@ -71,6 +71,18 @@ public class AlunoController {
         Aluno salvo = alunoService.salvar(aluno);
         return ResponseEntity.ok(salvo);
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> atualizar(@PathVariable UUID id, @RequestBody Aluno aluno) {
+        Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
+        if (alunoOptional.isPresent()) {
+            aluno.setId(id);
+            Aluno alunoAtualizado = alunoService.salvar(aluno);
+            return ResponseEntity.ok(alunoAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {

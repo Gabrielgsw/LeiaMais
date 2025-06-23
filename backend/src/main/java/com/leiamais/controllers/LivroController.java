@@ -72,6 +72,18 @@ public class LivroController {
         return ResponseEntity.ok(salvo);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> atualizar(@PathVariable UUID id, @RequestBody Livro livro  ) {
+        Optional<Livro> livroOptional = livroService.buscarPorId(id);
+        if (livroOptional.isPresent()) {
+            livro.setId(id);
+            Livro livroAtualizado = livroService.salvar(livro);
+            return ResponseEntity.ok(livroAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     /*@DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
         livroService.deletar(id);
