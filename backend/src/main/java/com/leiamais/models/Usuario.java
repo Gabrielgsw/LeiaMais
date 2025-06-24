@@ -9,7 +9,7 @@ import java.util.UUID;
 @MappedSuperclass
 @Getter
 @Setter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public abstract class Usuario {
 

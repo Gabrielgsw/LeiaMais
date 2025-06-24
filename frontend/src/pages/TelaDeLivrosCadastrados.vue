@@ -1,7 +1,7 @@
 <script setup>
 //imports do sistema
 import LivroRow from '../components/LivroRow.vue'
-import { ref, computed } from 'vue'
+import { ref, computed,onMounted } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
 import { useForm } from 'vee-validate'
@@ -24,14 +24,30 @@ import {
 } from '@/components/ui/form'
 
 //variáveis do sistema
-const livros = ref([
-    { id: 1, titulo: '1984', autor: 'George Orwell', editora: 'Companhia das Letras' },
-    { id: 2, titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', editora: 'Agir' },
-    { id: 3, titulo: 'Orgulho e Preconceito', autor: 'Jane Austen', editora: 'Martin Claret' },
-    { id: 4, titulo: 'O Senhor dos Anéis', autor: 'J.R.R. Tolkien', editora: 'HarperCollins Brasil' },
-])
+const livros = ref([]); // Inicialize como um array vazio
+const filtro = ref('');
+const isDialogOpen = ref(false);
 
-const filtro = ref('')
+// Adicione as variáveis reativas para os campos do formulário
+const titulo = ref('');
+const autor = ref('');
+const editora = ref('');
+const isbn = ref(''); // Se você tiver um campo ISBN no seu formulário de cadastro
+
+// Função para carregar os livros da API
+const carregarLivros = async () => {
+    try {
+        const response = await axios.get('http://localhost:8080/livros'); // Endpoint da sua API para listar livros
+        livros.value = response.data; // Atualiza a variável reativa 'livros' com os dados da API
+    } catch (error) {
+        console.error("Erro ao carregar livros:", error);
+    }
+};
+
+// Chame a função carregarLivros quando o componente for montado
+onMounted(() => {
+    carregarLivros();
+});
 
 const livrosFiltrados = computed(() => {
     if (!filtro.value) return livros.value
@@ -39,18 +55,30 @@ const livrosFiltrados = computed(() => {
         livro.titulo.toLowerCase().includes(filtro.value.toLowerCase())
     )
 })
+
 const cadastrarLivro = async () => {
     const novoLivro = {
         titulo: titulo.value,
         autor: autor.value,
-        editora: editora.value
+        editora: editora.value,
+        isbn: isbn.value // Inclua ISBN se for parte do seu modelo de livro
     };
 
     try {
         const response = await axios.post('http://localhost:8080/livros', novoLivro);
         const livroSalvo = response.data;
-        console.log("Livro salvo:", livroSalvo); // Aqui você recebe o ID
-        // Você pode adicionar `livroSalvo` a uma lista de livros reativos
+        console.log("Livro salvo:", livroSalvo);
+        
+        // Adicione o novo livro à lista existente e feche o modal
+        livros.value.push(livroSalvo);
+        isDialogOpen.value = false;
+
+        // Limpe os campos do formulário após o cadastro (opcional)
+        titulo.value = '';
+        autor.value = '';
+        editora.value = '';
+        isbn.value = '';
+
     } catch (error) {
         console.error("Erro ao cadastrar:", error);
     }
@@ -71,7 +99,6 @@ const handleDeleteUser = (livroId) => {
 
 
 
-const isDialogOpen = ref(false);
 </script>
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">

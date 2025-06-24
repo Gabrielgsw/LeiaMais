@@ -18,13 +18,13 @@ public class Livro {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(nullable = false)
+    @Column//(nullable = false)
     private String titulo;
-    @Column(unique = true)
+    @Column//(unique = true)
     private String ISBN;
-    @Column(nullable = false)
+    @Column//(nullable = false)
     private String autor;
-    @Column(nullable = false)
+    @Column//(nullable = false)
     private String editora;
 
     public UUID getId() {

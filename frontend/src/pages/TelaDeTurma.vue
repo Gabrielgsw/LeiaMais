@@ -61,7 +61,7 @@ import {
                 </button>
             </div>
             <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
-                <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
+                <span>Nome</span> <span>Enunciado</span> <span>Tipo</span> <span class="text-center">Ações</span>
             </div>
             <div class="grid grid-cols-4 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
                 <span>{{ nome }}</span>
