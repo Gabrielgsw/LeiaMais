@@ -1,10 +1,10 @@
 <script setup>
+//imports do sistema
 import LivroRow from '../components/LivroRow.vue'
 import { ref, computed } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
 import { useForm } from 'vee-validate'
-
 import {
     Dialog,
     DialogContent,
@@ -23,6 +23,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
+//variáveis do sistema
 const livros = ref([
     { id: 1, titulo: '1984', autor: 'George Orwell', editora: 'Companhia das Letras' },
     { id: 2, titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', editora: 'Agir' },
@@ -101,7 +102,7 @@ const isDialogOpen = ref(false);
                         <input v-model="filtro" type="text" class="w-full focus:outline-none py-2"
                             placeholder="Pesquisar livro...">
                     </div>
-                    <Dialog v-model:open="isDialogOpen" >
+                    <Dialog v-model:open="isDialogOpen">
                         <DialogTrigger as-child>
                             <button class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
                                 Cadastrar livro
@@ -122,32 +123,36 @@ const isDialogOpen = ref(false);
                                         <FormLabel>Título <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
                                             <Input id="titulo"
-                                                class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Título do livro" />
+                                                class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Título do livro" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>ISBN <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="isbn"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="ISBN"/>
+                                            <Input id="isbn" type="number"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="ISBN" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>Autor <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="autor"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Autor do livro" />
+                                            <Input id="autor" 
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Autor do livro" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>Editora <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
                                             <Input id="editora"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75" placeholder="Editora do livro" />
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Editora do livro" />
                                         </FormControl>
                                     </FormItem>
                                 </FormField>
-                                
+
                             </form>
                             <div class="flex items-center justify-between mt-4">
                                 <button
@@ -180,3 +185,12 @@ const isDialogOpen = ref(false);
         </div>
     </div>
 </template>
+<style scoped>
+#titulo, #isbn, #autor, #editora {
+    border-color: #DDDDDD;
+    border: 1px solid #DDDDDD;
+    border-radius: var(--dp-border-radius);
+    color: var(--dp-text-color);
+    background-color: #fff;
+}
+</style>

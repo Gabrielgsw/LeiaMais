@@ -1,4 +1,5 @@
 <script setup>
+//imports do sistema
 import { ref, computed } from 'vue'
 import UsuarioRow from '../components/UsuarioRow.vue'
 import { RouterLink } from 'vue-router'
@@ -7,8 +8,6 @@ import axios from 'axios';
 import { useForm } from 'vee-validate'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-
-
 import {
     Dialog,
     DialogContent,
@@ -27,8 +26,9 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
-const placeholder = ref()
 
+//variáveis do sistema
+const placeholder = ref()
 const usuarios = ref([
     { id: 1, nome: 'João Silva', cpf: '123.456.789-00', tipo: 'Aluno' },
     { id: 2, nome: 'Maria Souza', cpf: '987.654.321-11', tipo: 'Professor' },
@@ -44,8 +44,21 @@ const usuariosFiltrados = computed(() => {
     );
 });
 const date = ref(null)
+const handleDeleteUser = (userId) => {
+    // const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário com ID: ${userId}?`);
 
-// testando ainda o cadastro de usuário na API
+    // if (confirmDelete) {
+    //     usuarios.value = usuarios.value.filter(usuario => usuario.id !== userId);
+
+    //     console.log(`Usuário com ID ${userId} excluído.`);
+    // } else {
+    //     console.log(`Exclusão do usuário com ID ${userId} cancelada.`);
+    // }
+    console.log(`Usuário com ID ${userId} excluído.`);
+};
+const isDialogOpen = ref(false);
+
+// funções do sistema
 const cadastrarUsuario = () => {
     const usuario = {
         cpf: '123.456.789-00',
@@ -66,19 +79,6 @@ const cadastrarUsuario = () => {
     })
 };
 
-const handleDeleteUser = (userId) => {
-    // const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário com ID: ${userId}?`);
-
-    // if (confirmDelete) {
-    //     usuarios.value = usuarios.value.filter(usuario => usuario.id !== userId);
-
-    //     console.log(`Usuário com ID ${userId} excluído.`);
-    // } else {
-    //     console.log(`Exclusão do usuário com ID ${userId} cancelada.`);
-    // }
-    console.log(`Usuário com ID ${userId} excluído.`);
-};
-const isDialogOpen = ref(false);
 </script>
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">
@@ -130,31 +130,32 @@ const isDialogOpen = ref(false);
                                         <FormLabel>Nome <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
                                             <Input id="nome"
-                                                class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75"
+                                                class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Nome do usuário" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>E-mail <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="email"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75"
+                                            <Input id="email" type="email"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite o email" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>Senha <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="senha"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75"
+                                            <Input id="senha" type="password" 
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite a senha" />
+                                            <i class="bi bi-eye"></i>
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>CPF <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="cpf"
-                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75"
+                                            <Input id="cpf" type="number"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite o CPF" />
                                         </FormControl>
                                     </FormItem>
@@ -205,3 +206,14 @@ const isDialogOpen = ref(false);
         </div>
     </div>
 </template>
+
+<style scoped>
+
+#cpf, #nome, #email, #senha{
+    border-color: #DDDDDD;
+    border: 1px solid #DDDDDD;
+    border-radius: var(--dp-border-radius);
+    color: var(--dp-text-color);
+    background-color: #fff;
+}
+</style>
