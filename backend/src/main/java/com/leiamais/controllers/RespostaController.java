@@ -49,7 +49,7 @@ public class RespostaController {
         return ResponseEntity.status(201).body(novoAluno);
     }
 
-    @PutMapping("/{id}")
+    /*@PutMapping("/{id}")
     public ResponseEntity<Aluno> atualizarAluno(@PathVariable UUID id, @RequestBody Aluno aluno) {
         Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
         if (alunoOptional.isPresent()) {
@@ -59,7 +59,7 @@ public class RespostaController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarAluno(@PathVariable UUID id) {
@@ -72,7 +72,7 @@ public class RespostaController {
         }
     }
 
-    @GetMapping("/nome/{nome}")
+    /*@GetMapping("/nome/{nome}")
     public ResponseEntity<Aluno> buscarPorNome(@PathVariable String nome) {
         Optional<Aluno> alunoOptional = alunoService.buscarPorNome(nome);
         if (alunoOptional.isPresent()) {
@@ -90,5 +90,5 @@ public class RespostaController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }

@@ -11,4 +11,8 @@ import java.util.UUID;
 public interface AlunoRepository extends JpaRepository<Aluno, UUID> {
 
     Optional<Aluno> findByMatricula(String matricula);
+
+    Optional<Aluno> findByEmail(String email);
+
+    Optional<Aluno> findByNome(String nome);
 }
