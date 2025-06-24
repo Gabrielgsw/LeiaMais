@@ -1,13 +1,9 @@
-<script>
+<script setup>
 import { ref, computed } from 'vue'
-import UsuarioRow from '../components/UsuarioRow.vue'
-import { RouterLink } from 'vue-router'
-import { Search } from 'lucide-vue-next'
-import axios from 'axios';
-import { useForm } from 'vee-validate'
-import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-
+import { RouterLink } from 'vue-router';
+import AtividadeRow from '../components/AtividadeRow.vue';
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
     Dialog,
     DialogContent,
@@ -17,8 +13,21 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
+const atividades = [
+    { id: 1, nome: 'Atividade 01' },
+    { id: 2, nome: 'Atividade 02' },
+    { id: 3, nome: 'Atividade 03' },
+]
 
-
+const isDialogOpen = ref(false);
 
 </script>
 <template>
@@ -51,72 +60,21 @@ import {
             <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
                 <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
             </div>
-
-
-
             <div class="flex justify-between items-center text-center mb-3 mt-8">
                 <h3 class="text-[20px] font-bold mt-3">Atividades</h3>
-                <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">
-                    Cadastrar Atividade
-                </button>
-            </div>
-            <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
-                <span>Nome</span> <span>Enunciado</span> <span>Tipo</span> <span class="text-center">Ações</span>
-            </div>
-            <div class="grid grid-cols-4 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
-                <span>{{ nome }}</span>
-                <span>{{ cpf }}</span>
-                <span>{{ tipo }}</span>
-                <span class="flex justify-center gap-3">
-                    <button>
-                        <img src="../assets/botoes/botao_editar.svg" alt="Editar" />
+                <RouterLink to="/Telacriaratividade">
+                    <button class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
+                        Cadastrar atividade
                     </button>
-                    <!--aqui vai todo o conteúdo/popup-->
-                    
-                    <Dialog v-model:open="isDialogOpen">
-                        <DialogTrigger as-child>
-                            <button>
-                                <img src="/src/assets/botoes/botao_excluir.svg" alt="Excluir" />
-                            </button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>
-                                    <h1 class="text-[#0084FF] font-bold text-[24px]  mt-2">
-                                        Tem certeza que deseja excluir este usuário?
-                                    </h1>
 
-                                </DialogTitle>
-                                <div>
-                                    <p>
-                                        <span class="font-bold">Nome:</span>
-                                        {{ nome }}
-                                    </p>
-                                    <p>
-                                        <span class="font-bold ">CPF:</span>
-                                        {{ cpf }}
-                                    </p>
-                                </div>
-                            </DialogHeader>
-                            <div class="flex items-center justify-between mt-4">
-                                <button
-                                    class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
-                                    @click="isDialogOpen = false"> Cancelar
-                                </button>
-                                <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                                    @click="$emit('deleteUser', id)">
-                                    Excluir
-                                </Button>
-                            </div>
+                </RouterLink>
 
-
-                        </DialogContent>
-                    </Dialog>
-
-                </span>
             </div>
+            <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
+                <span>Nome</span> <span class="text-center">Ações</span>
+            </div>
+            <AtividadeRow v-for="(atividade, index) in atividades" :key="atividade.id" :numeroatividade="atividade.id"
+                :atividadename="atividade.nome" />
         </div>
-
     </div>
-
 </template>
