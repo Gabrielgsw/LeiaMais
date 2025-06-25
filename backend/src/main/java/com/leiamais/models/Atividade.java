@@ -21,6 +21,8 @@ public class Atividade {
     @Column(nullable = false)
     private String enunciado;
     @Column
+    private String nome;
+    @Column
     private String feedback;
     @OneToOne
     private Resposta resposta;
@@ -29,6 +31,13 @@ public class Atividade {
         return id;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
     public String getEnunciado() {
         return enunciado;
     }

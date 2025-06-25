@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed,onMounted } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { RouterLink } from 'vue-router';
+import axios from 'axios';
 import { ScrollArea } from '@/components/ui/scroll-area'
 import AtividadeRow from '@/components/AtividadeRow.vue';
 import {
@@ -21,13 +22,61 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form'
-const atividades = [
-    { id: 1, nome: 'Atividade 01' },
-    { id: 2, nome: 'Atividade 02' },
-    { id: 3, nome: 'Atividade 03' },
-]
-
+const atividades = ref([]); 
+const filtro = ref('');
 const isDialogOpen = ref(false);
+
+
+const nome = ref('');
+const enunciado = ref('');
+
+
+
+const carregarAtividades = async () => {
+    try {
+        const response = await axios.get('http://localhost:8080/atividades'); 
+        atividades.value = response.data; 
+    } catch (error) {
+        console.error("Erro ao carregar atividades:", error);
+    }
+};
+
+
+onMounted(() => {
+    carregarAtividades();
+});
+
+const atividadesFiltradas = computed(() => {
+    if (!filtro.value) return atividades.value
+    return atividades.value.filter((atividade) =>
+        atividade.nome.toLowerCase().includes(filtro.value.toLowerCase())
+    )
+})
+
+const cadastrarAtividade = async () => {
+    const novaAtividade = {
+        nome : nome.value,
+        enunciado : enunciado.value
+    };
+
+    try {
+        const response = await axios.post('http://localhost:8080/atividades', novaAtividade);
+        const atividadeSalva = response.data;
+        console.log("Atividade salvo:", atividadeSalva);
+        
+        
+        atividades.value.push(atividadeSalva);
+        isDialogOpen.value = false;
+
+        
+        nome.value = '';
+        enunciado.value = '';
+        
+
+    } catch (error) {
+        console.error("Erro ao cadastrar:", error);
+    }
+};
 
 </script>
 <template>
@@ -76,7 +125,7 @@ const isDialogOpen = ref(false);
             <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
                 <span>Nome</span> <span class="text-center">Ações</span>
             </div>
-            <AtividadeRow v-for="(atividade, index) in atividades" :key="atividade.id" :numeroatividade="atividade.id"
+            <AtividadeRow v-for="(atividade, index) in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
                 :atividadename="atividade.nome" />
         </div>
     </div>
