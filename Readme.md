@@ -5,46 +5,79 @@ Sistema de incentivo à leitura paradidática com gamificação
 Engenharia de Software
 
 ## Integrantes do grupo
-  * Aécio José
-  * Artur Guimarães
-  * Gabriel Germano
-  * Giovanna Neves
-  * Heitor Santana
+* Aécio José  
+* Artur Guimarães  
+* Gabriel Germano  
+* Giovanna Neves  
+* Heitor Santana  
 
 ## Descrição Geral do Projeto
-O Leia+ é um sistema web voltado para escolas, com o objetivo de promover o acesso a livros paradidáticos e incentivar o hábito da leitura entre os alunos de forma acessível, interativa e gamificada. Ele busca solucionar problemas relacionados à desmotivação dos alunos e à falta de acesso aos livros adotados no ambiente escolar, proporcionando um ambiente virtual de aprendizagem mais atrativo.
+O **Leia+** é um sistema web voltado para escolas, com o objetivo de promover o acesso a livros paradidáticos e incentivar o hábito da leitura entre os alunos de forma acessível, interativa e gamificada.  
+Ele busca solucionar problemas relacionados à desmotivação dos alunos e à falta de acesso aos livros adotados no ambiente escolar, proporcionando um ambiente virtual de aprendizagem mais atrativo.
 
-Aplataforma poderá ser utilizada tanto por professores, que podem cadastrar os livros e atividades relacionadas, quanto por alunos, que terão acesso aos livros, comentários e ganho de pontos baseadas em sua interação com a leitura.
+A plataforma poderá ser utilizada tanto por professores, que podem criar atividades relacionadas aos livros, quanto por alunos, que terão acesso aos livros, comentários e sistema de pontuação conforme sua interação com a leitura.
 
-## Descrição das Funcionalidades
-### 1. Cadastro de Usuários
- * O sistema permitirá o cadastro de três tipos de usuários: administrador, professor e aluno.
- * O e-mail será usado como identificador único para cada usuário.
- * O acesso e as permissões variam conforme o tipo de perfil.
+---
+
+## Requisitos Funcionais
+
+### 1. Gerenciamento de Usuários e Acesso
+**Descrição:**  
+Apenas o **administrador** pode cadastrar novos usuários (professores e alunos). Todos os usuários cadastrados podem acessar o sistema com seu login e têm interfaces distintas.
+
+**Critérios de aceitação:**
+* O sistema deve impedir o cadastro de usuários com e-mails já existentes.
+* Somente o administrador tem acesso à tela de cadastro de usuários.
+* Todos os usuários fazem login via e-mail e senha.
+* Após o login, o sistema redireciona o usuário conforme seu tipo de perfil:
+  * **Administrador:** painel de controle com acesso à gestão de usuários, livros e relatórios.
+  * **Professor:** gerenciamento de turmas, atividades e acompanhamento do desempenho dos alunos.
+  * **Aluno:** visualização de livros, atividades, comentários, pontuação e conquistas.
 
 ### 2. Gerenciamento de Livros Paradidáticos
- * Apenas o administrador tem permissão para cadastrar, editar ou excluir livros no sistema.
- * Cada livro possui informações como título, autor, editora e outros dados relevantes.
- * O sistema impedirá o cadastro duplicado de livros.
- * Professores não podem criar ou editar livros, mas podem associar os livros existentes às suas turmas ou atividades.
+**Descrição:**  
+Apenas o administrador pode cadastrar, editar ou excluir livros. Professores apenas associam livros existentes às suas turmas.
+
+**Critérios de aceitação:**
+* O sistema deve impedir o cadastro de livros com o mesmo ISBN.
+* Os campos obrigatórios no cadastro de livros são: título, autor, editora e o ISBN.
+* Professores podem visualizar os livros cadastrados, mas não têm acesso à edição ou exclusão.
+* Livros associados a atividades não podem ser excluídos até que as atividades sejam desfeitas.
 
 ### 3. Atividades Pedagógicas
- * Professores podem criar atividades vinculadas a livros já cadastrados pelo administrador.
- * Tipos de atividades: questionários, tarefas interpretativas, entre outros.
- * Alunos realizam essas atividades dentro da plataforma.
- * O sistema registra a participação e desempenho dos alunos.
+**Descrição:**  
+Professores podem criar atividades vinculadas a livros já cadastrados.
+
+**Critérios de aceitação:**
+* Apenas professores têm permissão para criar, editar ou excluir atividades.
+* Toda atividade deve estar associada a um livro previamente cadastrado.
+* Alunos visualizam e realizam apenas as atividades da sua turma.
+* O sistema registra data, pontuação e desempenho do aluno em cada atividade.
 
 ### 4. Leitura e Interação
- * Alunos terão acesso aos livros disponíveis e às atividades correspondentes.
- * Podem deixar comentários e avaliações sobre os livros.
+**Descrição:**  
+Alunos podem acessar os livros, deixar comentários e avaliar as obras.
+
+**Critérios de aceitação:**
+* Alunos têm acesso aos livros associados à sua turma e ao banco de livros do sistema.
+* O sistema deve permitir comentar e avaliar cada livro.
+* Deve haver moderação automática para palavras inadequadas.
 
 ### 5. Gamificação
- * Para estimular o engajamento dos alunos:
- * Pontuação por livros lidos e atividades realizadas.
- * Rankings por turma com base na pontuação.
- * Conquistas simbólicas e recompensas digitais.
+**Descrição:**  
+Sistema de pontos e recompensas para motivar os alunos a participarem ativamente.
+
+**Critérios de aceitação:**
+* Alunos ganham pontos por leitura de livros e conclusão de atividades.
+* Rankings por turma devem ser atualizados automaticamente com base na pontuação.
+* Alunos visualizam suas conquistas em uma área específica do perfil.
+* Conquistas devem ser simbólicas.
 
 ### 6. Histórico de Participação
- * Alunos visualizam seu histórico de leitura, atividades realizadas e pontos acumulados.
- * Professores têm acesso ao desempenho geral e individual de seus alunos.
- * Administradores acompanham dados gerais do sistema.
+**Descrição:**  
+Registro das ações realizadas pelos alunos, com acesso por professores e administradores.
+
+**Critérios de aceitação:**
+* Alunos visualizam seu histórico com livros lidos, atividades feitas e pontos acumulados.
+* Professores visualizam o desempenho de todos os alunos da sua turma.
+* Administradores conseguem acompanhar dados gerais do sistema.
