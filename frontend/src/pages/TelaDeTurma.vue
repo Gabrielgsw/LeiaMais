@@ -2,8 +2,8 @@
 import { ref, computed } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { RouterLink } from 'vue-router';
-import AtividadeRow from '../components/AtividadeRow.vue';
 import { ScrollArea } from '@/components/ui/scroll-area'
+import AtividadeRow from '@/components/AtividadeRow.vue';
 import {
     Dialog,
     DialogContent,
@@ -44,9 +44,12 @@ const isDialogOpen = ref(false);
         <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <button @click="$router.back()" class="text-2xl">
-                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
-                    </button>
+                    <RouterLink to="/TelaInicial">
+                        <button class="text-2xl">
+                            <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                        </button>
+                    </RouterLink>
+
                     <h2 class="text-[28px] font-bold">Turma: 1° ano - ensino fundamental</h2>
                 </div>
             </div>

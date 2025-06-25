@@ -9,6 +9,7 @@ import TelaDeLivrosCadastrados from './pages/TelaDeLivrosCadastrados.vue'
 import TelaDeUsuariosCadastrados from './pages/TelaDeUsuariosCadastrados.vue'
 import TeladeTurma from './pages/TeladeTurma.vue'
 import Telacriaratividade from './pages/Telacriaratividade.vue'
+import TelaTestes from './pages/TelaTestes.vue'
 
 const routes = [
   { path: '/', component: Welcome },
@@ -18,6 +19,7 @@ const routes = [
   { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados},
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
   { path: '/Telacriaratividade', component: Telacriaratividade},
+  { path: '/TelaTestes', component: TelaTestes},
 ]
 
 const router = createRouter({

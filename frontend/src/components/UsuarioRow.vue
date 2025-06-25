@@ -33,10 +33,10 @@ const isDialogOpen = ref(false);
 const idDialogOpenEdit = ref(false)
 const date = ref(null)
 
-const nomeInput = ref('');
-const emailInput = ref('');
+const nomeInput = ref(nome);
+const emailInput = ref('email@teste.com');
 const senhaInput = ref('');
-const cpfInput = ref('');
+const cpfInput = ref(cpf);
 const nascimentoInput = ref(null);
 
 //todas as funções do sistema
@@ -50,6 +50,7 @@ function carregarDadosParaEdicao() {
 const emit = defineEmits<{
     deleteUser: [id: number];
 }>();
+
 const isDialogOpenEdit = ref(false);
 </script>
 
@@ -78,7 +79,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>Nome <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <Input id="nome"
+                                    <input id="nome"
                                         class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         v-model="nomeInput" placeholder="Nome" />
                                 </FormControl>
@@ -86,7 +87,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>E-mail <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <Input id="email" type="email" v-model="emailInput"
+                                    <input id="email" type="email" v-model="emailInput"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite o email" />
                                 </FormControl>
@@ -94,7 +95,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>Senha <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <Input id="senha" type="password"
+                                    <input id="senha" type="password"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite a senha" />
                                     <i class="bi bi-eye"></i>
@@ -103,7 +104,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>CPF <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <Input id="cpf" type="number"
+                                    <input id="cpf" type="number"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite o CPF" />
                                 </FormControl>
