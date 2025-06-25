@@ -43,9 +43,9 @@ const nascimentoInput = ref(null);
 function carregarDadosParaEdicao() {
     nomeInput.value = nome;
     cpfInput.value = cpf;
-    emailInput.value = 'email@email.com'; // substitua por valor real se possível
+    emailInput.value = 'email@email.com'; 
     senhaInput.value = '';
-    nascimentoInput.value = null; // ou use uma data válida, se houver
+    nascimentoInput.value = null; 
 }
 const emit = defineEmits<{
     deleteUser: [id: number];
@@ -104,7 +104,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>CPF <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <input id="cpf" type="number"
+                                    <input id="cpf" type="text" v-model="cpfInput"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite o CPF" />
                                 </FormControl>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'; // Importe ref para criar uma variável reativa
+import { ref } from 'vue'; 
 import {
     Dialog,
     DialogContent,
@@ -15,7 +15,7 @@ const emit = defineEmits<{
     deleteUser: [id: number];
 }>();
 
-// Crie uma variável reativa para controlar o estado da dialog
+
 const isDialogOpen = ref(false);
 </script>
 
