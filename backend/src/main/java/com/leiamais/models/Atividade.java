@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,14 +19,17 @@ public class Atividade {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column //(nullable = false)
+    @Column(nullable = false)
     private String enunciado;
     @Column
     private String nome;
     @Column
     private String feedback;
-    @OneToOne
-    private Resposta resposta;
+    @OneToMany (mappedBy = "atividade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resposta> respostas;
+    @ManyToOne
+    @JoinColumn(name = "professor_id", nullable = false)
+    private Professor professor;
 
     public UUID getId() {
         return id;
@@ -54,12 +58,19 @@ public class Atividade {
         this.feedback = feedback;
     }
 
-    public Resposta getResposta() {
-        return resposta;
+    public List<Resposta> getRespostas() {
+        return respostas;
     }
 
-    public void setResposta(Resposta resposta) {
-        this.resposta = resposta;
+    public void setRespostas(List<Resposta> respostas) {
+        this.respostas = respostas;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
 }
