@@ -18,7 +18,7 @@ public class Atividade {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(nullable = false)
+    @Column //(nullable = false)
     private String enunciado;
     @Column
     private String nome;

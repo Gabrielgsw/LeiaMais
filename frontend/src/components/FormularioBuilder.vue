@@ -7,7 +7,7 @@
             <label for="" class="shrink-0">Digite o título da atividade</label>
             <input type="text" class="bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 w-full">
         </div>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-10 items-center">
             <label for="" class="shrink-0">Selecione o livro da atividade</label>
             <Combobox by="label">
                 <ComboboxAnchor>
@@ -79,9 +79,6 @@
             </RouterLink>
 
         </div>
-
-        <!--Essa linha vai servir para demonstrar as coisas da lista pra germano-->
-        <pre class="bg-gray-100 p-4 rounded overflow-auto">{{ questions }}</pre>
 
 
 

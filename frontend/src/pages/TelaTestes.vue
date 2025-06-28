@@ -1,6 +1,6 @@
 <script setup>
-import FormularioBuilder from '@/components/FormularioBuilder.vue';
+import QuestaoFormulario from '@/components/QuestaoFormulario.vue';
 </script>
 <template>
-    <FormularioBuilder/>
+    <QuestaoFormulario/>
 </template>

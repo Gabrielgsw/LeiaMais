@@ -5,6 +5,7 @@ import { RouterLink } from 'vue-router';
 import axios from 'axios';
 import { ScrollArea } from '@/components/ui/scroll-area'
 import AtividadeRow from '@/components/AtividadeRow.vue';
+import UsuarionaTurma from '@/components/UsuarionaTurma.vue';
 import {
     Dialog,
     DialogContent,
@@ -109,9 +110,10 @@ const cadastrarAtividade = async () => {
                 </button>
             </div>
 
-            <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
-                <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
+            <div class="grid grid-cols-5 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
+                <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span> <span class="text-center">Status</span>
             </div>
+            <UsuarionaTurma/>
             <div class="flex justify-between items-center text-center mb-3 mt-8">
                 <h3 class="text-[20px] font-bold mt-3">Atividades</h3>
                 <RouterLink to="/Telacriaratividade">
@@ -125,8 +127,9 @@ const cadastrarAtividade = async () => {
             <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
                 <span>Nome</span> <span class="text-center">Ações</span>
             </div>
-            <AtividadeRow v-for="(atividade, index) in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
+                <AtividadeRow v-for="(atividade, index) in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
                 :atividadename="atividade.nome" />
+            
         </div>
     </div>
 </template>

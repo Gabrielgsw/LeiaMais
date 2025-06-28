@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useForm } from 'vee-validate'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
     Dialog,
     DialogContent,
@@ -145,7 +146,7 @@ const cadastrarUsuario = () => {
                                     <FormItem>
                                         <FormLabel>Senha <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="senha" type="password" 
+                                            <Input id="senha" type="password"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite a senha" />
                                             <i class="bi bi-eye"></i>
@@ -164,11 +165,27 @@ const cadastrarUsuario = () => {
                                         </FormLabel>
                                         <FormControl>
 
-                                            <Datepicker v-model="date" :max-date="new Date()" :format="'dd/MM/yyyy'" 
-                                                placeholder="Selecione a data"
-                                                class=""
-                                                />
+                                            <Datepicker v-model="date" :max-date="new Date()" :format="'dd/MM/yyyy'"
+                                                placeholder="Selecione a data" class="" />
 
+                                        </FormControl>
+                                    </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Qual o tipo de perfil que deseja criar? <span
+                                                class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <div class="flex gap-4">
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="tipoUsuario" value="Aluno"
+                                                        v-model="tipoUsuario" class="accent-blue-600" />
+                                                    <span>Aluno</span>
+                                                </label>
+                                                <label class="flex items-center space-x-2">
+                                                    <input type="radio" name="tipoUsuario" value="Professor"
+                                                        v-model="tipoUsuario" class="accent-blue-600" />
+                                                    <span>Professor</span>
+                                                </label>
+                                            </div>
                                         </FormControl>
                                     </FormItem>
 
@@ -208,8 +225,10 @@ const cadastrarUsuario = () => {
 </template>
 
 <style scoped>
-
-#cpf, #nome, #email, #senha{
+#cpf,
+#nome,
+#email,
+#senha {
     border-color: #DDDDDD;
     border: 1px solid #DDDDDD;
     border-radius: var(--dp-border-radius);
