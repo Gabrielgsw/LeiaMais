@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,8 +20,9 @@ public class Atividade {
     @Id
     @GeneratedValue
     private UUID id;
+    @ElementCollection
     @Column(nullable = false)
-    private String enunciado;
+    private List<String> enunciado;
     @Column
     private String nome;
     @Column
@@ -30,6 +32,8 @@ public class Atividade {
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
+    @ManyToOne
+    private Livro livro;
 
     public UUID getId() {
         return id;
@@ -42,12 +46,20 @@ public class Atividade {
     public String getNome() {
         return nome;
     }
-    public String getEnunciado() {
+    public List<String> getEnunciado() {
         return enunciado;
     }
 
     public void setEnunciado(String enunciado) {
-        this.enunciado = enunciado;
+        this.enunciado = Collections.singletonList(enunciado);
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
     public String getFeedback() {

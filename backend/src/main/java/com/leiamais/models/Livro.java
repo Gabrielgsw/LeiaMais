@@ -27,6 +27,7 @@ public class Livro {
     @Column//(nullable = false)
     private String editora;
 
+
     public UUID getId() {
         return id;
     }
