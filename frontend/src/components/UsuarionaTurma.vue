@@ -55,20 +55,9 @@ const isDialogOpenEdit = ref(false);
 </script>
 
 <template>
-    <div class="grid grid-cols-5 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
-        <span>{{ nome }}</span>
-        <div>
-                Corrigir
-            </div>
-        <span>{{ cpf }}</span>
-        <span>{{ tipo }}</span>
-        <span class="flex justify-center gap-3 ">
-            <div>
-                Corrigir
-            </div>
-            
-
-        </span>
-    </div>
-
+  <div class="grid grid-cols-5 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
+    <span>{{ nome }}</span>
+    <span>{{ cpf }}</span>
+    <span>{{ tipo }}</span>
+  </div>
 </template>
