@@ -11,6 +11,7 @@ import TeladeTurma from './pages/TelaDeTurma.vue'
 import Telacriaratividade from './pages/Telacriaratividade.vue'
 import TelaTestes from './pages/TelaTestes.vue'
 import TelaResolverAtividade from './pages/TelaResolverAtividade.vue'
+import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 
 const routes = [
   { path: '/', component: Welcome },
@@ -22,6 +23,8 @@ const routes = [
   { path: '/Telacriaratividade', component: Telacriaratividade},
   { path: '/TelaTestes', component: TelaTestes},
   { path: '/TelaResolverAtividade', component: TelaResolverAtividade},
+  { path: '/TeladeLivroGeral', component: TeladeLivroGeral},
+  
 ]
 
 const router = createRouter({
