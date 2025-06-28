@@ -22,6 +22,12 @@ public class Resposta {
     private String texto;
     @Column
     private float nota;
+    @OneToOne
+    @JoinColumn(name = "aluno_id", nullable = false)
+    private Aluno aluno;
+    @OneToOne
+    @JoinColumn(name = "atividade_id", nullable = false)
+    private Atividade atividade;
 
     public UUID getId() {
         return id;
@@ -41,5 +47,17 @@ public class Resposta {
 
     public void setNota(float nota) {
         this.nota = nota;
+    }
+    public Aluno getAluno() {
+        return aluno;
+    }
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+    public Atividade getAtividade() {
+        return atividade;
+    }
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 }
