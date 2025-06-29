@@ -30,15 +30,16 @@ const isDialogOpen = ref(false);
 
 // Adicione as variáveis reativas para os campos do formulário
 const titulo = ref('');
+const isbn = ref('');
 const autor = ref('');
 const editora = ref('');
-const isbn = ref(''); // Se você tiver um campo ISBN no seu formulário de cadastro
 
 // Função para carregar os livros da API
 const carregarLivros = async () => {
     try {
         const response = await axios.get('http://localhost:8080/livros'); // Endpoint da sua API para listar livros
         livros.value = response.data; // Atualiza a variável reativa 'livros' com os dados da API
+        console.log("Livros carregados:", livros.value);
     } catch (error) {
         console.error("Erro ao carregar livros:", error);
     }
@@ -61,7 +62,7 @@ const cadastrarLivro = async () => {
         titulo: titulo.value,
         autor: autor.value,
         editora: editora.value,
-        isbn: isbn.value // Inclua ISBN se for parte do seu modelo de livro
+        isbn: isbn.value 
     };
 
     try {
@@ -84,17 +85,22 @@ const cadastrarLivro = async () => {
     }
 };
 
-const handleDeleteUser = (livroId) => {
-    // const confirmDelete = window.confirm(`Tem certeza que deseja excluir o usuário com ID: ${userId}?`);
+const handleDeleteLivro = async (isbn) => {
+    console.log("Excluindo livro com ISBN:", isbn);
 
-    // if (confirmDelete) {
-    //     usuarios.value = usuarios.value.filter(usuario => usuario.id !== userId);
+    try {
+        const response = await axios.delete(`http://localhost:8080/livros/${isbn}`);
 
-    //     console.log(`Usuário com ID ${userId} excluído.`);
-    // } else {
-    //     console.log(`Exclusão do usuário com ID ${userId} cancelada.`);
-    // }
-    console.log(`Livro com o ID ${livroId} excluído.`);
+        if (response.status >= 200 && response.status < 300) {
+            console.log("Livro excluído com sucesso");
+        } else {
+            console.error("Erro ao excluir livro:", response);
+        }
+
+        livros.value = livros.value.filter(livro => livro.isbn !== isbn);
+    } catch (error) {
+        console.error("Erro ao excluir livro:", error);
+    }
 };
 
 
@@ -149,33 +155,33 @@ const handleDeleteUser = (livroId) => {
                                     <FormItem>
                                         <FormLabel>Título <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="titulo"
+                                            <input id="titulo"
                                                 class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                                                placeholder="Título do livro" />
+                                                placeholder="Título do livro" v-model="titulo" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>ISBN <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="isbn" type="number"
+                                            <input id="isbn" type="number"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                                                placeholder="ISBN" />
+                                                placeholder="ISBN" v-model="isbn" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>Autor <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="autor" 
+                                            <input id="autor" 
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                                                placeholder="Autor do livro" />
+                                                placeholder="Autor do livro" v-model="autor" />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem>
                                         <FormLabel>Editora <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="editora"
+                                            <input id="editora"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                                                placeholder="Editora do livro" />
+                                                placeholder="Editora do livro" v-model="editora"/>
                                         </FormControl>
                                     </FormItem>
                                 </FormField>
@@ -187,7 +193,7 @@ const handleDeleteUser = (livroId) => {
                                     @click="isDialogOpen = false"> Cancelar
                                 </button>
                                 <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                                    @click="$emit('deleteUser', id)">
+                                    @click="cadastrarLivro">
                                     Cadastrar
                                 </Button>
                             </div>
@@ -203,8 +209,8 @@ const handleDeleteUser = (livroId) => {
                 <span>Editora</span>
                 <span class="text-center">Ações</span>
             </div>
-            <LivroRow v-for="(livro, index) in livrosFiltrados" :key="index" :id="livro.id" :titulo="livro.titulo"
-                :autor="livro.autor" :editora="livro.editora" @delete-user="handleDeleteUser" />
+            <LivroRow v-for="(livro, index) in livrosFiltrados" :key="index" :isbn="livro.isbn" :titulo="livro.titulo"
+                :autor="livro.autor" :editora="livro.editora" @delete-livro="handleDeleteLivro" />
 
             <div v-if="livrosFiltrados.length === 0" class="text-center text-gray-500 mt-4">
                 Nenhum livro encontrado.

@@ -3,7 +3,18 @@ import { RouterLink } from 'vue-router';
 import { ref } from 'vue'
 
 import Turma from '../components/Turma.vue'
-import Livro from '../components/Livro.vue'
+
+const turmas = ref([
+    {id: 1 , nome:'1º ano - Ensino Fundamental'},
+    {id: 2 , nome:'2º ano - Ensino Fundamental'},
+    {id: 3 , nome:'3º ano - Ensino Fundamental'},
+])
+
+const livros = ref([
+    'https://covers.openlibrary.org/b/isbn/9788562936524-M.jpg',
+    'https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg',
+    'https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg',
+])
 
 </script>
 
@@ -117,22 +128,19 @@ import Livro from '../components/Livro.vue'
                         turma</button>
                 </div>
 
-
+                <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
                 <div class="space-y-4 mb-8">
-                    <router-link to="/TelaDeTurma" class="block">
-                        <Turma nome="1º ano - fundamental" />
+                    <router-link v-for="turma in turmas" to="/TelaDeTurma" class="block">
+                        <Turma :nome="turma.nome" />
                     </router-link>
-
-                    <Turma nome="2º ano - fundamental" />
-                    <Turma nome="3º ano - fundamental" />
-                    <Turma nome="4º ano - fundamental" />
+                    
                 </div>
 
 
                 <div>
                     <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
                     <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-                        <Livro v-for="n in 7" :key="n" />
+                        <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
                     </div>
                 </div>
             </div>

@@ -4,32 +4,25 @@ import { ref, computed } from 'vue'
 import UsuarioRow from '../components/UsuarioRow.vue'
 import { RouterLink } from 'vue-router'
 import { Search } from 'lucide-vue-next'
-import axios from 'axios';
-import { useForm } from 'vee-validate'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from '@/components/ui/form'
 
 
 //variáveis do sistema
-const placeholder = ref()
+
 const usuarios = ref([
     { id: 1, nome: 'João Silva', cpf: '123.456.789-00', tipo: 'Aluno' },
     { id: 2, nome: 'Maria Souza', cpf: '987.654.321-11', tipo: 'Professor' },
@@ -60,25 +53,27 @@ const handleDeleteUser = (userId) => {
 const isDialogOpen = ref(false);
 
 // funções do sistema
-const cadastrarUsuario = () => {
-    const usuario = {
-        cpf: '123.456.789-00',
-        nome: 'Joãozinho',
-        email: 'joaozinho@gmail.com',
-        senha: 'senha123',
-        cargo: 'ALUNO',
-        //   dataNascimento: null,
-        matricula: "223",
-    }
+// const cadastrarUsuario = () => {
+//     const usuario = {
+//         cpf: '123.456.789-00',
+//         nome: 'Joãozinho',
+//         email: 'joaozinho@gmail.com',
+//         senha: 'senha123',
+//         cargo: 'ALUNO',
+//         //   dataNascimento: null,
+//         matricula: "223",
+//     }
 
-    fetch('http://localhost:8080/alunos', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usuario)
-    })
-};
+//     fetch('http://localhost:8080/alunos', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(usuario)
+//     })
+// };
+
+const tipoUsuario = ref('');
 
 </script>
 <template>
@@ -130,7 +125,7 @@ const cadastrarUsuario = () => {
                                     <FormItem>
                                         <FormLabel>Nome <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="nome"
+                                            <input id="nome"
                                                 class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Nome do usuário" />
                                         </FormControl>
@@ -138,7 +133,7 @@ const cadastrarUsuario = () => {
                                     <FormItem>
                                         <FormLabel>E-mail <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="email" type="email"
+                                            <input id="email" type="email"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite o email" />
                                         </FormControl>
@@ -146,7 +141,7 @@ const cadastrarUsuario = () => {
                                     <FormItem>
                                         <FormLabel>Senha <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="senha" type="password"
+                                            <input id="senha" type="password"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite a senha" />
                                             <i class="bi bi-eye"></i>
@@ -155,7 +150,7 @@ const cadastrarUsuario = () => {
                                     <FormItem>
                                         <FormLabel>CPF <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <Input id="cpf" type="number"
+                                            <input id="cpf"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Digite o CPF" />
                                         </FormControl>
@@ -188,8 +183,14 @@ const cadastrarUsuario = () => {
                                             </div>
                                         </FormControl>
                                     </FormItem>
-
-
+                                    <FormItem v-if="tipoUsuario === 'Aluno'">
+                                        <FormLabel>Matrícula <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <input id="matricula"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Digite a matrícula" />
+                                        </FormControl>
+                                    </FormItem>
                                 </FormField>
 
                             </form>
@@ -214,7 +215,7 @@ const cadastrarUsuario = () => {
                 <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
             </div>
 
-            <UsuarioRow v-for="(usuario, index) in usuariosFiltrados" :key="index" :id="usuario.id" :nome="usuario.nome"
+            <UsuarioRow v-for="usuario in usuariosFiltrados" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"
                 :cpf="usuario.cpf" :tipo="usuario.tipo" @delete-user="handleDeleteUser" />
 
             <div v-if="usuariosFiltrados.length === 0" class="text-center text-gray-500 mt-4">

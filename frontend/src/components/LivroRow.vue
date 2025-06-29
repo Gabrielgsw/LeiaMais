@@ -3,16 +3,14 @@ import { ref } from 'vue'; // Importe ref para criar uma variável reativa
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-defineProps(['id', 'titulo', 'autor', 'editora'])
+defineProps(['isbn', 'titulo', 'autor', 'editora'])
 const emit = defineEmits<{
-    deleteUser: [id: number];
+    deleteLivro: [isbn: string];
 }>();
 
 // Crie uma variável reativa para controlar o estado da dialog
@@ -56,7 +54,7 @@ const isDialogOpen = ref(false);
                             @click="isDialogOpen = false"> Cancelar
                         </button>
                         <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                            @click="$emit('deleteUser', id)">
+                            @click="$emit('deleteLivro', isbn)">
                             Excluir
                         </Button>
                     </div>

@@ -7,7 +7,7 @@ import SelecaoLogin from './pages/SelecaoLogin.vue'
 import TelaInicial from './pages/TelaInicial.vue'
 import TelaDeLivrosCadastrados from './pages/TelaDeLivrosCadastrados.vue'
 import TelaDeUsuariosCadastrados from './pages/TelaDeUsuariosCadastrados.vue'
-import TeladeTurma from './pages/TelaDeTurma.vue'
+import TelaDeTurma from './pages/TelaDeTurma.vue'
 import Telacriaratividade from './pages/Telacriaratividade.vue'
 import TelaTestes from './pages/TelaTestes.vue'
 import TelaResolverAtividade from './pages/TelaResolverAtividade.vue'
@@ -17,7 +17,7 @@ const routes = [
   { path: '/', component: Welcome },
   { path: '/SelecaoLogin', component: SelecaoLogin },
   { path: '/TelaInicial', component: TelaInicial },
-  { path: '/TeladeTurma', component: TeladeTurma },
+  { path: '/TeladeTurma', component: TelaDeTurma },
   { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados},
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
   { path: '/Telacriaratividade', component: Telacriaratividade},

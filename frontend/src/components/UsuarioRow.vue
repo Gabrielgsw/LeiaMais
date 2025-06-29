@@ -1,22 +1,18 @@
 <script setup lang="ts">
 //todos os imports do sistema
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from '@/components/ui/form'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -31,7 +27,6 @@ const { nome, cpf, id, tipo } = defineProps<{
 
 const isDialogOpen = ref(false);
 const idDialogOpenEdit = ref(false)
-const date = ref(null)
 
 const nomeInput = ref(nome);
 const emailInput = ref('email@teste.com');
@@ -39,14 +34,6 @@ const senhaInput = ref('');
 const cpfInput = ref(cpf);
 const nascimentoInput = ref(null);
 
-//todas as funções do sistema
-function carregarDadosParaEdicao() {
-    nomeInput.value = nome;
-    cpfInput.value = cpf;
-    emailInput.value = 'email@email.com'; // substitua por valor real se possível
-    senhaInput.value = '';
-    nascimentoInput.value = null; // ou use uma data válida, se houver
-}
 const emit = defineEmits<{
     deleteUser: [id: number];
 }>();
@@ -62,7 +49,7 @@ const isDialogOpenEdit = ref(false);
         <span class="flex justify-center gap-3">
             <Dialog v-model:open="idDialogOpenEdit">
                 <DialogTrigger as-child>
-                    <button @open="carregarDadosParaEdicao">
+                    <button>
                         <img src="../assets/botoes/botao_editar.svg" alt="Editar" />
                     </button>
                 </DialogTrigger>
@@ -95,7 +82,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>Senha <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <input id="senha" type="password"
+                                    <input id="senha" type="password" v-model="senhaInput"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite a senha" />
                                     <i class="bi bi-eye"></i>
@@ -104,7 +91,7 @@ const isDialogOpenEdit = ref(false);
                             <FormItem>
                                 <FormLabel>CPF <span class="text-red-500 font-bold">*</span></FormLabel>
                                 <FormControl>
-                                    <input id="cpf" type="number"
+                                    <input id="cpf" v-model="cpfInput"
                                         class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                         placeholder="Digite o CPF" />
                                 </FormControl>
@@ -114,7 +101,7 @@ const isDialogOpenEdit = ref(false);
                                 </FormLabel>
                                 <FormControl>
 
-                                    <Datepicker v-model="date" :max-date="new Date()" :format="'dd/MM/yyyy'"
+                                    <Datepicker v-model="nascimentoInput" :max-date="new Date()" :format="'dd/MM/yyyy'"
                                         placeholder="Selecione a data" class="" />
 
                                 </FormControl>

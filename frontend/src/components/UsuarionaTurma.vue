@@ -55,9 +55,11 @@ const isDialogOpenEdit = ref(false);
 </script>
 
 <template>
-  <div class="grid grid-cols-5 items-center px-4 py-2 bg-blue-100 mb-2 rounded-md">
+  <div class="grid grid-cols-4 px-4 py-2 bg-blue-100 mb-2 rounded-md">
+  <!-- <div class="grid grid-cols-4 px-4 py-2 bg-blue-100 rounded-md mb-2"> -->
     <span>{{ nome }}</span>
     <span>{{ cpf }}</span>
     <span>{{ tipo }}</span>
+    <span class="text-center">teste</span>
   </div>
 </template>
