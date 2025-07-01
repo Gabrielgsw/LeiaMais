@@ -1,15 +1,13 @@
 <script setup>
 //imports do sistema
 import LivroRow from '../components/LivroRow.vue'
-import { ref, computed,onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
 import { useForm } from 'vee-validate'
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -62,14 +60,14 @@ const cadastrarLivro = async () => {
         titulo: titulo.value,
         autor: autor.value,
         editora: editora.value,
-        isbn: isbn.value 
+        isbn: isbn.value
     };
 
     try {
         const response = await axios.post('http://localhost:8080/livros', novoLivro);
         const livroSalvo = response.data;
         console.log("Livro salvo:", livroSalvo);
-        
+
         // Adicione o novo livro à lista existente e feche o modal
         livros.value.push(livroSalvo);
         isDialogOpen.value = false;
@@ -102,6 +100,48 @@ const handleDeleteLivro = async (isbn) => {
         console.error("Erro ao excluir livro:", error);
     }
 };
+
+const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
+    console.log("Editando livro com ISBN:", id);
+    console.log("Editando titulo:", titulo);
+    console.log("Editando autor:", autor);
+    console.log("Editando editora:", editora);
+
+    const livroAtualizado = {
+        titulo,
+        autor,
+        editora,
+        isbn
+    }
+
+    try {
+        const response = await axios.put(`http://localhost:8080/livros/${id}`, livroAtualizado);
+
+        if (response.status >= 200 && response.status < 300) {
+            console.log("Livro editado com sucesso");
+            livros.value = livros.value.map(livro => {
+                if (livro.id === id) {
+                    return {
+                        ...livro,
+                        titulo: titulo,
+                        autor: autor,
+                        editora: editora,
+                        isbn: isbn
+                    };
+                }
+                return livro;
+            })
+        } else {
+            console.error("Erro ao editar livro:", response.data);
+        }
+
+
+
+    } catch (error) {
+        console.error("Erro ao editar livro:", error);
+    }
+};
+
 
 
 
@@ -142,7 +182,7 @@ const handleDeleteLivro = async (isbn) => {
                             </button>
                         </DialogTrigger>
                         <DialogContent>
-                            <form class=" space-y-6" @submit="onSubmit">
+                            <form class=" space-y-6">
                                 <FormField v-slot="{ componentField }" name="username"
                                     :validate-on-blur="!isFieldDirty">
                                     <DialogHeader>
@@ -171,7 +211,7 @@ const handleDeleteLivro = async (isbn) => {
                                     <FormItem>
                                         <FormLabel>Autor <span class="text-red-500 font-bold">*</span></FormLabel>
                                         <FormControl>
-                                            <input id="autor" 
+                                            <input id="autor"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
                                                 placeholder="Autor do livro" v-model="autor" />
                                         </FormControl>
@@ -181,7 +221,7 @@ const handleDeleteLivro = async (isbn) => {
                                         <FormControl>
                                             <input id="editora"
                                                 class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                                                placeholder="Editora do livro" v-model="editora"/>
+                                                placeholder="Editora do livro" v-model="editora" />
                                         </FormControl>
                                     </FormItem>
                                 </FormField>
@@ -209,8 +249,10 @@ const handleDeleteLivro = async (isbn) => {
                 <span>Editora</span>
                 <span class="text-center">Ações</span>
             </div>
-            <LivroRow v-for="(livro, index) in livrosFiltrados" :key="index" :isbn="livro.isbn" :titulo="livro.titulo"
-                :autor="livro.autor" :editora="livro.editora" @delete-livro="handleDeleteLivro" />
+
+            <LivroRow v-for="livro in livrosFiltrados" :key="livro.isbn" :id="livro.id" :isbn="livro.isbn"
+                :titulo="livro.titulo" :autor="livro.autor" :editora="livro.editora" @delete-livro="handleDeleteLivro"
+                @atualizar-livro="handleEditarLivro" />
 
             <div v-if="livrosFiltrados.length === 0" class="text-center text-gray-500 mt-4">
                 Nenhum livro encontrado.
@@ -219,7 +261,10 @@ const handleDeleteLivro = async (isbn) => {
     </div>
 </template>
 <style scoped>
-#titulo, #isbn, #autor, #editora {
+#titulo,
+#isbn,
+#autor,
+#editora {
     border-color: #DDDDDD;
     border: 1px solid #DDDDDD;
     border-radius: var(--dp-border-radius);
