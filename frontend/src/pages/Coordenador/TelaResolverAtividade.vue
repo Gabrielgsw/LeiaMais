@@ -10,7 +10,7 @@ import QuestaoFormulario from '@/components/QuestaoFormulario.vue';
             <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
-                    <img src="../assets/capivara.svg" alt="" />
+                    <img src="../../assets/capivara.svg" alt="" />
                 </div>
             </RouterLink>
         </header>

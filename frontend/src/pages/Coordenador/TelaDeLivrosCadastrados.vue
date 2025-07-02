@@ -1,6 +1,6 @@
 <script setup>
 //imports do sistema
-import LivroRow from '../components/LivroRow.vue'
+import LivroRow from '../../components/LivroRow.vue'
 import { ref, computed, onMounted } from 'vue'
 import { Search } from 'lucide-vue-next'
 import axios from 'axios';
@@ -152,7 +152,7 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
             <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
-                    <img src="../assets/capivara.svg" alt="" />
+                    <img src="../../assets/capivara.svg" alt="" />
                 </div>
             </RouterLink>
         </header>
@@ -161,7 +161,7 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <button @click="$router.back()" class="text-2xl">
-                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                        <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
                     </button>
                     <h2 class="text-2xl font-bold text-[28px] ">Livros</h2>
                 </div>

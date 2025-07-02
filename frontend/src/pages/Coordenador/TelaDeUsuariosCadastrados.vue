@@ -1,7 +1,7 @@
 <script setup>
 //imports do sistema
 import { ref, computed } from 'vue'
-import UsuarioRow from '../components/UsuarioRow.vue'
+import UsuarioRow from '../../components/UsuarioRow.vue'
 import { RouterLink } from 'vue-router'
 import { Search } from 'lucide-vue-next'
 import Datepicker from '@vuepic/vue-datepicker'
@@ -82,7 +82,7 @@ const tipoUsuario = ref('');
             <RouterLink to="/">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
-                    <img src="../assets/capivara.svg" alt="" />
+                    <img src="../../assets/capivara.svg" alt="" />
                 </div>
             </RouterLink>
         </header>
@@ -91,7 +91,7 @@ const tipoUsuario = ref('');
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <button @click="$router.back()" class="text-2xl">
-                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                        <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
                     </button>
                     <h2 class="text-[28px] font-bold">Usuários</h2>
                 </div>

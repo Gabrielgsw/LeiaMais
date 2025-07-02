@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue'
 
-import Turma from '../components/Turma.vue'
+import Turma from '../../components/Turma.vue'
 
 const turmas = ref([
     {id: 1 , nome:'1º ano - Ensino Fundamental'},
@@ -96,7 +96,7 @@ const livros = ref([
             <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
-                    <img src="../assets/capivara.svg" alt="" />
+                    <img src="../../assets/capivara.svg" alt="" />
                 </div>
             </RouterLink>
         </header>
@@ -106,7 +106,7 @@ const livros = ref([
 
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-20 h-20 bg-gray-300 rounded-full">
-                        <img src="../assets/Capivara.png" alt="Fundo" class="w-full h-full object-cover" />
+                        <img src="../../assets/capivara.png" alt="Fundo" class="w-full h-full object-cover" />
                     </div>
                     <div>
                         <p class="text-blue-600 font-bold text-lg">Olá, Coordenador</p>
