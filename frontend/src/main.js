@@ -10,8 +10,10 @@ import TelaDeUsuariosCadastrados from './pages/Coordenador/TelaDeUsuariosCadastr
 import TelaDeTurma from './pages/Coordenador/TelaDeTurma.vue'
 import Telacriaratividade from './pages/Coordenador/Telacriaratividade.vue'
 import TelaTestes from './pages/TelaTestes.vue'
-import TelaResolverAtividade from './pages/Coordenador/TelaResolverAtividade.vue'
+import TelaResolverAtividade from './pages/Aluno/TelaResolverAtividade.vue'
 import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
+import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
+
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -31,6 +33,7 @@ const routes = [
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno},
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno},
+  { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador},
   
   
 ]

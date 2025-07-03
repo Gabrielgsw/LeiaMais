@@ -20,7 +20,7 @@ import FormularioBuilder from '@/components/FormularioBuilder.vue';
                 </div>
             </RouterLink>
         </header>
-        <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
+        <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16 mb-5">
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <button @click="$router.back()" class="text-2xl">
@@ -29,25 +29,6 @@ import FormularioBuilder from '@/components/FormularioBuilder.vue';
                     <h2 class="text-[28px] font-bold">Criar atividade</h2>
                 </div>
             </div>
-            <!-- <h3 class="text-[20px] font-bold mt-3 mb-5 ">Pergunta n°1: </h3>
-            <form class="w-2/3 space-y-6" @submit="onSubmit">
-                <FormField v-slot="{ componentField }" name="username" :validate-on-blur="!isFieldDirty">
-                    <FormItem>
-                        <FormLabel>Digite o enunciado da 1° pergunta:</FormLabel>
-                        <FormControl>
-                            <Input id="pergunta"
-                                class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 "
-                                placeholder="Digite o enunciado da pergunta" />
-                        </FormControl>
-                        <FormLabel>Digite o enunciado da 2° pergunta:</FormLabel>
-                        <FormControl>
-                            <Input id="pergunta"
-                                class="w-100% col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 "
-                                placeholder="Digite o enunciado da pergunta" />
-                        </FormControl>
-                    </FormItem>
-                </FormField>
-            </form> -->
             <FormularioBuilder/>
             
         </div>

@@ -15,7 +15,7 @@ import QuestaoFormulario from '@/components/QuestaoFormulario.vue';
             </RouterLink>
         </header>
         
-        <div class="max-w-5xl mx-auto bg-white  p-6 mt-16">
+        <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
             <QuestaoFormulario/>
         </div> 
     </div>
