@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class LivroService {
+public class LivroService{
 
     private final LivroRepository livroRepository;
 
@@ -27,9 +27,6 @@ public class LivroService {
         return livroRepository.findById(id);
     }
 
-    public Optional<Livro> buscarPorISBN(String ISBN) {
-        return livroRepository.findByISBN(ISBN);
-    }
 
     public Livro salvar(Livro livro) {
         return livroRepository.save(livro);
@@ -40,4 +37,12 @@ public class LivroService {
     }
 
 
+    public Optional<Livro> findByISBN(String ISBN) {
+        for(Livro livro : livroRepository.findAll()) {
+            if(livro.getISBN().equals(ISBN)) {
+                return Optional.of(livro);
+            }        }
+
+        return Optional.empty();
+    }
 }

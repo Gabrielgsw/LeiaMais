@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.net.URL;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Livro {
@@ -26,7 +25,16 @@ public class Livro {
     private String autor;
     @Column//(nullable = false)
     private String editora;
+    @Column
+    private String livroUrl;
 
+    public String getLivroUrl() {
+        return livroUrl;
+    }
+
+    public void setLivroUrl(String livroUrl) {
+        this.livroUrl = livroUrl;
+    }
 
     public UUID getId() {
         return id;
