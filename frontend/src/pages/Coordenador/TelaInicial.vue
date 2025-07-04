@@ -98,6 +98,7 @@ const livros = ref([
                     <h1>Leia+</h1>
                     <img src="../../assets/capivara.svg" alt="" />
                 </div>
+                
             </RouterLink>
         </header>
 
@@ -126,6 +127,7 @@ const livros = ref([
                     </router-link>
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
                         turma</button>
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Sair da conta</button>
                 </div>
 
                 <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
