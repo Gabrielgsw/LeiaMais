@@ -127,7 +127,9 @@ const livros = ref([
                     </router-link>
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
                         turma</button>
-                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Sair da conta</button>
+                    <router-link to="/SelecaoLogin"><button
+                            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Sair da conta</button>
+                    </router-link>
                 </div>
 
                 <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
