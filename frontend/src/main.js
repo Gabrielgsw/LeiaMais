@@ -13,7 +13,7 @@ import TelaTestes from './pages/TelaTestes.vue'
 import TelaResolverAtividade from './pages/Aluno/TelaResolverAtividade.vue'
 import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
-
+import Telaleitura from './pages/Telaleitura.vue'
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -30,6 +30,7 @@ const routes = [
   { path: '/TelaTestes', component: TelaTestes},
   { path: '/TelaResolverAtividade', component: TelaResolverAtividade},
   { path: '/TeladeLivroGeral', component: TeladeLivroGeral},
+  { path: '/Telaleitura', component: Telaleitura},
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno},
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno},
