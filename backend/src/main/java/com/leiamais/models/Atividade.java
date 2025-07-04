@@ -25,8 +25,6 @@ public class Atividade {
     private List<String> enunciado;
     @Column
     private String nome;
-    @Column
-    private String feedback;
     @OneToMany (mappedBy = "atividade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
     @ManyToOne
@@ -59,16 +57,7 @@ public class Atividade {
     }
 
     public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
+        this.livro = livro;    }
 
     public List<Resposta> getRespostas() {
         return respostas;
