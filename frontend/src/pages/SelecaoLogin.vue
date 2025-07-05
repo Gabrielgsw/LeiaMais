@@ -64,7 +64,7 @@ const handleLogin = async () => {
 
         if (userLogin.cargo === 'COORDENADOR'){
           router.push('/TelaInicial');
-        } else if (userLogin.cargo === 'ALUNIO'){
+        } else if (userLogin.cargo === 'ALUNO'){
           router.push('/TelaInicialAluno');
         }
           //--------- a ser implementado -----------//

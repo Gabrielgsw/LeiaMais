@@ -1,8 +1,10 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import {RouterLink, useRouter} from 'vue-router';
 import { ref } from 'vue'
 
 import Turma from '../../components/Turma.vue'
+
+const router = useRouter();
 
 const turmas = ref([
     {id: 1 , nome:'1º ano - Ensino Fundamental'},
