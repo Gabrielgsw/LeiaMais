@@ -32,6 +32,9 @@ public class Atividade {
     private Professor professor;
     @ManyToOne
     private Livro livro;
+    @ManyToOne
+    @JoinColumn(name = "turma_id", nullable = false)
+    private Turma turma;
 
     public UUID getId() {
         return id;
