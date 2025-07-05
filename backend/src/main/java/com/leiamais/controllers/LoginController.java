@@ -1,6 +1,7 @@
 package com.leiamais.controllers;
 
 
+import com.leiamais.dtos.UsuarioLoginDTO;
 import com.leiamais.models.Usuario;
 import com.leiamais.services.UsuarioService;
 import com.leiamais.services.UsuarioSession;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(value = "http://localhost:5173",allowCredentials = "true")
 @RequestMapping("/api/auth")
 public class LoginController {
 
@@ -23,16 +25,20 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String nome, @RequestParam String senha) {
-        Optional<Usuario> usuarioOptional = usuarioService.findByNome(nome);
+    public ResponseEntity<String> login(@RequestBody UsuarioLoginDTO usuarioLoginDTO ) {
+        String email = usuarioLoginDTO.getEmail();
+        String password = usuarioLoginDTO.getPassword();
+        String cargo = String.valueOf(usuarioLoginDTO.getCargo());
+
+        Optional<Usuario> usuarioOptional = usuarioService.findByEmail(email);
         if (usuarioOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas: Usuário não encontrado");
         }
 
         Usuario foundUsuario = usuarioOptional.get();
-        if (foundUsuario.getSenha().equals(senha)) {
+        if (foundUsuario.getSenha().equals(password)) {
             UsuarioSession.getInstance().setLoggedInUsuario(foundUsuario);
-            return ResponseEntity.ok("Login realizado com sucesso como " + foundUsuario.getNome() + ", Cargo: " + foundUsuario.getCargo().name() + "!");
+            return ResponseEntity.ok("Login realizado com sucesso como " + foundUsuario.getNome() + ", Cargo: " + cargo + "!");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas: Senha incorreta");
         }

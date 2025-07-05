@@ -1,8 +1,11 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import {RouterLink, useRouter} from 'vue-router';
 import { ref } from 'vue'
 
 import Turma from '../../components/Turma.vue'
+import axios from "axios";
+
+const router = useRouter();
 
 const turmas = ref([
     {id: 1 , nome:'1º ano - Ensino Fundamental'},
@@ -15,6 +18,19 @@ const livros = ref([
     'https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg',
     'https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg',
 ])
+const handleLogout = async () => {
+
+    try{
+      const response = await axios.post('http://localhost:8080/api/auth/logout', {}, {withCredentials:true});
+      if(response.status === 200) {
+        alert("Logout realizado com sucesso.");
+        router.push('/');
+      }
+    } catch(error){
+      console.error("Erro no logout:",error);
+    }
+}
+
 
 </script>
 
@@ -127,7 +143,7 @@ const livros = ref([
                     </router-link>
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
                         turma</button>
-                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Sair da conta</button>
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600" @click="handleLogout">Sair da conta</button>
                 </div>
 
                 <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->

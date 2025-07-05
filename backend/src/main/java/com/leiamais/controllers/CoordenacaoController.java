@@ -1,8 +1,11 @@
 package com.leiamais.controllers;
 
 
+import com.leiamais.dtos.TurmaRegistrationDTO;
 import com.leiamais.dtos.UsuarioRegistrationDTO;
 import com.leiamais.models.*;
+import com.leiamais.services.CoordenacaoService;
+import com.leiamais.services.TurmaService;
 import com.leiamais.services.UsuarioService;
 import com.leiamais.services.UsuarioSession;
 import org.springframework.beans.BeanUtils;
@@ -20,11 +23,48 @@ import java.util.List;
 public class CoordenacaoController {
 
     private final UsuarioService usuarioService;
+    private final TurmaService turmaService;
+    private final CoordenacaoService coordenacaoService;
 
     @Autowired
-    public CoordenacaoController(UsuarioService usuarioService) {
+    public CoordenacaoController(UsuarioService usuarioService, CoordenacaoService coordenacaoService, TurmaService turmaService) {
         this.usuarioService = usuarioService;
+        this.coordenacaoService = coordenacaoService;
+        this.turmaService = turmaService;
     }
+
+    @PostMapping("/register-turma")
+    public ResponseEntity<Turma> registerTurmas(@RequestBody TurmaRegistrationDTO dto){
+
+            UsuarioSession session = UsuarioSession.getInstance();
+            if(!session.isLoggedIn()){
+                return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+            }
+
+            if(session.getLoggedInUsuario().getCargo() != Cargo.COORDENADOR) {
+                return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+            }
+
+            if(dto.getId() == null || dto.getNome() == null){
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+
+            Turma turma = new Turma();
+
+            BeanUtils.copyProperties(dto, turma);
+
+            try {
+                Turma registeredTurma = turmaService.RegistrarTurma(turma);
+                return new ResponseEntity<>(registeredTurma, HttpStatus.OK);
+            }catch (IllegalArgumentException e) {
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT); // Nome de usuário/email já existe
+            } catch (Exception e) {
+                e.printStackTrace(); // Logar o erro para depuração
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+
 
     @PostMapping("/register-user")
     public ResponseEntity<Usuario> registerUser(@RequestBody UsuarioRegistrationDTO dto) {
@@ -87,4 +127,13 @@ public class CoordenacaoController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
+    @GetMapping("/turmas")
+    public ResponseEntity<List<Turma>> getAllTurmas() {
+        UsuarioSession session = UsuarioSession.getInstance();
+        if (!session.isLoggedIn()) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+        List<Turma> turmas = coordenacaoService.findAllTurmas();
+        return new ResponseEntity<>(turmas, HttpStatus.OK);
+    }
 }

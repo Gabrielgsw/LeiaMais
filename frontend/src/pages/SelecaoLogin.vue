@@ -2,6 +2,7 @@
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
 import { ref, onMounted, nextTick, watch } from 'vue';
+import axios from "axios";
 
 const router = useRouter();
 
@@ -11,6 +12,8 @@ const selected = ref('professor');
 const email = ref('');
 const senha = ref('');
 
+const loginSucesso = ref('');
+const loginErro = ref('');
 const buttons = ref([]);
 
 const selectRole = (role) => {
@@ -40,11 +43,41 @@ watch(selected, () => {
     updateSlider();
 });
 
-const handleLogin = () => {
+const handleLogin = async () => {
     // Aqui vai a lógica de autenticação
-    alert(`Logando como ${selected.value} com email ${email.value}`);
 
-    router.push('/TelaInicial');
+    loginErro.value = ''; //limpar erros anteriores
+    loginSucesso.value = ''; // limpar para logins anteriores
+
+    const userLogin = { // recebendo as info do form
+      email: email.value,
+      password: senha.value,
+      cargo: selected.value.toUpperCase(), // O enum apenas aceita em UpperCase
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/login', userLogin,{ withCredentials: true});
+
+      if (response.status === 200) {
+        loginSucesso.value = response.data
+        alert(`Logando como ${selected.value} com email ${email.value}`);
+
+        if (userLogin.cargo === 'COORDENADOR'){
+          router.push('/TelaInicial');
+        } else if (userLogin.cargo === 'ALUNIO'){
+          router.push('/TelaInicialAluno');
+        }
+          //--------- a ser implementado -----------//
+          //else if (userLogin.cargo === 'professor') {
+          // router.push('/TelaInicialProfessor');
+          //
+
+      }
+    }
+    catch (error) {
+      console.error("Erro no login.", error);
+  }
+
 };
 
 </script>
@@ -104,7 +137,8 @@ const handleLogin = () => {
                     </RouterLink>
 
                     <button type="submit"
-                        class="px-4 py-2 border border-blue-300 rounded hover:bg-blue-100 text-sky-600 font-medium">
+                        class="px-4 py-2 border border-blue-300 rounded hover:bg-blue-100 text-sky-600 font-medium"
+                        @click="handleLogin">
                         Entrar
                     </button>
                 </div>

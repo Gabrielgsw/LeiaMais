@@ -47,7 +47,7 @@ public class LeiaMaisApplication {
 				adminUser.setDataNascimento(null);
 
 				usuarioRepository.save(adminUser);
-				System.out.println("Initial 'Coordenador' user created: coordenador/senha123");
+				System.out.println("Initial 'Coordenador' user created: coordenador@example.com/senha123");
 
 			}
 		};
