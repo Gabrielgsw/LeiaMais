@@ -1,7 +1,9 @@
 package com.leiamais.services;
 
 import com.leiamais.models.Aluno;
+import com.leiamais.models.Atividade;
 import com.leiamais.repositories.AlunoRepository;
+import com.leiamais.repositories.AtividadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,11 @@ import java.util.UUID;
 
 public class RepostaService {
     private final AlunoRepository alunoRepository;
+    private final AtividadeRepository atividadeRepository;
 
-    public RepostaService(AlunoRepository alunoRepository) {
+    public RepostaService(AlunoRepository alunoRepository, AtividadeRepository atividadeRepository) {
         this.alunoRepository = alunoRepository;
+        this.atividadeRepository = atividadeRepository;
     }
 
     public List<Aluno> listarTodos() {
@@ -43,4 +47,11 @@ public class RepostaService {
     public Optional<Aluno> buscarPorEmail(String email) {
         return alunoRepository.findByEmail(email);
     }
+
+    /*public void responderAtividade(Aluno aluno, Atividade atividade, String texto){
+        Atividade atv = atividadeRepository.findByEnunciado()
+
+
+
+    }*/
 }
