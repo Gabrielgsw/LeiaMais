@@ -28,6 +28,8 @@ public class Resposta {
     @OneToOne
     @JoinColumn(name = "atividade_id", nullable = false)
     private Atividade atividade;
+    @Column
+    private String feedback;
 
     public UUID getId() {
         return id;
@@ -59,5 +61,11 @@ public class Resposta {
     }
     public void setAtividade(Atividade atividade) {
         this.atividade = atividade;
+    }
+    public String getFeedback() {
+        return feedback;
+    }
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }
