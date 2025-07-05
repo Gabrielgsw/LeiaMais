@@ -47,6 +47,18 @@ const enunciado = ref('');
 const alunosDaTurma = ref([])
 const alunos = ref([])
 
+async function getAlunos() {
+    try {
+        const response = await axios.get('http://localhost:8080/api/alunos');
+        if (response.status !== 200) {
+            throw new Error('Erro ao buscar alunos, status: ' + response.status + ' - ' + response.statusText);
+        }
+        alunos.value = response.data;
+    } catch (error) {
+        console.error("Erro ao carregar alunos:", error);
+    }    
+}
+
 const carregarAtividades = async () => {
     try {
         const response = await axios.get('http://localhost:8080/atividades');
@@ -55,9 +67,6 @@ const carregarAtividades = async () => {
         console.error("Erro ao carregar atividades:", error);
     }
 };
-
-
-
 
 const atividadesFiltradas = computed(() => {
     if (!filtro.value) return atividades.value
@@ -93,17 +102,7 @@ const cadastrarAtividade = async () => {
 
 const isAddAlunoDialogOpen = ref(false);
 
-async function getAlunos() {
-    try {
-        const response = await axios.get('http://localhost:8080/api/alunos');
-        if (response.status !== 200) {
-            throw new Error('Erro ao buscar alunos, status: ' + response.status + ' - ' + response.statusText);
-        }
-        alunosDaTurma.value = response.data;
-    } catch (error) {
-        console.error("Erro ao carregar alunos:", error);
-    }    
-}
+
 
 onMounted(() => {
     carregarAtividades();

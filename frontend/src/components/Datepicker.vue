@@ -1,74 +1,32 @@
-<script setup lang="ts">
-import { toTypedSchema } from "@vee-validate/zod";
-import { useForm } from "vee-validate";
-import { h } from "vue";
-import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-const formSchema = toTypedSchema(
-  z.object({
-    type: z.enum(["all", "mentions", "none"], {
-      required_error: "You need to select a notification type.",
-    }),
-  })
-);
-
-const { handleSubmit } = useForm({
-  validationSchema: formSchema,
-});
-
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
-});
-</script>
-
 <template>
-  <form class="w-2/3 space-y-6" @submit="onSubmit">
-    <FormField
-      v-slot="{ componentField: tipoUsuario }"
-      type="radio"
-      name="type"
-    >
-      <FormItem class="space-y-3">
-        <FormLabel>Notify me about...</FormLabel>
+ <Combobox by="label">
+    <ComboboxAnchor>
+      <div class="relative w-full max-w-sm items-center">
+        <ComboboxInput class="pl-9" :display-value="(val) => val?.label ?? ''" placeholder="Select framework..." />
+        <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
+          <Search class="size-4 text-muted-foreground" />
+        </span>
+      </div>
+    </ComboboxAnchor>
 
-        <FormControl>
-          <RadioGroup class="flex flex-col space-y-1" v-bind="tipoUsuario">
-            <FormItem class="flex items-center space-y-0 gap-x-3">
-              <FormControl>
-                <RadioGroupItem value="all" />
-              </FormControl>
-              <FormLabel class="font-normal"> All new messages </FormLabel>
-            </FormItem>
-            <FormItem class="flex items-center space-y-0 gap-x-3">
-              <FormControl>
-                <RadioGroupItem value="mentions" />
-              </FormControl>
-              <FormLabel class="font-normal">
-                Direct messages and mentions
-              </FormLabel>
-            </FormItem>
-            <FormItem class="flex items-center space-y-0 gap-x-3">
-              <FormControl>
-                <RadioGroupItem value="none" />
-              </FormControl>
-              <FormLabel class="font-normal"> Nothing </FormLabel>
-            </FormItem>
-          </RadioGroup>
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    </FormField>
+    <ComboboxList>
+      <ComboboxEmpty>
+        No framework found.
+      </ComboboxEmpty>
 
-    <Button type="submit"> Submit </Button>
-  </form>
+      <ComboboxGroup>
+        <ComboboxItem
+          v-for="framework in frameworks"
+          :key="framework.value"
+          :value="framework"
+        >
+          {{ framework.label }}
+
+          <ComboboxItemIndicator>
+            <Check :class="cn('ml-auto h-4 w-4')" />
+          </ComboboxItemIndicator>
+        </ComboboxItem>
+      </ComboboxGroup>
+    </ComboboxList>
+  </Combobox>
 </template>
