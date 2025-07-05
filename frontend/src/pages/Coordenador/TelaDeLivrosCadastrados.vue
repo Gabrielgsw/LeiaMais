@@ -31,6 +31,7 @@ const titulo = ref('');
 const isbn = ref('');
 const autor = ref('');
 const editora = ref('');
+const linkDoLivro = ref('');
 
 // Função para carregar os livros da API
 const carregarLivros = async () => {
@@ -51,17 +52,21 @@ onMounted(() => {
 const livrosFiltrados = computed(() => {
     if (!filtro.value) return livros.value
     return livros.value.filter((livro) =>
-        livro.titulo.toLowerCase().includes(filtro.value.toLowerCase())
+        livro.titulo.toLowerCase().includes(filtro.value.toLowerCase()) || livro.isbn.toLowerCase().includes(filtro.value.toLowerCase())
     )
 })
 
-const cadastrarLivro = async () => {
+
+async function cadastrarLivro ()  {
     const novoLivro = {
         titulo: titulo.value,
         autor: autor.value,
         editora: editora.value,
-        isbn: isbn.value
+        isbn: isbn.value,
+        livroUrl: linkDoLivro.value
     };
+
+    console.log("Cadastrando novo livro:", novoLivro);
 
     try {
         const response = await axios.post('http://localhost:8080/livros', novoLivro);
@@ -77,13 +82,14 @@ const cadastrarLivro = async () => {
         autor.value = '';
         editora.value = '';
         isbn.value = '';
+        linkDoLivro.value = '';
 
     } catch (error) {
         console.error("Erro ao cadastrar:", error);
     }
 };
 
-const handleDeleteLivro = async (isbn) => {
+ async function handleDeleteLivro(isbn)  {
     console.log("Excluindo livro com ISBN:", isbn);
 
     try {
@@ -224,8 +230,15 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
                                                 placeholder="Editora do livro" v-model="editora" />
                                         </FormControl>
                                     </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Link do livro <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <input id="linkdolivro"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Link do livro" v-model="linkDoLivro" />
+                                        </FormControl>
+                                    </FormItem>
                                 </FormField>
-
                             </form>
                             <div class="flex items-center justify-between mt-4">
                                 <button
@@ -264,7 +277,8 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
 #titulo,
 #isbn,
 #autor,
-#editora {
+#editora,
+#linkdolivro{
     border-color: #DDDDDD;
     border: 1px solid #DDDDDD;
     border-radius: var(--dp-border-radius);

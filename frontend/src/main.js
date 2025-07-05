@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
 import { createWebHistory, createRouter } from 'vue-router'
 import BemVindo from './pages/BemVindo.vue'
 import SelecaoLogin from './pages/SelecaoLogin.vue'
@@ -14,6 +16,7 @@ import TelaResolverAtividade from './pages/Aluno/TelaResolverAtividade.vue'
 import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
 import Telaleitura from './pages/Telaleitura.vue'
+import TelaCorrigirAtividadeCoordenador from './pages/Coordenador/TelaCorrigirAtividadeCoordenador.vue'
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -24,19 +27,21 @@ const routes = [
   { path: '/SelecaoLogin', component: SelecaoLogin },
   { path: '/TelaInicial', component: TelaInicial },
   { path: '/TeladeTurma', component: TelaDeTurma },
-  { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados},
+  { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados },
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
-  { path: '/Telacriaratividade', component: Telacriaratividade},
-  { path: '/TelaTestes', component: TelaTestes},
-  { path: '/TelaResolverAtividade', component: TelaResolverAtividade},
-  { path: '/TeladeLivroGeral', component: TeladeLivroGeral},
-  { path: '/Telaleitura', component: Telaleitura},
+  { path: '/Telacriaratividade', component: Telacriaratividade },
+  { path: '/TelaTestes', component: TelaTestes },
+  { path: '/TelaResolverAtividade', component: TelaResolverAtividade },
+  { path: '/TeladeLivroGeral', component: TeladeLivroGeral },
+  { path: '/Telaleitura', component: Telaleitura },
+  { path: '/TelaCorrigirAtividadeCoordenador', component: TelaCorrigirAtividadeCoordenador },
+
   //telas de aluno:
-  { path: '/TelaInicialAluno', component: TelaInicialAluno},
-  { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno},
-  { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador},
-  
-  
+  { path: '/TelaInicialAluno', component: TelaInicialAluno },
+  { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
+  { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
+
+
 ]
 
 const router = createRouter({
@@ -44,4 +49,8 @@ const router = createRouter({
   routes,
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(PrimeVue, {
+  theme: {
+    preset: Aura
+  }
+}).use(router).mount('#app')

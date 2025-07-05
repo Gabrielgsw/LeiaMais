@@ -1,5 +1,11 @@
-<script setup lang="">
+<script setup lang="ts">
 import { RouterLink } from 'vue-router'
+const props = defineProps(['livro']);
+
+function abrirPdf(isbn) {
+  const url = `http://localhost:8080/livros/${isbn}/pdf`;
+  window.open(url, '_blank');
+}
 </script>
 
 <template>
@@ -24,11 +30,12 @@ import { RouterLink } from 'vue-router'
                     desencadeando uma série de eventos que mergulham a região em uma guerra civil. Paralelamente,
                     Daenerys Targaryen, exilada, planeja sua vingança e a retomada do Trono de Ferro, enquanto no
                     extremo norte, Jon Snow enfrenta perigos além da Muralha. </p>
-                <RouterLink to="/Telaleitura">
-                    <Button class="bg-[#359DFF] text-white mt-4 px-4 py-2 rounded shadow hover:bg-blue-600">
+                
+                    <button class="bg-[#359DFF] text-white mt-4 px-4 py-2 rounded shadow hover:bg-blue-600" @click="abrirPdf('9788562936524')">
                         Ler agora
-                    </Button>
-                </RouterLink>
+                    </button>
+                    
+               
             </div>
 
         </div>

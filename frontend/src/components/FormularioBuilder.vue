@@ -11,13 +11,8 @@
             <label for="" class="shrink-0">Selecione o livro da atividade</label>
             <Combobox by="label" v-model="form.livro">
                 <ComboboxAnchor>
-                    <div class="relative w-full max-w-sm items-center">
-                        <ComboboxInput class="pl-9" :display-value="(val) => val?.label ?? ''"
-                            placeholder="Select framework..." />
-                        <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
-                            <Search class="size-4 text-muted-foreground" />
-                        </span>
-                    </div>
+                    <input v-model="filtro" type="text" class="w-full focus:outline-none py-2"
+                            placeholder="Pesquisar livro...">
                 </ComboboxAnchor>
 
                 <ComboboxList>
@@ -78,6 +73,7 @@ import { reactive } from 'vue'
 import { Check, Search } from 'lucide-vue-next'
 import { cn } from '../lib/utils'
 import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxList } from '@/components/ui/combobox'
+
 
 const frameworks = [
     { value: 'O Senhor dos anéis', label: 'O Senhor dos anéis' },

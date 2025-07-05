@@ -9,7 +9,6 @@
             </RouterLink>
         </header>
         <div class="flex flex-row max-w-5xl mx-auto bg-white rounded-2xl p-6 mt-16">
-           
         </div>
     </div>
 

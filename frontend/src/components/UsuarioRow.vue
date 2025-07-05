@@ -19,7 +19,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 //todas as variáveis do sistema
 const { nome, cpf, id, tipo } = defineProps<{
-    id: number;
+    id: string;
     nome: string;
     cpf: string;
     tipo: string;
@@ -35,7 +35,7 @@ const cpfInput = ref(cpf);
 const nascimentoInput = ref(null);
 
 const emit = defineEmits<{
-    deleteUser: [id: number];
+    deleteUser: [id: string];
 }>();
 
 const isDialogOpenEdit = ref(false);
@@ -128,6 +128,7 @@ const isDialogOpenEdit = ref(false);
             <!--aqui vai todo o conteúdo/popup de excluir-->
             <Dialog v-model:open="isDialogOpen">
                 <DialogTrigger as-child>
+                    
                     <button>
                         <img src="/src/assets/botoes/botao_excluir.svg" alt="Excluir" />
                     </button>
