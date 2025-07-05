@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/coordenador")
@@ -136,4 +138,18 @@ public class CoordenacaoController {
         List<Turma> turmas = coordenacaoService.findAllTurmas();
         return new ResponseEntity<>(turmas, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Integer> deletarCoordenador(@PathVariable("id") UUID id){
+        Optional<Usuario> coordenador = usuarioService.findById(id);
+
+        if(coordenador.isPresent()){
+            usuarioService.deletar(id);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
 }

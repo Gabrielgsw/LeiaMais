@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -40,5 +41,11 @@ public class UsuarioService {
     public Optional<Usuario> findByEmail(String email) {return usuarioRepository.findByEmail(email); }
     public List<Usuario> findAllUsuarios() {
         return usuarioRepository.findAll();
+    }
+    public Optional<Usuario> findById(UUID id) {
+        return usuarioRepository.findById(id);
+    }
+    public void deletar(UUID id){
+        usuarioRepository.deleteById(id);
     }
 }
