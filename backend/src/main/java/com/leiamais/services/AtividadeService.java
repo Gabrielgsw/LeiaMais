@@ -4,6 +4,7 @@ import com.leiamais.models.Atividade;
 import com.leiamais.repositories.AtividadeRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,16 +32,22 @@ public class AtividadeService {
                 .findFirst();
     }
 
-    public Optional<Atividade> buscarPorTurma(UUID turmaId) {
+    public List<Atividade> buscarPorTurma(UUID turmaId) {
         return atividadeRepository.findAll().stream()
                 .filter(atividade -> atividade.getTurma() != null && atividade.getTurma().getId().equals(turmaId))
-                .findFirst();
+                .toList();
     }
+
 
     public Atividade salvar(Atividade atividade) {
         if (atividade.getEnunciado() != null && atividade.getEnunciado().size() > 3) {
             throw new IllegalArgumentException("Cada atividade pode ter no máximo 3 enunciados.");
         }
+
+        if (atividade.getPrazoEntrega().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("O prazo de entrega não pode ser no passado.");
+        }
+
         return atividadeRepository.save(atividade);
     }
 
