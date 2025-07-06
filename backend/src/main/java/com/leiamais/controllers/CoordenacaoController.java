@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -116,6 +115,46 @@ public class CoordenacaoController {
         } catch (Exception e) {
             e.printStackTrace(); // Logar o erro para depuração
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") UUID id) {
+
+        UsuarioSession session = UsuarioSession.getInstance(); // instanciando UsuarioSession
+        if (!session.isLoggedIn()) { // se nao estiver logado
+
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+        if (session.getLoggedInUsuario().getCargo() != Cargo.COORDENADOR) { // se nao for coordenador
+
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        try {
+
+            Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+
+            if (!usuarioOptional.isPresent()) { // se o user encontrado nao estiver presente
+
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+
+            Usuario usuario = usuarioOptional.get();
+
+
+            if (usuario.getId().equals(session.getLoggedInUsuario().getId())) { // se o user tentar se deletar (apenas coordenador pode deletar um user, não ele mesmo)
+
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+
+
+            usuarioService.deletar(id);
+
+            return new ResponseEntity<>(usuario, HttpStatus.OK); // se der certo, deu certo e retorna ok
+        } catch( Exception e) {
+            System.err.println("Erro ao deletar: " + e.getMessage()); // printando a mensagem de erro
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // retornar que deu algum Internal Server Error
         }
     }
 

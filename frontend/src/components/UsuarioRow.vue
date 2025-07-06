@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import axios from "axios";
 
 //todas as variáveis do sistema
 const { nome, cpf, id, tipo } = defineProps<{
@@ -26,7 +27,7 @@ const { nome, cpf, id, tipo } = defineProps<{
 }>();
 
 const isDialogOpen = ref(false);
-const idDialogOpenEdit = ref(false)
+const isDialogOpenEdit = ref(false)
 
 const nomeInput = ref(nome);
 const emailInput = ref('email@teste.com');
@@ -38,7 +39,7 @@ const emit = defineEmits<{
     deleteUser: [id: string];
 }>();
 
-const isDialogOpenEdit = ref(false);
+
 </script>
 
 <template>
@@ -47,7 +48,7 @@ const isDialogOpenEdit = ref(false);
         <span>{{ cpf }}</span>
         <span>{{ tipo }}</span>
         <span class="flex justify-center gap-3">
-            <Dialog v-model:open="idDialogOpenEdit">
+            <Dialog v-model:open="isDialogOpenEdit">
                 <DialogTrigger as-child>
                     <button>
                         <img src="../assets/botoes/botao_editar.svg" alt="Editar" />
@@ -114,7 +115,7 @@ const isDialogOpenEdit = ref(false);
                     <div class="flex items-center justify-between mt-4">
                         <button
                             class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
-                            @click="idDialogOpenEdit = false"> Cancelar
+                            @click="isDialogOpenEdit = false"> Cancelar
                         </button>
                         <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
                             @click="$emit('deleteUser', id)">

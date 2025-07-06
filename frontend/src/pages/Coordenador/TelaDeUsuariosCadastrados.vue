@@ -112,17 +112,17 @@ async function getUsuarios() {
 }
 
 const handleDeleteUser =async (userId: string) => {
-    // try {
-    //     const response = await axios.delete(`http://localhost:8080/api/coordenador/usuario/${userId}`);
-    //     if (response.status >= 200 && response.status < 300) {
-    //         console.log('Usuário deletado com sucesso:', response.data);
-    //         getUsuarios();
-    //     } else {
-    //         console.error('Erro ao deletar usuário:', response.statusText);
-    //     }
-    // } catch (error) {
-    //     console.error('Erro ao deletar usuário:', error);
-    // }
+    try {
+        const response = await axios.delete(`http://localhost:8080/api/coordenador/usuarios/${userId}`);
+        if (response.status >= 200 && response.status < 300) {
+            console.log('Usuário deletado com sucesso:', response.data);
+            getUsuarios();
+        } else {
+            console.error('Erro ao deletar usuário:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Erro ao deletar usuário:', error);
+    }
 };
 
 const isDialogOpen = ref(false);
