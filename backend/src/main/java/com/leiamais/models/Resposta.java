@@ -70,6 +70,26 @@ public class Resposta {
         this.respostas = respostas;
     }
 
+    public void adicionarResposta(String resposta) {
+        this.respostas.add(resposta);
+    }
+
+    public void adicionarRespostas(List<String> respostas) {
+        this.respostas.addAll(respostas);
+    }
+
+    public void removerResposta(int index) {
+        if (index >= 0 && index < respostas.size()) {
+            this.respostas.remove(index);
+        } else {
+            throw new IndexOutOfBoundsException("Índice fora dos limites da lista de respostas.");
+        }
+    }
+    
+    public void removerResposta(String resposta) {
+        this.respostas.remove(resposta);
+    }
+
     public float getNota() {
         return nota;
     }
