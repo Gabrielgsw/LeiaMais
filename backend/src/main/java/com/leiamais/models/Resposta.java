@@ -2,6 +2,8 @@ package com.leiamais.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -11,8 +13,9 @@ public class Resposta {
     @GeneratedValue
     private UUID id;
 
+    @ElementCollection
     @Column(nullable = false)
-    private String texto;
+    private List<String> respostas;
 
     @Column
     private float nota;
@@ -28,14 +31,21 @@ public class Resposta {
     @Column
     private String feedback;
 
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataEntrega;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataEntrega = LocalDateTime.now();
+    }
 
     public Resposta() {
     }
 
 
-    public Resposta(UUID id, String texto, float nota, Aluno aluno, Atividade atividade, String feedback) {
+    public Resposta(UUID id, List<String> respostas, float nota, Aluno aluno, Atividade atividade, String feedback) {
         this.id = id;
-        this.texto = texto;
+        this.respostas = respostas;
         this.nota = nota;
         this.aluno = aluno;
         this.atividade = atividade;
@@ -52,12 +62,12 @@ public class Resposta {
         this.id = id;
     }
 
-    public String getTexto() {
-        return texto;
+    public List<String> getRespostas() {
+        return respostas;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setRespostas(List<String> respostas) {
+        this.respostas = respostas;
     }
 
     public float getNota() {
