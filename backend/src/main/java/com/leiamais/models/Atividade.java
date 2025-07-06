@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,10 @@ public class Atividade {
     private List<String> enunciado;
     @Column
     private String nome;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataCriacao;
+    @Column(nullable = false)
+    private LocalDateTime prazoEntrega;
     @OneToMany (mappedBy = "atividade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
     @ManyToOne
@@ -35,6 +40,11 @@ public class Atividade {
     @ManyToOne
     @JoinColumn(name = "turma_id", nullable = false)
     private Turma turma;
+    
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriacao = LocalDateTime.now();
+    }
 
     public UUID getId() {
         return id;
@@ -51,15 +61,56 @@ public class Atividade {
         return enunciado;
     }
 
-    public void setEnunciado(String enunciado) {
-        this.enunciado = Collections.singletonList(enunciado);
+    public void setEnunciado(List<String> enunciado) {
+        this.enunciado = enunciado;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+    public LocalDateTime getPrazoEntrega() {
+        return prazoEntrega;
+    }
+    
+    public void setPrazoEntrega(LocalDateTime prazoEntrega) {
+        this.prazoEntrega = prazoEntrega;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    public void adicionarEnunciado(String enunciado) {
+        this.enunciado.add(enunciado);
+    }
+
+    public void adicionarEnunciado(List<String> enunciados) {
+        this.enunciado.addAll(enunciados);
+    }
+
+    public void removerEnunciado(int index) {
+        if (index >= 0 && index < enunciado.size()) {
+            this.enunciado.remove(index);
+        } else {
+            throw new IndexOutOfBoundsException("Índice fora dos limites da lista de enunciados.");
+        }
+    }
+    
+    public void removerEnunciado(String enunciado) {
+        this.enunciado.remove(enunciado);
     }
 
     public Livro getLivro() {
-        return livro;   }
+        return livro;   
+    }
 
     public void setLivro(Livro livro) {
-        this.livro = livro;     }
+        this.livro = livro;     
+    }
 
     public List<Resposta> getRespostas() {
         return respostas;
