@@ -37,9 +37,9 @@ public class AtividadeController {
         }
     }
 
-    @GetMapping("/enunciado/{enunciado}")
-    public ResponseEntity<Atividade> buscarPorEnunciado(@PathVariable String enunciado) {
-        Optional<Atividade> atividadeOptional = atividadeService.buscarPorEnunciado(enunciado);
+    @GetMapping("/buscarPorNome")
+    public ResponseEntity<Atividade> buscarPorNome(@RequestParam String nome) {
+        Optional<Atividade> atividadeOptional = atividadeService.buscarPorNome(nome);
         if (atividadeOptional.isPresent()) {
             return ResponseEntity.ok(atividadeOptional.get());
         } else {
@@ -47,6 +47,26 @@ public class AtividadeController {
         }
     }
 
+    @GetMapping("/buscarPorTrechoDeEnunciado")
+    public ResponseEntity<List<Atividade>> buscarPorTrechoDeEnunciado(@RequestParam String termo) {
+        List<Atividade> atividades = atividadeService.buscarPorTrechoDeEnunciado(termo);
+        if (atividades.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(atividades);
+        }
+    }
+
+    @GetMapping("/buscarPorTurma/{turmaId}")
+    public ResponseEntity<Atividade> buscarPorTurma(@PathVariable UUID turmaId) {
+        Optional<Atividade> atividadeOptional = atividadeService.buscarPorTurma(turmaId);
+        if (atividadeOptional.isPresent()) {
+            return ResponseEntity.ok(atividadeOptional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
     @PostMapping
     public ResponseEntity<Atividade> criar(@RequestBody Atividade atividade) {
         Atividade salvo = atividadeService.salvar(atividade);

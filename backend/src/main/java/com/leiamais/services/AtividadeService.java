@@ -25,16 +25,37 @@ public class AtividadeService {
         return atividadeRepository.findById(id);
     }
 
+    public Optional<Atividade> buscarPorNome(String nome) {
+        return atividadeRepository.findAll().stream()
+                .filter(atividade -> atividade.getNome().equalsIgnoreCase(nome))
+                .findFirst();
+    }
+
+    public Optional<Atividade> buscarPorTurma(UUID turmaId) {
+        return atividadeRepository.findAll().stream()
+                .filter(atividade -> atividade.getTurma() != null && atividade.getTurma().getId().equals(turmaId))
+                .findFirst();
+    }
+
     public Atividade salvar(Atividade atividade) {
+        if (atividade.getEnunciado() != null && atividade.getEnunciado().size() > 3) {
+            throw new IllegalArgumentException("Cada atividade pode ter no máximo 3 enunciados.");
+        }
         return atividadeRepository.save(atividade);
     }
 
     public void deletar(UUID id) {
+        if (!atividadeRepository.existsById(id)) {
+            throw new IllegalArgumentException("Atividade com ID " + id + " não encontrada.");
+        }
         atividadeRepository.deleteById(id);
     }
 
-    public Optional<Atividade> buscarPorEnunciado(String enunciado) {
-        return atividadeRepository.findByEnunciado(enunciado);
+    public List<Atividade> buscarPorTrechoDeEnunciado(String termo) {
+    return atividadeRepository.findAll().stream()
+        .filter(atividade -> atividade.getEnunciado().stream()
+            .anyMatch(enunciado -> enunciado.toLowerCase().contains(termo.toLowerCase())))
+        .toList();
     }
     
 
