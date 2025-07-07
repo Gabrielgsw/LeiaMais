@@ -49,7 +49,7 @@ const alunos = ref([])
 
 async function getAlunos() {
     try {
-        const response = await axios.get('http://localhost:8080/api/alunos');
+        const response = await axios.get('http://localhost:8080/alunos');
         if (response.status !== 200) {
             throw new Error('Erro ao buscar alunos, status: ' + response.status + ' - ' + response.statusText);
         }

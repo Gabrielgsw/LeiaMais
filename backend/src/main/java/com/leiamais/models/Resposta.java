@@ -85,7 +85,7 @@ public class Resposta {
             throw new IndexOutOfBoundsException("Índice fora dos limites da lista de respostas.");
         }
     }
-    
+
     public void removerResposta(String resposta) {
         this.respostas.remove(resposta);
     }

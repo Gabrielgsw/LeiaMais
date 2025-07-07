@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed,onMounted } from 'vue'
 import { Check, Search } from 'lucide-vue-next'
 import { cn } from '../lib/utils'
 import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxList } from '@/components/ui/combobox'
+import axios from 'axios'
 
-
-const livros = [
+const livros = ref([]) /*[
     {
         "id": "a9f91256-18cf-4629-8725-63a86bcddaef",
         "titulo": "Livro 1",
@@ -23,13 +23,15 @@ const livros = [
         "livroUrl": "dgwfwfwefwef",
         "isbn": "342534654654"
     }
-]
+]*/
 
 const questions = reactive([])
 
 const nome = ref('')
 const livro = ref(null)
 const filtroLivro = ref('')
+
+
 
 const livrosFiltrados = computed(() => {
     if (!filtroLivro.value) return livros
@@ -49,10 +51,11 @@ async function handleSubmit() {
         enunciado: enunciados,
         feedback: "",
         livro: {
-            nome: livro.value || ''
+            //nome: livro.value || 'teste'
+            id: livro.value ? livro.value.id : 'PASSAR ID EXISTENTE' 
         },
         professor: {
-            id: "COLOCAR UM ID VÁLIDO JÁ CRIADO AQUI"
+            id: "PASSAR PROF EXISTENTE"
         }
     }
 
@@ -80,6 +83,15 @@ async function handleSubmit() {
         alert("Erro ao criar atividade.")
     }
 }
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('http://localhost:8080/livros')
+    livros.value = res.data
+  } catch (err) {
+    console.error('Erro ao buscar livros:', err)
+  }
+})
 
 function removeQuestion(index) {
     questions.splice(index, 1)

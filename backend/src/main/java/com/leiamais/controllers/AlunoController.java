@@ -48,7 +48,7 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Aluno> buscarPorId(@PathVariable UUID id) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
+        Optional<Aluno> alunoOptional = Optional.ofNullable(alunoService.buscarPorId(id));
         if (alunoOptional.isPresent()) {
             return ResponseEntity.ok(alunoOptional.get());
         } else {
@@ -88,6 +88,11 @@ public class AlunoController {
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
         alunoService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public Aluno atualizarAluno(@PathVariable UUID id, @RequestBody Aluno alunoAtualizado) {
+        return alunoService.atualizarAluno(id, alunoAtualizado);
     }
 
 }

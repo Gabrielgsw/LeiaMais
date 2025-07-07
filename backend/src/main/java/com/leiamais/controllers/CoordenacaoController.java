@@ -191,4 +191,9 @@ public class CoordenacaoController {
 
     }
 
+    @PutMapping("/{id}")
+    public Coordenacao atualizarCoordenador(@PathVariable UUID id, @RequestBody Coordenacao coordenadorAtualizado) {
+        return coordenacaoService.atualizarCoordenador(id, coordenadorAtualizado);
+    }
+
 }

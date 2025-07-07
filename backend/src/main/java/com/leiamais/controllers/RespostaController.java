@@ -1,8 +1,15 @@
 package com.leiamais.controllers;
 
+import com.leiamais.dtos.RequisicaoRespostaDTO;
 import com.leiamais.models.Aluno;
+import com.leiamais.models.Atividade;
+import com.leiamais.models.Resposta;
+import com.leiamais.repositories.RespostaRepository;
 import com.leiamais.services.AlunoService;
+import com.leiamais.services.AtividadeService;
+import com.leiamais.services.RepostaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,19 +18,47 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/resposta")
+@CrossOrigin(origins = "http://localhost:5173")
 public class RespostaController {
     private final AlunoService alunoService;
+    private final RepostaService repostaService;
+    private final AtividadeService atividadeService;
 
-    public RespostaController(AlunoService alunoService) {
+
+    public RespostaController(AlunoService alunoService, RepostaService repostaService, AtividadeService atividadeService) {
         this.alunoService = alunoService;
+        this.repostaService = repostaService;
+        this.atividadeService = atividadeService;
+
     }
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> listarTodos() {
-        return ResponseEntity.ok(alunoService.listarTodos());
+    public ResponseEntity<List<Resposta>> listarTodos() {
+        return ResponseEntity.ok(repostaService.listarRespostas());
     }
 
-    @GetMapping("/{id}")
+    @PostMapping
+    public ResponseEntity<Resposta> salvar(@RequestBody RequisicaoRespostaDTO dto) {
+        Optional<Atividade> atv = atividadeService.buscarPorNome(dto.getNomeAtividade());
+        Aluno aluno = alunoService.buscarPorId(dto.getAlunoId());
+        Resposta resposta = null;
+        if (aluno != null) {
+            resposta = repostaService.responderAtividade(aluno,dto.getNomeAtividade(), dto.getTexto());
+        }
+
+        if (resposta != null) {
+            Atividade a = atv.get();
+            a.adicionarResposta(resposta);
+            return ResponseEntity.ok(resposta);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
+
+    /*@GetMapping("/{id}")
     public ResponseEntity<Aluno> buscarPorId(@PathVariable UUID id) {
         Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
         if (alunoOptional.isPresent()) {
@@ -61,7 +96,7 @@ public class RespostaController {
         }
     }*/
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarAluno(@PathVariable UUID id) {
         Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
         if (alunoOptional.isPresent()) {
@@ -70,7 +105,7 @@ public class RespostaController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
     /*@GetMapping("/nome/{nome}")
     public ResponseEntity<Aluno> buscarPorNome(@PathVariable String nome) {
@@ -91,4 +126,6 @@ public class RespostaController {
             return ResponseEntity.notFound().build();
         }
     }*/
+
+
 }

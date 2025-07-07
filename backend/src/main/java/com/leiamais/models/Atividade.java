@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -15,36 +16,58 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Atividade {
 
     @Id
     @GeneratedValue
     private UUID id;
     @ElementCollection
-    @Column(nullable = false)
+    @Column//(nullable = false)
     private List<String> enunciado;
     @Column
     private String nome;
-    @Column(nullable = false, updatable = false)
+    @Column//(nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
-    @Column(nullable = false)
+    @Column//(nullable = false)
     private LocalDateTime prazoEntrega;
     @OneToMany (mappedBy = "atividade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
     @ManyToOne
-    @JoinColumn(name = "professor_id", nullable = false)
+    @JoinColumn//(name = "professor_id", nullable = false)
     private Professor professor;
     @ManyToOne
     private Livro livro;
     @ManyToOne
-    @JoinColumn(name = "turma_id", nullable = false)
+    @JoinColumn//(name = "turma_id", nullable = false)
     private Turma turma;
-    
+
     @PrePersist
     protected void onCreate() {
         this.dataCriacao = LocalDateTime.now();
     }
+
+
+    public Atividade() {
+        this.enunciado = new ArrayList<>();
+        this.respostas = new ArrayList<>();
+        this.prazoEntrega = LocalDateTime.now();
+        this.dataCriacao = LocalDateTime.now();
+    }
+
+
+    public Atividade(UUID id, List<String> enunciado, String nome, List<Resposta> respostas, Professor professor, Livro livro, Turma turma, LocalDateTime dataCriacao, LocalDateTime prazoEntrega) {
+        this.id = id;
+        this.enunciado = (enunciado != null) ? enunciado : new ArrayList<>();
+        this.nome = nome;
+        this.respostas = (respostas != null) ? respostas : new ArrayList<>();
+        this.professor = professor;
+        this.livro = livro;
+        this.turma = turma;
+        this.dataCriacao = LocalDateTime.now();
+        this.prazoEntrega = LocalDateTime.now();
+    }
+
+
 
     public UUID getId() {
         return id;
@@ -71,7 +94,7 @@ public class Atividade {
     public LocalDateTime getPrazoEntrega() {
         return prazoEntrega;
     }
-    
+
     public void setPrazoEntrega(LocalDateTime prazoEntrega) {
         this.prazoEntrega = prazoEntrega;
     }
@@ -99,18 +122,16 @@ public class Atividade {
             throw new IndexOutOfBoundsException("Índice fora dos limites da lista de enunciados.");
         }
     }
-    
+
     public void removerEnunciado(String enunciado) {
         this.enunciado.remove(enunciado);
     }
 
     public Livro getLivro() {
-        return livro;   
-    }
+        return livro;   }
 
     public void setLivro(Livro livro) {
-        this.livro = livro;     
-    }
+        this.livro = livro;     }
 
     public List<Resposta> getRespostas() {
         return respostas;
@@ -127,4 +148,10 @@ public class Atividade {
         this.professor = professor;
     }
 
+
+
+    public void adicionarResposta(Resposta resposta) {
+        this.respostas.add(resposta);
+        resposta.setAtividade(this);
+    }
 }
