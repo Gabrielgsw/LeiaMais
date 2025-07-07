@@ -23,29 +23,27 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
+type Aluno = {
+  id: string
+  cpf: string
+  nome: string
+  email: string
+  senha: string
+  cargo: string
+  dataNascimento: string
+  matricula: string
+  pontos: number
+  qtdLivrosLidos: number
+  qtdLivrosFavoritos: number
+}
+
 const atividades = ref([]);
-const filtro = ref('');
-const isDialogOpen = ref(false);
-
-
-const nome = ref('');
-const enunciado = ref('');
-
-const alunosDaTurma = ref([])
-const alunos = ref([])
+const alunosDaTurma = ref<Aluno[]>([])
+const alunosDoSistema = ref<(Aluno & {checked:boolean})[]>([])
 
 async function getAlunos() {
     try {
@@ -53,7 +51,11 @@ async function getAlunos() {
         if (response.status !== 200) {
             throw new Error('Erro ao buscar alunos, status: ' + response.status + ' - ' + response.statusText);
         }
-        alunos.value = response.data;
+        console.log("Alunos carregados:", response.data);
+        alunosDoSistema.value = response.data.map((aluno: Aluno) => ({
+            ...aluno,
+            checked: false
+        }));
     } catch (error) {
         console.error("Erro ao carregar alunos:", error);
     }    
@@ -68,41 +70,40 @@ const carregarAtividades = async () => {
     }
 };
 
-const atividadesFiltradas = computed(() => {
-    if (!filtro.value) return atividades.value
-    return atividades.value.filter((atividade) =>
-        atividade.nome.toLowerCase().includes(filtro.value.toLowerCase())
-    )
-})
+// const atividadesFiltradas = computed(() => {
+//     if (!filtro.value) return atividades.value
+//     return atividades.value.filter((atividade) =>
+//         atividade.nome.toLowerCase().includes(filtro.value.toLowerCase())
+//     )
+// })
 
-const cadastrarAtividade = async () => {
-    const novaAtividade = {
-        nome: nome.value,
-        enunciado: enunciado.value
-    };
-
-    try {
-        const response = await axios.post('http://localhost:8080/atividades', novaAtividade);
-        const atividadeSalva = response.data;
-        console.log("Atividade salvo:", atividadeSalva);
-
-
-        atividades.value.push(atividadeSalva);
-        isDialogOpen.value = false;
-
-
-        nome.value = '';
-        enunciado.value = '';
-
-
-    } catch (error) {
-        console.error("Erro ao cadastrar:", error);
+async function adicionarAlunosNaTurma(){
+    const alunos = alunosDoSistema.value.filter(aluno => aluno.checked);
+    if (alunos.length === 0) {
+        alert("Nenhum aluno selecionado para adicionar.");
+        return;
     }
-};
+    
+    console.log("Alunos selecionados para adicionar:", alunos);
+
+    isAddAlunoDialogOpen.value = false;
+
+    alunosDaTurma.value = alunos.map(aluno => ({
+        id: aluno.id,
+        cpf: aluno.cpf,
+        nome: aluno.nome,
+        email: aluno.email,
+        senha: aluno.senha,
+        cargo: aluno.cargo,
+        dataNascimento: aluno.dataNascimento,
+        matricula: aluno.matricula,
+        pontos: aluno.pontos,
+        qtdLivrosLidos: aluno.qtdLivrosLidos,
+        qtdLivrosFavoritos: aluno.qtdLivrosFavoritos
+    }));
+}
 
 const isAddAlunoDialogOpen = ref(false);
-
-
 
 onMounted(() => {
     carregarAtividades();
@@ -150,8 +151,8 @@ onMounted(() => {
                                 Adicione um ou mais alunos na turma.
                             </DialogDescription>
                         </DialogHeader>
-                        <div v-for="aluno in alunos" class="flex gap-4">
-                            <Checkbox id="nameAluno" />
+                        <div v-for="aluno in alunosDoSistema" class="flex gap-4">
+                            <Checkbox id="nameAluno" v-model="aluno.checked"/>
                             <label for="nameAluno"
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                 {{aluno.nome}}
@@ -167,7 +168,8 @@ onMounted(() => {
                                 @click="isAddAlunoDialogOpen = false"> Cancelar
                             </button>
                             <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                                >
+                            @click="adicionarAlunosNaTurma"
+                            >
                                 Adicionar
                             </Button>
                         </div>
@@ -177,10 +179,10 @@ onMounted(() => {
 
             <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
                 <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
-                <UsuarionaTurma v-for="usuario in alunosDaTurma" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"
-                    :cpf="usuario.cpf" :tipo="usuario.tipo" />
-
+                
             </div>
+            <UsuarionaTurma v-for="usuario in alunosDaTurma" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"
+                :cpf="usuario.cpf" :tipo="usuario.cargo" />
             <!-- <UsuarionaTurma v-for="aluno in alunos"/> -->
             <div class="flex justify-between items-center text-center mb-3 mt-8">
                 <h3 class="text-[20px] font-bold mt-3">Atividades</h3>
@@ -190,11 +192,13 @@ onMounted(() => {
                 </RouterLink>
 
             </div>
-            <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
+            <!-- <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2"> -->
+            <div class="flex justify-between px-4 py-2 bg-blue-100 rounded-md mb-2 font-bold">
                 <span>Nome</span> <span class="text-center">Ações</span>
-                <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
-                :atividadename="atividade.nome" />
             </div>
+            <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
+            :atividadename="atividade.nome" />
+
             <div class="flex justify-between items-center text-center mb-3 mt-8">
                 <h3 class="text-[20px] font-bold mt-3">Livros</h3>
             </div>

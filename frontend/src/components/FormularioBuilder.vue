@@ -1,177 +1,197 @@
 <script setup lang="ts">
-
-import { reactive, ref, computed,onMounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { Check, Search } from 'lucide-vue-next'
 import { cn } from '../lib/utils'
-import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxList } from '@/components/ui/combobox'
+import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxList, ComboboxTrigger } from '@/components/ui/combobox'
 import axios from 'axios'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
+import * as z from 'zod'
+import {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
+import { useRouter, RouterLink } from 'vue-router'
 
-const livros = ref([]) /*[
-    {
-        "id": "a9f91256-18cf-4629-8725-63a86bcddaef",
-        "titulo": "Livro 1",
-        "autor": "tedssfwe",
-        "editora": "wefwefw",
-        "livroUrl": "3424323423423423412",
-        "isbn": "32423123"
+const livros = ref<{
+    id: string
+    titulo: string
+    autor: string
+    editora: string
+    livroUrl: string
+    isbn: string
+}[]>([])
+const questions = reactive<string[]>([''])
+
+const router= useRouter()
+
+const formSchema = toTypedSchema(z.object({
+    nome: z.string().min(1, 'O nome é obrigatório'),
+    prazoEntrega: z.string(),
+    // professor: z.object({
+    //     id: z.string().min(1, 'O ID do professor é obrigatório')
+    // }),
+    livro: z.object({
+        id: z.string().min(1, 'O ID do livro é obrigatório')
+    }),
+}))
+
+const { handleSubmit, setFieldValue, isFieldDirty, values} = useForm({
+    validationSchema: formSchema,
+    initialValues: {
+        nome: '',
+        prazoEntrega: '',
+        // professor: {
+        //     id: ''
+        // },
+        livro: {
+            id: ''
+        }
     },
-    {
-        "id": "609e6de3-e44f-44de-97bf-55fe4270f96f",
-        "titulo": "sdfwefwefwef",
-        "autor": "edffgersgsg",
-        "editora": "dfgcdfxbcnfgn",
-        "livroUrl": "dgwfwfwefwef",
-        "isbn": "342534654654"
-    }
-]*/
-
-const questions = reactive([])
-
-const nome = ref('')
-const livro = ref(null)
-const filtroLivro = ref('')
-
-
-
-const livrosFiltrados = computed(() => {
-    if (!filtroLivro.value) return livros
-    return livros.filter(livro => livro.titulo.toLowerCase().includes(filtroLivro.value.toLowerCase()))
 })
 
+
+// const livrosFiltrados = computed(() => {
+//     if (!filtroLivro.value) return livros
+//     return livros.filter(livro => livro.titulo.toLowerCase().includes(filtroLivro.value.toLowerCase()))
+// })
+
 function addQuestion() {
-    questions.push({
-        text: ''
-    })
-}
-async function handleSubmit() {
-    const enunciados = questions.map(q => q.text)
-
-    const payload = {
-        nome: nome.value,
-        enunciado: enunciados,
-        feedback: "",
-        livro: {
-            //nome: livro.value || 'teste'
-            id: livro.value ? livro.value.id : 'PASSAR ID EXISTENTE' 
-        },
-        professor: {
-            id: "PASSAR PROF EXISTENTE"
-        }
-    }
-
-    try {
-        const res = await fetch("http://localhost:8080/atividades", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        })
-
-        if (!res.ok) {
-            const errorText = await res.text()
-            console.error("Erro completo do servidor:", errorText)
-            throw new Error("Erro ao criar atividade")
-        }
-
-        const data = await res.json()
-        console.log("✔️ Atividade criada:", data)
-        alert("Atividade criada com sucesso!")
-
-    } catch (err) {
-        console.error("❌ Erro ao enviar:", err)
-        alert("Erro ao criar atividade.")
-    }
+    questions.push( '' )
 }
 
 onMounted(async () => {
-  try {
-    const res = await axios.get('http://localhost:8080/livros')
-    livros.value = res.data
-  } catch (err) {
-    console.error('Erro ao buscar livros:', err)
-  }
+    try {
+        const res = await axios.get('http://localhost:8080/livros')
+        livros.value = res.data
+    } catch (err) {
+        console.error('Erro ao buscar livros:', err)
+    }
 })
 
-function removeQuestion(index) {
+function removeQuestion(index: number) {
     questions.splice(index, 1)
 }
 
-function correctMark(qIndex, optIndex) {
-    questions[qIndex].correct = optIndex
-}
+// function markAsCorrect(qIndex, optIndex) {
+//     questions[qIndex].correct = optIndex
+// }
 
-function addOption(qIndex) {
-    questions[qIndex].options.push('')
-}
+// function addOption(qIndex) {
+//     questions[qIndex].options.push('')
+// }
 
-function removeOption(qIndex, optIndex) {
-    questions[qIndex].options.splice(optIndex, 1)
-}
+// function removeOption(qIndex, optIndex) {
+//     questions[qIndex].options.splice(optIndex, 1)
+// }
+
+const onSubmit = handleSubmit(async (values) => {
+    console.log('Values: ', values)
+    console.log('Questions: ', questions)
+    
+    const atividade = {
+        nome : values.nome,
+        enunciado: questions.map(q => q.trim()),
+        livro : values.livro,
+        professor: {
+            id: 'b39fb530-3b50-4d13-b1d4-4597b6cdc866'
+        }
+    }
+
+    console.log('Atividade: ', atividade)
+
+    try {
+        const response = await axios.post('http://localhost:8080/atividades', atividade)
+        if (response.status >= 200 && response.status < 300) {
+            console.log('Atividade criada com sucesso:', response.data)
+            router.push('/TeladeTurma')            
+        } else {
+            console.error('Erro ao criar atividade:', response.statusText)
+        }
+    } catch (err) {
+        console.error('Erro ao criar atividade:', err)
+    }
+})
+
 </script>
 
 <template>
-    <div class="flex-1 max-w-2xl mx-auto p-4 space-y-4">
-        <div class="flex gap-4 items-center">
-            <label for="" class="shrink-0">Digite o título da atividade</label>
-            <input type="text" v-model="nome"
-                class="bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 w-full">
-        </div>
-        <div class="flex gap-10 items-center">
-            <label for="" class="shrink-0">Selecione o livro da atividade</label>
-            <Combobox by="label" v-model="livro">
-                <ComboboxAnchor>
-                    <ComboboxInput type="text" class="w-full focus:outline-none py-2"
-                        placeholder="Pesquisar livro..." />
-                </ComboboxAnchor>
+    <form class="flex-1 max-w-2xl mx-auto p-4 space-y-4" @submit="onSubmit">
+        <FormField name="nome" v-slot="{ componentField: nome }" :validate="!isFieldDirty">
 
-                <ComboboxList>
-                    <ComboboxEmpty>
-                        Nenhum livro encontrado.
-                    </ComboboxEmpty>
+            <FormItem class="flex gap-4 items-center">
+                
+                <FormLabel for="" class="shrink-0">Digite o título da atividade</FormLabel>
+                <FormControl>
+                    
+                    <input type="text" v-bind="nome"
+                    class="bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 w-full">
+                </FormControl>
+            </FormItem>
+            
+        </FormField>
+        <FormField name="livro">
+            <FormItem class="flex gap-10 items-center">                
+                <FormLabel class="shrink-0">Selecione o livro da atividade</FormLabel>
+                <Combobox by="label">
+                    <FormControl>
+                        <ComboboxAnchor>
+                            <div class="relative w-full max-w-sm items-center">
+                                <ComboboxInput class="w-full focus:outline-none py-2"
+                                    :display-value="(val) => val?.titulo ?? ''" placeholder="Pesquisar livro..." />
 
-                    <ComboboxGroup>
-                        <ComboboxItem v-for="livro in livros" :key="livro.id" :value="livro">
-                            {{ livro.titulo }}
-                            <ComboboxItemIndicator>
-                                <Check :class="cn('ml-auto h-4 w-4')" />
-                            </ComboboxItemIndicator>
-                        </ComboboxItem>
-                    </ComboboxGroup>
-                </ComboboxList>
-            </Combobox>
+                                <ComboboxTrigger class="absolute end-0 inset-y-0 flex items-center justify-center px-3">
+                                    <Search class="size-4 text-muted-foreground" />
+                                </ComboboxTrigger>
+                            </div>
+                        </ComboboxAnchor>
+                    </FormControl>
+                    <ComboboxList>
+                        <ComboboxEmpty>
+                            Nenhum livro encontrado.
+                        </ComboboxEmpty>
 
-        </div>
+                        <ComboboxGroup>
+                            <ComboboxItem v-for="livro in livros" :key="livro.id" :value="livro" @select="() => {
+                                setFieldValue('livro', livro)
+                            }">
+                                {{ livro.titulo }}
+                                <ComboboxItemIndicator>
+                                    <Check :class="cn('ml-auto h-4 w-4')" />
+                                </ComboboxItemIndicator>
+                            </ComboboxItem>
+                        </ComboboxGroup>
+                    </ComboboxList>
+                </Combobox>
+            </FormItem>
+
+        </FormField>
         <div v-for="(question, index) in questions" :key="index" class="border p-4 rounded-xl space-y-2">
-            <input v-model="question.text" placeholder="Digite a pergunta" class="w-full p-2 border rounded" />
+            <input v-model="questions[index]" placeholder="Digite a pergunta" class="w-full p-2 border rounded" />
             <p class="text-sm text-gray-600"><span class="font-bold">Tipo:</span> Resposta curta</p>
-            <div v-if="question.type === 'multiple'" class="space-y-1">
+            <!-- <div v-if="question.type === 'multiple'" class="space-y-1">
                 <button @click="addOption(index)" class="text-blue-500 hover:underline">+ Adicionar opção</button>
-            </div>
+            </div> -->
 
-            <button @click="removeQuestion(index)" class="text-red-600 hover:underline">Excluir pergunta</button>
+            <button type="button" @click="removeQuestion(index)" class="text-red-600 hover:underline">Excluir pergunta</button>
         </div>
 
 
-        <button @click="addQuestion" :disabled="questions.length == 3"
+        <button type="button" @click="addQuestion" :disabled="questions.length == 3"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
             + Nova Pergunta
         </button>
         <div class="flex items-center justify-between mt-4">
-            <RouterLink to="/TeladeTurma"><button
-                    class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors">
+            <RouterLink to="/TeladeTurma" class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors">
                     Cancelar
-                </button></RouterLink>
-            <RouterLink to="/TeladeTurma">
-                <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                    @click="handleSubmit">
-                    Criar
-                </Button>
             </RouterLink>
-
+            <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600" type="submit">
+                Criar
+            </button>
         </div>
-
-
-
-    </div>
+    </form>
 </template>

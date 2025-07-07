@@ -23,7 +23,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 //todas as variáveis do sistema
 const { nome, cpf, id, tipo } = defineProps<{
-    id: number;
+    id: string;
     nome: string;
     cpf: string;
     tipo: string;
