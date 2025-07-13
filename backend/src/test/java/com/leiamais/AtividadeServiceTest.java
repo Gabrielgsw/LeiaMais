@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -36,7 +37,7 @@ class AtividadeServiceTest {
         atividade.setId(UUID.randomUUID());
         atividade.setNome("Atividade de Matemática");
         atividade.setEnunciado(List.of("Questão 1", "Questão 2"));
-        atividade.setPrazoEntrega(LocalDateTime.now().plusDays(3));
+        atividade.setPrazoEntrega(LocalDate.now().plusDays(3));
         atividade.setProfessor(new Professor());
         atividade.setTurma(new Turma());
     }
@@ -67,7 +68,7 @@ class AtividadeServiceTest {
 
     @Test
     void exceptionPrazoEntrega() {
-        atividade.setPrazoEntrega(LocalDateTime.now().minusDays(15));
+        atividade.setPrazoEntrega(LocalDate.now().minusDays(15));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             atividadeService.salvar(atividade);

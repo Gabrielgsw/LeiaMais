@@ -25,6 +25,9 @@ public class Leitura {
     @OneToOne
     private Aluno aluno;
 
+    @OneToOne
+    private StatusLivro status;
+
     public UUID getId() {
         return id;
     }
@@ -44,5 +47,13 @@ public class Leitura {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public StatusLivro getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusLivro status) {
+        this.status = status;
     }
 }

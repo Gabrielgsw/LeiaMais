@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,9 +28,9 @@ public class Atividade {
     @Column
     private String nome;
     @Column//(nullable = false, updatable = false)
-    private LocalDateTime dataCriacao;
+    private LocalDate dataCriacao;
     @Column//(nullable = false)
-    private LocalDateTime prazoEntrega;
+    private LocalDate prazoEntrega;
     @OneToMany (mappedBy = "atividade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas;
     @ManyToOne
@@ -43,15 +44,15 @@ public class Atividade {
 
     @PrePersist
     protected void onCreate() {
-        this.dataCriacao = LocalDateTime.now();
+        this.dataCriacao = LocalDate.now();
     }
 
 
     public Atividade() {
         this.enunciado = new ArrayList<>();
         this.respostas = new ArrayList<>();
-        this.prazoEntrega = LocalDateTime.now();
-        this.dataCriacao = LocalDateTime.now();
+        this.prazoEntrega = LocalDate.now();
+        this.dataCriacao = LocalDate.now();
     }
 
 
@@ -63,8 +64,8 @@ public class Atividade {
         this.professor = professor;
         this.livro = livro;
         this.turma = turma;
-        this.dataCriacao = LocalDateTime.now();
-        this.prazoEntrega = LocalDateTime.now();
+        this.dataCriacao = LocalDate.now();
+        this.prazoEntrega = LocalDate.now();
     }
 
 
@@ -88,14 +89,14 @@ public class Atividade {
         this.enunciado = enunciado;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
-    public LocalDateTime getPrazoEntrega() {
+    public LocalDate getPrazoEntrega() {
         return prazoEntrega;
     }
 
-    public void setPrazoEntrega(LocalDateTime prazoEntrega) {
+    public void setPrazoEntrega(LocalDate prazoEntrega) {
         this.prazoEntrega = prazoEntrega;
     }
 
