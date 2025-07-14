@@ -18,13 +18,13 @@ public class Turma {
     @OneToMany
     private List<Aluno> alunosMatriculados = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
     private List<Professor> professores = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
     private List<Livro> livros = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
     private List<Atividade> atividades = new ArrayList<>();
 
 
@@ -32,6 +32,10 @@ public class Turma {
 
     public Turma(String nome) {
         this.nome = nome;
+        this.alunosMatriculados = new ArrayList<>();
+        this.professores = new ArrayList<>();
+        this.livros = new ArrayList<>();
+        this.atividades = new ArrayList<>();
     }
 
     public Turma(UUID id, String nome, List<Aluno> alunosMatriculados, List<Professor> professores, List<Livro> livros, List<Atividade> atividades) {

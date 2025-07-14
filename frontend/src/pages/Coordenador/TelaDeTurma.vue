@@ -8,7 +8,7 @@ import AtividadeRow from '@/components/AtividadeRow.vue';
 import UsuarionaTurma from '@/components/UsuarionaTurma.vue';
 import { Checkbox } from '@/components/ui/checkbox'
 const livros = ref([
-    'https://covers.openlibrary.org/b/isbn/9788562936524-M.jpg',
+    'C:\Users\Gabriel Germano\Desktop\Repositorios\LeiaMais\frontend\src\assets\livros-teste',
     'https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg',
     'https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg',
     'https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg',
