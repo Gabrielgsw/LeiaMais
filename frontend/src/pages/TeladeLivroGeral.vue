@@ -1,12 +1,25 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+import ListaSuspensa from '@/components/ListaSuspensa.vue';
 const props = defineProps(['livro']);
+import Rating from 'primevue/rating';
+import Select from 'primevue/select';
 
 function abrirPdf(isbn) {
-  const url = `http://localhost:8080/livros/${isbn}/pdf`;
-  window.open(url, '_blank');
+    const url = `http://localhost:8080/livros/${isbn}/pdf`;
+    window.open(url, '_blank');
 }
+
+const value = ref(0);
+const selectedStatus = ref()
+const options = ref([
+    { name: 'Não iniciado', code: 'NY' },
+    { name: 'Em leitura', code: 'RM' },
+    { name: 'Concluído', code: 'LDN' }
+]);
 </script>
+
 
 <template>
     <div class="min-h-screen bg-[#e6f7fa] font-sans">
@@ -30,12 +43,19 @@ function abrirPdf(isbn) {
                     desencadeando uma série de eventos que mergulham a região em uma guerra civil. Paralelamente,
                     Daenerys Targaryen, exilada, planeja sua vingança e a retomada do Trono de Ferro, enquanto no
                     extremo norte, Jon Snow enfrenta perigos além da Muralha. </p>
-                
-                    <button class="bg-[#359DFF] text-white mt-4 px-4 py-2 rounded shadow hover:bg-blue-600" @click="abrirPdf('9788562936524')">
+
+                <div class="flex  gap-10 items-center mt-4">
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+                        @click="abrirPdf('23487234')">
                         Ler agora
                     </button>
                     
-               
+                        <Rating v-model="value" />
+                        <Select v-model="selectedStatus" :options="options" optionLabel="name"
+                            placeholder="Status do livro" class="w-full md:w-56"  />
+
+                </div>
+
             </div>
 
         </div>

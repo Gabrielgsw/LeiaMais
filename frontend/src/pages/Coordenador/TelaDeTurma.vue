@@ -28,22 +28,22 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 type Aluno = {
-  id: string
-  cpf: string
-  nome: string
-  email: string
-  senha: string
-  cargo: string
-  dataNascimento: string
-  matricula: string
-  pontos: number
-  qtdLivrosLidos: number
-  qtdLivrosFavoritos: number
+    id: string
+    cpf: string
+    nome: string
+    email: string
+    senha: string
+    cargo: string
+    dataNascimento: string
+    matricula: string
+    pontos: number
+    qtdLivrosLidos: number
+    qtdLivrosFavoritos: number
 }
 
 const atividades = ref([]);
 const alunosDaTurma = ref<Aluno[]>([])
-const alunosDoSistema = ref<(Aluno & {checked:boolean})[]>([])
+const alunosDoSistema = ref<(Aluno & { checked: boolean })[]>([])
 
 async function getAlunos() {
     try {
@@ -58,7 +58,7 @@ async function getAlunos() {
         }));
     } catch (error) {
         console.error("Erro ao carregar alunos:", error);
-    }    
+    }
 }
 
 const carregarAtividades = async () => {
@@ -77,13 +77,13 @@ const carregarAtividades = async () => {
 //     )
 // })
 
-async function adicionarAlunosNaTurma(){
+async function adicionarAlunosNaTurma() {
     const alunos = alunosDoSistema.value.filter(aluno => aluno.checked);
     if (alunos.length === 0) {
         alert("Nenhum aluno selecionado para adicionar.");
         return;
     }
-    
+
     console.log("Alunos selecionados para adicionar:", alunos);
 
     isAddAlunoDialogOpen.value = false;
@@ -152,14 +152,14 @@ onMounted(() => {
                             </DialogDescription>
                         </DialogHeader>
                         <div v-for="aluno in alunosDoSistema" class="flex gap-4">
-                            <Checkbox id="nameAluno" v-model="aluno.checked"/>
+                            <Checkbox id="nameAluno" v-model="aluno.checked" />
                             <label for="nameAluno"
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                {{aluno.nome}}
+                                {{ aluno.nome }}
                             </label>
                             <label for="cpfaluno"
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                               {{aluno.cpf}}
+                                {{ aluno.cpf }}
                             </label>
                         </div>
                         <div class="flex items-center justify-between mt-4">
@@ -168,8 +168,7 @@ onMounted(() => {
                                 @click="isAddAlunoDialogOpen = false"> Cancelar
                             </button>
                             <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                            @click="adicionarAlunosNaTurma"
-                            >
+                                @click="adicionarAlunosNaTurma">
                                 Adicionar
                             </Button>
                         </div>
@@ -179,7 +178,7 @@ onMounted(() => {
 
             <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
                 <span>Nome</span> <span>CPF</span> <span>Tipo</span> <span class="text-center">Ações</span>
-                
+
             </div>
             <UsuarionaTurma v-for="usuario in alunosDaTurma" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"
                 :cpf="usuario.cpf" :tipo="usuario.cargo" />
@@ -197,15 +196,17 @@ onMounted(() => {
                 <span>Nome</span> <span class="text-center">Ações</span>
             </div>
             <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
-            :atividadename="atividade.nome" />
+                :atividadename="atividade.nome" />
 
             <div class="flex justify-between items-center text-center mb-3 mt-8">
                 <h3 class="text-[20px] font-bold mt-3">Livros</h3>
             </div>
+            <RouterLink to="/TeladeLivroGeral">
+                <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
+                    <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
+                </div>
+            </RouterLink>
 
-            <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-                <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
-            </div>
 
         </div>
     </div>

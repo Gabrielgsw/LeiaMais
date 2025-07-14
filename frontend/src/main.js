@@ -17,6 +17,7 @@ import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
 import Telaleitura from './pages/Telaleitura.vue'
 import TelaCorrigirAtividadeCoordenador from './pages/Coordenador/TelaCorrigirAtividadeCoordenador.vue'
+import TeladeRanking from './pages/TeladeRanking.vue'
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -35,7 +36,8 @@ const routes = [
   { path: '/TeladeLivroGeral', component: TeladeLivroGeral },
   { path: '/Telaleitura', component: Telaleitura },
   { path: '/TelaCorrigirAtividadeCoordenador', component: TelaCorrigirAtividadeCoordenador },
-
+  { path: '/TeladeRanking', component: TeladeRanking },
+   
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno },
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
@@ -49,8 +51,10 @@ const router = createRouter({
   routes,
 })
 
+
 createApp(App).use(PrimeVue, {
   theme: {
-    preset: Aura
+    preset: Aura,
+    darkModeSelector:'.my-app-dark'
   }
 }).use(router).mount('#app')

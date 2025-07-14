@@ -238,6 +238,14 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
                                                 placeholder="Link do livro" v-model="linkDoLivro" />
                                         </FormControl>
                                     </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Link da imagem <span class="text-red-500 font-bold">*</span></FormLabel>
+                                        <FormControl>
+                                            <input id="linkdaimagem"
+                                                class="col-span-3 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                                                placeholder="Link da imagem" v-model="linkDaImagem" />
+                                        </FormControl>
+                                    </FormItem>
                                 </FormField>
                             </form>
                             <div class="flex items-center justify-between mt-4">
@@ -278,7 +286,8 @@ const handleEditarLivro = async (id, isbn, titulo, autor, editora) => {
 #isbn,
 #autor,
 #editora,
-#linkdolivro{
+#linkdolivro,
+#linkdaimagem{
     border-color: #DDDDDD;
     border: 1px solid #DDDDDD;
     border-radius: var(--dp-border-radius);
