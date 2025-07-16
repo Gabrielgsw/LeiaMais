@@ -1,5 +1,7 @@
 package com.leiamais.controllers;
 
+import com.leiamais.models.Aluno;
+import com.leiamais.models.Professor;
 import com.leiamais.models.Turma;
 import com.leiamais.services.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,16 @@ public class TurmaController {
     public ResponseEntity<Void> deletarTurma(@PathVariable UUID id) {
         turmaService.deletarTurma(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/aluno/{turma}/{matricula}")
+    public ResponseEntity<Aluno> adicionarAluno(@PathVariable String matricula,@PathVariable String nomeTurma) {
+        return ResponseEntity.ok(turmaService.adicionarAluno(nomeTurma,matricula));
+    }
+
+    @PostMapping("/professor/{turma}/{cpf}")
+    public ResponseEntity<Professor> adicionarProfessor(@PathVariable String turma, @PathVariable String cpf) {
+        return ResponseEntity.ok(turmaService.adicionarProfessor(turma, cpf));
     }
 
 }

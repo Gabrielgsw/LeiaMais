@@ -25,7 +25,7 @@ public class Leitura {
     @OneToOne
     private Aluno aluno;
 
-    @OneToOne
+    @Column
     private StatusLivro status;
 
     public UUID getId() {

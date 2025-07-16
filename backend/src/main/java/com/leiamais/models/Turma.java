@@ -68,24 +68,24 @@ public class Turma {
         return alunosMatriculados;
     }
 
-    public void setAlunosMatriculados(List<Aluno> alunosMatriculados) {
-        this.alunosMatriculados = alunosMatriculados;
+    public void setAlunosMatriculados(Aluno alunosMatriculado) {
+        this.alunosMatriculados.add(alunosMatriculado);
     }
 
     public List<Professor> getProfessores() {
         return professores;
     }
 
-    public void setProfessores(List<Professor> professores) {
-        this.professores = professores;
+    public void setProfessores(Professor professor) {
+        this.professores.add(professor);
     }
 
     public List<Livro> getLivros() {
         return livros;
     }
 
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
+    public void setLivros(Livro livro) {
+        this.livros.add(livro);
     }
 
     public List<Atividade> getAtividades() {

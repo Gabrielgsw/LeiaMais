@@ -45,4 +45,14 @@ public class ProfessorService {
     public void deletar(UUID id) {
         usuarioRepository.deleteById(id);
     }
+
+    public Professor buscarPorCpf(String cpf) {
+        for(Usuario p : listarTodos()){
+            if(p.getCpf().equals(cpf) && p.getClass().equals(Professor.class)) {
+                return (Professor)p;
+            }
+        }
+        return null;
+    }
+
 }
