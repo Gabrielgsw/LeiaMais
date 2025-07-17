@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/turmas")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TurmaController {
 
     private final TurmaService turmaService;
@@ -52,8 +53,9 @@ public class TurmaController {
     }
 
     @PostMapping("/aluno/{turma}/{matricula}")
-    public ResponseEntity<Aluno> adicionarAluno(@PathVariable String matricula,@PathVariable String nomeTurma) {
-        return ResponseEntity.ok(turmaService.adicionarAluno(nomeTurma,matricula));
+    public ResponseEntity<Aluno> adicionarAluno(@PathVariable String turma,@PathVariable String matricula) {
+        System.out.println("Adicionando aluno com matrícula: " + matricula + " à turma: " + turma);
+        return ResponseEntity.ok(turmaService.adicionarAluno(turma, matricula));
     }
 
     @PostMapping("/professor/{turma}/{cpf}")

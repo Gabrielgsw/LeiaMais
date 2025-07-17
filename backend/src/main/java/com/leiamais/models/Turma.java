@@ -65,11 +65,21 @@ public class Turma {
     }
 
     public List<Aluno> getAlunosMatriculados() {
+        System.out.println("[TURMA] Obtendo alunos matriculados na turma: " + this.nome + " - Total de alunos: " + this.alunosMatriculados.size());
+        for (Aluno aluno : this.alunosMatriculados) {
+            System.out.println("[TURMA] Aluno na turma: " + aluno.getNome());
+        }
+        
         return alunosMatriculados;
     }
 
     public void setAlunosMatriculados(Aluno alunosMatriculado) {
+        System.out.println("[TURMA] Adicionando aluno: " + alunosMatriculado.getNome() + " à turma: " + this.nome);
         this.alunosMatriculados.add(alunosMatriculado);
+        System.out.println("[TURMA] Aluno adicionado com sucesso. Total de alunos na turma: " + this.alunosMatriculados.size());
+        for (Aluno aluno : this.alunosMatriculados) {
+            System.out.println("[TURMA] Aluno na turma: " + aluno.getNome());
+        }
     }
 
     public List<Professor> getProfessores() {

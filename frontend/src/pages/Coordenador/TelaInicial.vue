@@ -1,37 +1,107 @@
-<script setup>
-import { RouterLink, useRouter } from 'vue-router';
-import { ref } from 'vue'
-
-import Turma from '../../components/Turma.vue'
+<script setup lang="ts">
+import { RouterLink, useRouter } from "vue-router";
+import { toTypedSchema } from "@vee-validate/zod";
+import { useForm } from "vee-validate";
+import * as z from "zod";
+import { ref, onMounted} from "vue";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import Turma from "../../components/Turma.vue";
 import axios from "axios";
 
 const router = useRouter();
 
-const turmas = ref([
-    { id: 1, nome: '1º ano - Ensino Fundamental' },
-    { id: 2, nome: '2º ano - Ensino Fundamental' },
-    { id: 3, nome: '3º ano - Ensino Fundamental' },
-])
+const turmas = ref<
+{id: string; nome: string; alunosMatriculados: []; professores: []; livros: []; atividades: []}[]
+>([]);
 
 const livros = ref([
-    'https://covers.openlibrary.org/b/isbn/9788562936524-M.jpg',
-    'https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg',
-    'https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg',
-])
+  "https://covers.openlibrary.org/b/isbn/9788562936524-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+]);
 const handleLogout = async () => {
-
-    try {
-        const response = await axios.post('http://localhost:8080/api/auth/logout', {}, { withCredentials: true });
-        if (response.status === 200) {
-            alert("Logout realizado com sucesso.");
-            router.push('/');
-        }
-    } catch (error) {
-        console.error("Erro no logout:", error);
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/auth/logout",
+      {},
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      alert("Logout realizado com sucesso.");
+      router.push("/");
     }
+  } catch (error) {
+    console.error("Erro no logout:", error);
+  }
+};
+
+const isAddTurmaDialogOpen = ref(false);
+const createTurmaFormSchema = toTypedSchema(
+  z.object({
+    nome: z.string().min(2).max(50),
+  })
+);
+
+const { handleSubmit, isFieldDirty, values, setFieldValue } = useForm({
+  validationSchema: createTurmaFormSchema,
+  initialValues: {
+    nome: "",
+  },
+});
+
+
+async function getTurmas() {
+    const  response = await axios.get("http://localhost:8080/turmas");
+    if (response.status >= 200 && response.status < 300) {
+      turmas.value = response.data;
+    } else {
+      console.error("Erro ao buscar turmas:", response.statusText);
+    }
+
+    turmas.value = await response.data
+
+    console.log("Turmas carregadas:", turmas.value);
 }
 
+const criarTurma = handleSubmit(async (values) => {
+  const turma = {
+    nome: values.nome,
+  };
 
+  try {
+    const response = await axios.post("http://localhost:8080/turmas", turma);
+
+    if (response.status >= 200 && response.status < 300) {
+      console.log("Usuário cadastrado com sucesso:", response.data);
+      isAddTurmaDialogOpen.value = false;
+      getTurmas();
+    } else {
+      console.error("Erro ao cadastrar usuário:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Erro ao cadastrar usuário:", error);
+  }
+
+  console.log("Formulário enviado com sucesso:", values);
+});
+
+onMounted(() => {
+  getTurmas();
+});
 </script>
 
 <!--<div class="min-h-[90vh] bg-blue-100">
@@ -107,74 +177,137 @@ const handleLogout = async () => {
 </main>
 </div>-->
 <template>
-    <div class="min-h-screen bg-[#e6f7fa] font-sans">
-        <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
-            <RouterLink to="/TelaInicial">
-                <div class="text-5xl flex ">
-                    <h1>Leia+</h1>
-                    <img src="../../assets/capivara.svg" alt="" />
+  <div class="min-h-screen bg-[#e6f7fa] font-sans">
+    <header
+      class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center"
+    >
+      <RouterLink to="/TelaInicial">
+        <div class="text-5xl flex">
+          <h1>Leia+</h1>
+          <img src="../../assets/capivara.svg" alt="" />
+        </div>
+      </RouterLink>
+    </header>
+
+    <main class="p-12">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-20 h-20 bg-gray-300 rounded-full">
+            <img
+              src="../../assets/capivara.png"
+              alt="Fundo"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <p class="text-blue-600 font-bold text-lg">Olá, Coordenador</p>
+            <p class="text-gray-600">Escola: Educandário São Judas Tadeu</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 mb-6">
+          <router-link to="/TelaDeLivrosCadastrados">
+            <button
+              class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+            >
+              Adicionar Livros
+            </button>
+          </router-link>
+          <router-link to="/TelaDeUsuariosCadastrados"
+            ><button
+              class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
+            >
+              Adicionar usuários
+            </button>
+          </router-link>
+
+          <Dialog v-model:open="isAddTurmaDialogOpen">
+            <DialogTrigger as-child>
+              <button
+                class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
+              >
+                Adicionar Turma
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <form class="space-y-6" @submit="criarTurma">
+                <DialogHeader>
+                  <DialogTitle>
+                    <h1 class="text-[#0084FF] font-bold text-[28px] mt-2">
+                      Adicionar turma
+                    </h1>
+                  </DialogTitle>
+                </DialogHeader>
+                <FormField
+                  v-slot="{ componentField: nome }"
+                  name="nome"
+                  :validate-on-blur="!isFieldDirty"
+                >
+                  <FormItem>
+                    <FormLabel
+                      >Nome
+                      <span class="text-red-500 font-bold">*</span></FormLabel
+                    >
+                    <FormControl>
+                      <input
+                        id="nome"
+                        class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
+                        placeholder="Nome da turma"
+                        v-bind="nome"
+                      />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+
+                <div class="flex items-center justify-between mt-4">
+                  <button
+                    class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
+                    @click="isAddTurmaDialogOpen = false"
+                  >
+                    Cancelar
+                  </button>
+                  <Button
+                    type="submit"
+                    class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
+                  >
+                    Cadastrar
+                  </Button>
                 </div>
+              </form>
+            </DialogContent>
+          </Dialog>
+          
 
-            </RouterLink>
-        </header>
+          <button
+            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
+            @click="handleLogout"
+          >
+            Sair da conta
+          </button>
+        </div>
 
-        <main class="p-12">
-            <div class="bg-white rounded-lg shadow-md p-6">
+        <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
+        <div class="space-y-4 mb-8">
+          <router-link v-for="turma in turmas" :to="`/turma/${turma.id}`" class="block">
+            <Turma :nome="turma.nome" />
+          </router-link>
+        </div>
 
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-20 h-20 bg-gray-300 rounded-full">
-                        <img src="../../assets/capivara.png" alt="Fundo" class="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <p class="text-blue-600 font-bold text-lg">Olá, Coordenador</p>
-                        <p class="text-gray-600">Escola: Educandário São Judas Tadeu</p>
-                    </div>
-                </div>
-
-
-                <div class="flex gap-4 mb-6">
-                    <router-link to="/TelaDeLivrosCadastrados">
-                        <button class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600">Adicionar
-                            Livros</button>
-                    </router-link>
-                    <router-link to="/TelaDeUsuariosCadastrados"><button
-                            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
-                            usuários</button>
-                    </router-link>
-                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Adicionar
-                        turma</button>
-                    <router-link to="/TeladeRanking">
-                        <button
-                            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking geral</button>
-                    </router-link>
-
-                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                        @click="handleLogout">Sair da conta</button>
-                </div>
-
-                <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
-                <div class="space-y-4 mb-8">
-                    <router-link v-for="turma in turmas" to="/TelaDeTurma" class="block">
-                        <Turma :nome="turma.nome" />
-                    </router-link>
-
-                </div>
-
-
-                <div>
-                    <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
-                    <RouterLink to="/TeladeLivroGeral">
-                        <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-                            <img v-for="livro in livros" :src="livro"
-                                class="w-[160px] h-[230px] rounded-sm object-cover" />
-                        </div>
-                    </RouterLink>
-                </div>
+        <div>
+          <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
+          <RouterLink to="/TeladeLivroGeral">
+            <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
+              <img
+                v-for="livro in livros"
+                :src="livro"
+                class="w-[160px] h-[230px] rounded-sm object-cover"
+              />
             </div>
-        </main>
-    </div>
+          </RouterLink>
+        </div>
+      </div>
+    </main>
+  </div>
 </template>
-
-
 
 <style scoped></style>

@@ -13,4 +13,5 @@ public class UsuarioRegistrationDTO {
     private Cargo cargo;
     private Date dataNascimento;
     private String disciplinaMinistrada;
+    private String matricula;
 }

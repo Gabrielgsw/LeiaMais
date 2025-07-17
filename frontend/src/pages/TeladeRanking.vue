@@ -29,6 +29,9 @@ import { RouterLink } from 'vue-router'
                     <img src="../assets/capivara-trofeu.png" alt="">
                 </div>
                 <div>
+                    <h1 class="font-normal mt-4">Turma: <strong>1° ano A - Ensino fundamental</strong></h1>
+                </div>
+                <div>
                     <span></span>
                 </div>
 

@@ -1,5 +1,5 @@
 <script setup>
-import {RouterLink, useRouter} from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { ref } from 'vue'
 
 import Turma from '../../components/Turma.vue'
@@ -7,7 +7,7 @@ import Turma from '../../components/Turma.vue'
 const router = useRouter();
 
 const turmas = ref([
-    {id: 1 , nome:'1º ano - Ensino Fundamental'},
+    { id: 1, nome: '1º ano - Ensino Fundamental' },
 ])
 
 const livros = ref([
@@ -106,7 +106,8 @@ const livros = ref([
 
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-20 h-20 bg-gray-300 rounded-full">
-                        <img src="../../assets/capivara-icone-amigo.png" alt="Fundo" class="w-full h-full object-cover" />
+                        <img src="../../assets/capivara-icone-amigo.png" alt="Fundo"
+                            class="w-full h-full object-cover" />
                     </div>
                     <div>
                         <p class="text-blue-600 font-bold text-lg">Olá, Aluno</p>
@@ -114,12 +115,21 @@ const livros = ref([
                         <p class="text-gray-600">Turma atual: 1° ano - fundamental</p>
                     </div>
                 </div>
+                <div class="flex gap-4 mb-6">
+                    <router-link to="/TeladeRanking">
+                        <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking
+                            geral</button>
+                    </router-link>
+
+                    <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+                        @click="handleLogout">Sair da conta</button>
+                </div>
                 <!--:to="`/turma/${turma.id}`" colocar quando tiver pronto-->
                 <div class="space-y-4 mb-8">
                     <router-link v-for="turma in turmas" to="/TelaDeTurmaAluno" class="block">
                         <Turma :nome="turma.nome" />
                     </router-link>
-                    
+
                 </div>
 
 
@@ -128,6 +138,13 @@ const livros = ref([
                     <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
                         <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
                     </div>
+                    <div class="flex justify-end">
+                        <router-link to="/TelaBiblioteca">
+                            <button class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">Ver mais</button>
+                        </router-link>
+                        
+                    </div>
+                    
                 </div>
             </div>
         </main>

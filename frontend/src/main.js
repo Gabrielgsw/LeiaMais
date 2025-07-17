@@ -22,12 +22,13 @@ import TeladeRanking from './pages/TeladeRanking.vue'
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
 import TelaDeTurmaAluno from './pages/Aluno/TelaDeTurmaAluno.vue'
+import TelaBiblioteca from './pages/TelaBiblioteca.vue'
 
 const routes = [
   { path: '/', component: BemVindo },
   { path: '/SelecaoLogin', component: SelecaoLogin },
   { path: '/TelaInicial', component: TelaInicial },
-  { path: '/TeladeTurma', component: TelaDeTurma },
+  { path: '/turma/:id', component: TelaDeTurma },
   { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados },
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
   { path: '/Telacriaratividade', component: Telacriaratividade },
@@ -42,6 +43,8 @@ const routes = [
   { path: '/TelaInicialAluno', component: TelaInicialAluno },
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
+  { path: '/TelaBiblioteca', component: TelaBiblioteca },
+  
 
 
 ]

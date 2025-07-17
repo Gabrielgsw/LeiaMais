@@ -88,12 +88,15 @@ public class TurmaService {
     }
 
     public Aluno adicionarAluno(String turmaNome,String matriculaAluno){
+        System.out.println("[SERVICE] Adicionando aluno com matrícula: " + matriculaAluno + " à turma: " + turmaNome);
         Turma turma = findByNome(turmaNome);
+
+        System.out.println("[SERVICE] Turma encontrada: " + turma.getNome() + ", ID: " + turma.getId());
+
         Optional<Aluno> aluno = alunoService.buscarPorMatricula(matriculaAluno);
+        
+        System.out.println("[SERVICE] Aluno encontrado: " + (aluno.isPresent() ? aluno.get().getNome() : "Nenhum aluno encontrado com a matrícula: " + matriculaAluno));
         turma.setAlunosMatriculados(aluno.get());
         return aluno.get();
     }
-
-
-
 }
