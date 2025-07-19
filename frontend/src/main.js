@@ -23,6 +23,13 @@ import TeladeRanking from './pages/TeladeRanking.vue'
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
 import TelaDeTurmaAluno from './pages/Aluno/TelaDeTurmaAluno.vue'
 
+//import telas de professor:
+import TelaInicialProfessor from './pages/Professor/TelaInicialProfessor.vue';
+import TelaDeTurmaProfessor from './pages/Professor/TelaDeTurmaProfessor.vue';
+import TelaCriarAtividadeProfessor from './pages/Professor/TelaCriarAtividadeProfessor.vue';
+import TelaAlunosCorrecao from './pages/Professor/TelaAlunosCorrecao.vue';
+import TelaCorrigirAtividadeProfessor from './pages/Professor/TelaCorrigirAtividadeProfessor.vue';
+
 const routes = [
   { path: '/', component: BemVindo },
   { path: '/SelecaoLogin', component: SelecaoLogin },
@@ -43,6 +50,12 @@ const routes = [
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
 
+  //telas de professor:
+  { path: '/TelaInicialProfessor', component: TelaInicialProfessor },
+  { path: '/TelaDeTurmaProfessor', component: TelaDeTurmaProfessor },
+  {path: '/TelaCriarAtividadeProfessor', component: TelaCriarAtividadeProfessor },
+  {path: '/TelaAlunosCorrecao', component: TelaAlunosCorrecao },
+  {path: '/TelaCorrigirAtividadeProfessor', component: TelaCorrigirAtividadeProfessor },
 
 ]
 
