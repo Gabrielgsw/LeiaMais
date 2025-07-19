@@ -9,6 +9,7 @@ import com.leiamais.repositories.RespostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,28 +30,20 @@ public class RepostaService {
         return respostaRepository.findAll();
     }
 
-    public Optional<Aluno> buscarPorId(UUID id) {
-        return alunoRepository.findById(id);
+    public Optional<Resposta> buscarRespostaPorId(UUID id) {
+        return respostaRepository.findById(id);
     }
 
-    public Optional<Aluno> buscarPorMatricula(String matricula) {
-        return alunoRepository.findByMatricula(matricula);
+    public void salvarResposta(Resposta resposta) {
+        respostaRepository.save(resposta);
     }
 
-    public Aluno salvar(Aluno aluno) {
-        return alunoRepository.save(aluno);
+    public void excluirResposta(UUID id) {
+        respostaRepository.deleteById(id);
     }
 
-    public void deletar(UUID id) {
-        alunoRepository.deleteById(id);
-    }
-
-    public Optional<Aluno> buscarPorNome(String nome) {
-        return alunoRepository.findByNome(nome);
-    }
-
-    public Optional<Aluno> buscarPorEmail(String email) {
-        return alunoRepository.findByEmail(email);
+    public void atualizarResposta(Resposta resposta) {
+        respostaRepository.save(resposta);
     }
 
     public Optional<Atividade> findByNome(String nome) {
@@ -60,7 +53,7 @@ public class RepostaService {
                 return Optional.of(a);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public Resposta responderAtividade(Aluno aluno, String nomeAtividade, String texto){
@@ -72,7 +65,27 @@ public class RepostaService {
             //resp.setTexto(texto);
             return resp;
         }
-        return null;
+        return null;    
 
+    }
+    
+    public Optional<Resposta> corrigirResposta(UUID idResposta, float nota, String feedback) {
+        Optional<Resposta> respostaOpt = respostaRepository.findById(idResposta);
+        if (respostaOpt.isPresent()) {
+            Resposta resposta = respostaOpt.get();
+            resposta.setNota(nota);
+            resposta.setFeedback(feedback);
+            respostaRepository.save(resposta);
+            return Optional.of(resposta);
+        }
+        return Optional.empty();
+    }
+    public Optional<Resposta> findByAlunoAndAtividade(Aluno aluno, Atividade atividade){
+        return findAll().stream()
+                .filter(resposta -> resposta.getAluno().equals(aluno) && resposta.getAtividade().equals(atividade))
+                .findFirst();
+    }
+    public Collection<Resposta> findAll() {
+        return respostaRepository.findAll();
     }
 }
