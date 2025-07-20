@@ -1,6 +1,7 @@
 package com.leiamais.services;
 
 import com.leiamais.models.Atividade;
+import com.leiamais.models.Turma;
 import com.leiamais.repositories.AtividadeRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.UUID;
 public class AtividadeService {
 
     private final AtividadeRepository atividadeRepository;
+    private final TurmaService turmaService;
 
-    public AtividadeService(AtividadeRepository atividadeRepository) {
+    public AtividadeService(AtividadeRepository atividadeRepository,TurmaService turmaService) {
         this.atividadeRepository = atividadeRepository;
+        this.turmaService = turmaService;
     }
 
     public List<Atividade> listarTodas() {
@@ -33,14 +36,14 @@ public class AtividadeService {
                 .findFirst();
     }
 
-    public List<Atividade> buscarPorTurma(UUID turmaId) {
+    /*public List<Atividade> buscarPorTurma(UUID turmaId) {
         return atividadeRepository.findAll().stream()
                 .filter(atividade -> atividade.getTurma() != null && atividade.getTurma().getId().equals(turmaId))
                 .toList();
-    }
+    }*/
 
 
-    public Atividade salvar(Atividade atividade) {
+    public Atividade salvar(UUID idTurma, Atividade atividade) {
         if (atividade.getEnunciado() != null && atividade.getEnunciado().size() > 3) {
             throw new IllegalArgumentException("Cada atividade pode ter no máximo 3 enunciados.");
         }
@@ -48,8 +51,9 @@ public class AtividadeService {
         if (atividade.getPrazoEntrega().isBefore(LocalDate.now().minusDays(10))) {
             throw new IllegalArgumentException("O prazo de entrega não pode ser no passado.");
         }
-
-        return atividadeRepository.save(atividade);
+        Atividade atividadeCriada =  atividadeRepository.save(atividade);
+        turmaService.adicionarAtividade(idTurma, atividade);
+        return atividadeCriada;
     }
 
     public void deletar(UUID id) {

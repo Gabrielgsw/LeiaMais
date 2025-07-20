@@ -11,8 +11,8 @@ public class Turma {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @Column(nullable = false)
+// nullable = false
+    @Column
     private String nome;
 
     @OneToMany
@@ -76,7 +76,7 @@ public class Turma {
     public void setAlunosMatriculados(Aluno alunosMatriculado) {
         System.out.println("[TURMA] Adicionando aluno: " + alunosMatriculado.getNome() + " à turma: " + this.nome);
         this.alunosMatriculados.add(alunosMatriculado);
-        System.out.println("[TURMA] Aluno adicionado com sucesso. Total de alunos na turma: " + this.alunosMatriculados.size());
+        System.out.println("[TURMA] Aluno adicionado com sucesso. Total de alunos na turma: " + this.alunosMatriculados.size());  
         for (Aluno aluno : this.alunosMatriculados) {
             System.out.println("[TURMA] Aluno na turma: " + aluno.getNome());
         }
@@ -102,7 +102,7 @@ public class Turma {
         return atividades;
     }
 
-    public void setAtividades(List<Atividade> atividades) {
-        this.atividades = atividades;
+    public void setAtividades(Atividade atividade) {
+        this.atividades.add(atividade);
     }
 }

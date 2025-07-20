@@ -136,7 +136,7 @@ async function carregarDadosDaTurma() {
 const carregarAtividades = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/atividades/buscarPorTurma/${turma.value.id}`
+      `http://localhost:8080/atividades`
     );
     if (response.status !== 200) {
       throw new Error(
@@ -260,7 +260,7 @@ onMounted(() => {
       <div class="flex justify-between items-center text-center mb-3 mt-8">
         <h3 class="text-[20px] font-bold mt-3">Atividades</h3>
         <RouterLink
-          to="/Telacriaratividade"
+        :to="`/turma/${turma?.id}/criar-atividade`"
           class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600"
         >
           Cadastrar atividade

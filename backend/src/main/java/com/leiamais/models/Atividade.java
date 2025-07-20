@@ -39,8 +39,8 @@ public class Atividade {
     @ManyToOne
     private Livro livro;
     @ManyToOne
-    @JoinColumn//(name = "turma_id", nullable = false)
-    private Turma turma;
+   // @JoinColumn//(name = "turma_id", nullable = false)
+    //private Turma turma;
 
     @PrePersist
     protected void onCreate() {
@@ -56,14 +56,14 @@ public class Atividade {
     }
 
 
-    public Atividade(UUID id, List<String> enunciado, String nome, List<Resposta> respostas, Professor professor, Livro livro, Turma turma, LocalDateTime dataCriacao, LocalDateTime prazoEntrega) {
+    public Atividade(UUID id, List<String> enunciado, String nome, List<Resposta> respostas, Professor professor, Livro livro/*, Turma turma*/, LocalDateTime dataCriacao, LocalDateTime prazoEntrega) {
         this.id = id;
         this.enunciado = (enunciado != null) ? enunciado : new ArrayList<>();
         this.nome = nome;
         this.respostas = (respostas != null) ? respostas : new ArrayList<>();
         this.professor = professor;
         this.livro = livro;
-        this.turma = turma;
+        //this.turma = turma;
         this.dataCriacao = LocalDate.now();
         this.prazoEntrega = LocalDate.now();
     }
@@ -100,13 +100,13 @@ public class Atividade {
         this.prazoEntrega = prazoEntrega;
     }
 
-    public Turma getTurma() {
+    /*public Turma getTurma() {
         return turma;
     }
 
     public void setTurma(Turma turma) {
         this.turma = turma;
-    }
+    }*/
 
     public void adicionarEnunciado(String enunciado) {
         this.enunciado.add(enunciado);

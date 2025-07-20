@@ -6,7 +6,7 @@ import com.leiamais.models.Turma;
 import com.leiamais.repositories.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.leiamais.models.Atividade;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -65,7 +65,7 @@ public class TurmaService {
             //turmaExistente.setAlunosMatriculados(novaTurma.getAlunosMatriculados());
             //turmaExistente.setProfessores(novaTurma.getProfessor());
             //turmaExistente.setLivros(novaTurma.getLivros());
-            turmaExistente.setAtividades(novaTurma.getAtividades());
+            //turmaExistente.setAtividades(novaTurma.getAtividades());
 
             return turmaRepository.save(turmaExistente);
         } else {
@@ -98,5 +98,15 @@ public class TurmaService {
         System.out.println("[SERVICE] Aluno encontrado: " + (aluno.isPresent() ? aluno.get().getNome() : "Nenhum aluno encontrado com a matrícula: " + matriculaAluno));
         turma.setAlunosMatriculados(aluno.get());
         return aluno.get();
+    }
+
+    public void adicionarAtividade(UUID idTurma,Atividade atividade) {
+        //Turma t = atividade.getTurma();
+        System.out.println("Turma vinculada a atividade "+atividade.getNome()+": "+atividade.getNome());
+        System.out.println("adicionar atividade: turma ->"+idTurma);
+        Turma turma = buscarPorId(idTurma);
+        turma.setAtividades(atividade);
+        turmaRepository.save(turma);
+
     }
 }

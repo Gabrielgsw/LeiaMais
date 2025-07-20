@@ -3,7 +3,7 @@ import { RouterLink, useRouter } from "vue-router";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
-import { ref, onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ import axios from "axios";
 const router = useRouter();
 
 const turmas = ref<
-{id: string; nome: string; alunosMatriculados: []; professores: []; livros: []; atividades: []}[]
+  { id: string; nome: string; alunosMatriculados: []; professores: []; livros: []; atividades: [] }[]
 >([]);
 
 const livros = ref([
@@ -65,16 +65,16 @@ const { handleSubmit, isFieldDirty, values, setFieldValue } = useForm({
 
 
 async function getTurmas() {
-    const  response = await axios.get("http://localhost:8080/turmas");
-    if (response.status >= 200 && response.status < 300) {
-      turmas.value = response.data;
-    } else {
-      console.error("Erro ao buscar turmas:", response.statusText);
-    }
+  const response = await axios.get("http://localhost:8080/turmas");
+  if (response.status >= 200 && response.status < 300) {
+    turmas.value = response.data;
+  } else {
+    console.error("Erro ao buscar turmas:", response.statusText);
+  }
 
-    turmas.value = await response.data
+  turmas.value = await response.data
 
-    console.log("Turmas carregadas:", turmas.value);
+  console.log("Turmas carregadas:", turmas.value);
 }
 
 const criarTurma = handleSubmit(async (values) => {
@@ -178,9 +178,7 @@ onMounted(() => {
 </div>-->
 <template>
   <div class="min-h-screen bg-[#e6f7fa] font-sans">
-    <header
-      class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center"
-    >
+    <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
       <RouterLink to="/TelaInicial">
         <div class="text-5xl flex">
           <h1>Leia+</h1>
@@ -193,11 +191,7 @@ onMounted(() => {
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex items-center gap-4 mb-6">
           <div class="w-20 h-20 bg-gray-300 rounded-full">
-            <img
-              src="../../assets/capivara.png"
-              alt="Fundo"
-              class="w-full h-full object-cover"
-            />
+            <img src="../../assets/capivara.png" alt="Fundo" class="w-full h-full object-cover" />
           </div>
           <div>
             <p class="text-blue-600 font-bold text-lg">Olá, Coordenador</p>
@@ -207,25 +201,19 @@ onMounted(() => {
 
         <div class="flex gap-4 mb-6">
           <router-link to="/TelaDeLivrosCadastrados">
-            <button
-              class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-            >
+            <button class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
               Adicionar Livros
             </button>
           </router-link>
-          <router-link to="/TelaDeUsuariosCadastrados"
-            ><button
-              class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
-            >
+          <router-link to="/TelaDeUsuariosCadastrados"><button
+              class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors">
               Adicionar usuários
             </button>
           </router-link>
 
           <Dialog v-model:open="isAddTurmaDialogOpen">
             <DialogTrigger as-child>
-              <button
-                class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
-              >
+              <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors">
                 Adicionar Turma
               </button>
             </DialogTrigger>
@@ -238,23 +226,15 @@ onMounted(() => {
                     </h1>
                   </DialogTitle>
                 </DialogHeader>
-                <FormField
-                  v-slot="{ componentField: nome }"
-                  name="nome"
-                  :validate-on-blur="!isFieldDirty"
-                >
+                <FormField v-slot="{ componentField: nome }" name="nome" :validate-on-blur="!isFieldDirty">
                   <FormItem>
-                    <FormLabel
-                      >Nome
-                      <span class="text-red-500 font-bold">*</span></FormLabel
-                    >
+                    <FormLabel>Nome
+                      <span class="text-red-500 font-bold">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <input
-                        id="nome"
+                      <input id="nome"
                         class="col-span-4 bg-[#F5F7FA] rounded-xs border border-gray-300 px-1.5 py-0.75 h-[38px]"
-                        placeholder="Nome da turma"
-                        v-bind="nome"
-                      />
+                        placeholder="Nome da turma" v-bind="nome" />
                     </FormControl>
                   </FormItem>
                 </FormField>
@@ -262,26 +242,21 @@ onMounted(() => {
                 <div class="flex items-center justify-between mt-4">
                   <button
                     class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
-                    @click="isAddTurmaDialogOpen = false"
-                  >
+                    @click="isAddTurmaDialogOpen = false">
                     Cancelar
                   </button>
-                  <Button
-                    type="submit"
-                    class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
-                  >
+                  <Button type="submit"
+                    class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors">
                     Cadastrar
                   </Button>
                 </div>
               </form>
             </DialogContent>
           </Dialog>
-          
 
-          <button
-            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
-            @click="handleLogout"
-          >
+
+          <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors"
+            @click="handleLogout">
             Sair da conta
           </button>
         </div>
@@ -297,13 +272,16 @@ onMounted(() => {
           <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
           <RouterLink to="/TeladeLivroGeral">
             <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-              <img
-                v-for="livro in livros"
-                :src="livro"
-                class="w-[160px] h-[230px] rounded-sm object-cover"
-              />
+              <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
             </div>
           </RouterLink>
+          <div class="flex justify-end">
+            <router-link to="/TelaBiblioteca">
+              <button class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">
+                Ver mais
+              </button>
+            </router-link>
+          </div>
         </div>
       </div>
     </main>

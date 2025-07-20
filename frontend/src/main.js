@@ -17,7 +17,7 @@ import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
 import Telaleitura from './pages/Telaleitura.vue'
 import TelaCorrigirAtividadeCoordenador from './pages/Coordenador/TelaCorrigirAtividadeCoordenador.vue'
-import TeladeRanking from './pages/TeladeRanking.vue'
+import TeladeRanking from './pages/Aluno/TeladeRanking.vue'
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -36,9 +36,9 @@ const routes = [
   { path: '/SelecaoLogin', component: SelecaoLogin },
   { path: '/TelaInicial', component: TelaInicial },
   { path: '/turma/:id', component: TelaDeTurma },
+  { path: '/turma/:id/criar-atividade', component: Telacriaratividade },
   { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados },
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
-  { path: '/Telacriaratividade', component: Telacriaratividade },
   { path: '/TelaTestes', component: TelaTestes },
   { path: '/TelaResolverAtividade', component: TelaResolverAtividade },
   { path: '/TeladeLivroGeral', component: TeladeLivroGeral },

@@ -43,7 +43,6 @@ const handleLogout = async () => {
 
         <main class="p-12">
             <div class="bg-white rounded-lg shadow-md p-6">
-                
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-20 h-20 bg-gray-300 rounded-full">
                         <img src="../../assets/capivara.png" alt="Fundo" class="w-full h-full object-cover" />
@@ -56,10 +55,10 @@ const handleLogout = async () => {
 
                 <div class="flex gap-4 mb-6">
                     <router-link to="/TeladeRanking">
-                        <button
-                            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking geral</button>
+                        <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking
+                            geral</button>
                     </router-link>
-                    
+
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
                         @click="handleLogout">Sair da conta</button>
                 </div>
@@ -78,6 +77,14 @@ const handleLogout = async () => {
                                 class="w-[160px] h-[230px] rounded-sm object-cover" />
                         </div>
                     </RouterLink>
+                    <div class="flex justify-end">
+                        <router-link to="/TelaBiblioteca">
+                            <button
+                                class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">
+                                Ver mais
+                            </button>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </main>

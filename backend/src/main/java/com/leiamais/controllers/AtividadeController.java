@@ -57,7 +57,7 @@ public class AtividadeController {
         }
     }
 
-    @GetMapping("/buscarPorTurma/{turmaId}")
+    /*@GetMapping("/buscarPorTurma/{turmaId}")
     public ResponseEntity<List<Atividade>> buscarPorTurma(@PathVariable UUID turmaId) {
         List<Atividade> atividadeOptional = atividadeService.buscarPorTurma(turmaId);
         if (atividadeOptional != null) {
@@ -65,11 +65,11 @@ public class AtividadeController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
     
-    @PostMapping
-    public ResponseEntity<Atividade> criar(@RequestBody Atividade atividade) {
-        Atividade salvo = atividadeService.salvar(atividade);
+    @PostMapping("/{idTurma}")
+    public ResponseEntity<Atividade> criar(@RequestBody Atividade atividade,@PathVariable UUID idTurma) {        
+        Atividade salvo = atividadeService.salvar(idTurma,atividade);
         return ResponseEntity.ok(salvo);
     }
 

@@ -1,7 +1,9 @@
 package com.leiamais;
 
+import com.leiamais.models.Aluno;
 import com.leiamais.models.Cargo;
 import com.leiamais.models.Coordenacao;
+import com.leiamais.models.Professor;
 import com.leiamais.models.Usuario;
 import com.leiamais.repositories.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -36,7 +38,6 @@ public class LeiaMaisApplication {
 	@Profile("!test")
 	public CommandLineRunner initData(UsuarioRepository usuarioRepository) { // Removed PasswordEncoder
 		return args -> {
-
 			if (usuarioRepository.findByNome("coordenador").isEmpty()) {
 				Coordenacao adminUser = new Coordenacao();
 				adminUser.setNome("coordenador");
@@ -48,8 +49,34 @@ public class LeiaMaisApplication {
 
 				usuarioRepository.save(adminUser);
 				System.out.println("Initial 'Coordenador' user created: coordenador@example.com/senha123");
-
 			}
+
+			if (usuarioRepository.findByNome("aluno").isEmpty()) {
+				Aluno aluno = new Aluno();
+				aluno.setNome("aluno");
+				aluno.setSenha("senha123");
+				aluno.setEmail("aluno@example.com");
+				aluno.setCargo(Cargo.ALUNO);
+				aluno.setCpf("222.222.222-22");
+				aluno.setMatricula("123456789");
+				aluno.setDataNascimento(null);
+
+				usuarioRepository.save(aluno);
+			}
+
+			if (usuarioRepository.findByNome("professor").isEmpty()) {
+				Professor professor = new Professor();
+				professor.setNome("professor");
+				professor.setSenha("senha123");
+				professor.setEmail("professor@example.com");
+				professor.setCargo(Cargo.PROFESSOR);
+				professor.setCpf("333.333.333-33");
+				professor.setDataNascimento(null);
+
+				usuarioRepository.save(professor);
+			}
+
+			// Livro, Turma
 		};
 	}
 

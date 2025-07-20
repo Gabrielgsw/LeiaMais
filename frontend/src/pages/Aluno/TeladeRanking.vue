@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
             <RouterLink to="/TelaInicial">
                 <div class="text-5xl flex ">
                     <h1>Leia+</h1>
-                    <img src="../assets/capivara.svg" alt="" />
+                    <img src="../../assets/capivara.svg" alt="" />
                 </div>
             </RouterLink>
         </header>
@@ -19,14 +19,14 @@ import { RouterLink } from 'vue-router'
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-3">
                         <RouterLink to="/TelaInicial">
-                            <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                            <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
                         </RouterLink>
 
                         <h2 class="text-[28px] font-bold">Ranking da turma:</h2>
                     </div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <img src="../assets/capivara-trofeu.png" alt="">
+                    <img src="../../assets/capivara-trofeu.png" alt="">
                 </div>
                 <div>
                     <h1 class="font-normal mt-4">Turma: <strong>1° ano A - Ensino fundamental</strong></h1>

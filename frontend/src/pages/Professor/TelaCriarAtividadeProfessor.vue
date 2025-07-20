@@ -1,12 +1,4 @@
 <script setup>
-import {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
 import FormularioBuilder from '@/components/FormularioBuilder.vue';
 </script>
 
