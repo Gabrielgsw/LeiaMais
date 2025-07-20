@@ -1,5 +1,6 @@
 package com.leiamais.controllers;
 
+import com.leiamais.dtos.CorrecaoRespostaDTO;
 import com.leiamais.dtos.RequisicaoRespostaDTO;
 import com.leiamais.models.Aluno;
 import com.leiamais.models.Atividade;
@@ -92,11 +93,17 @@ public class RespostaController {
             return ResponseEntity.notFound().build();
         }
     }
-    public Optional<Resposta> buscarPorAlunoEAtividade(Aluno aluno, Atividade atividade) {
-        return repostaService.findByAlunoAndAtividade(aluno, atividade);
-    }
-    public Optional<Resposta> corrigirResposta(UUID idResposta, float nota, String feedback) {
-        return repostaService.corrigirResposta(idResposta, nota, feedback);
+    
+    @PutMapping("/corrigir/{id}")
+    public ResponseEntity<Resposta> corrigirResposta(
+            @PathVariable UUID id,
+            @RequestBody CorrecaoRespostaDTO dto) {
+
+        Optional<Resposta> respostaCorrigida = repostaService.corrigirResposta(id, dto.getNota(), dto.getFeedback());
+
+        return respostaCorrigida
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
