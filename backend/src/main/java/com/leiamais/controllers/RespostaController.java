@@ -57,75 +57,47 @@ public class RespostaController {
         }
 
     }
-
-    /*@GetMapping("/{id}")
-    public ResponseEntity<Aluno> buscarPorId(@PathVariable UUID id) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
-        if (alunoOptional.isPresent()) {
-            return ResponseEntity.ok(alunoOptional.get());
+    @GetMapping("/{id}")
+    public ResponseEntity<Resposta> buscarPorId(@PathVariable UUID id) {
+        Optional<Resposta> resposta = repostaService.buscarRespostaPorId(id);
+        if (resposta.isPresent()) {
+            return ResponseEntity.ok(resposta.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @GetMapping("/matricula/{matricula}")
-    public ResponseEntity<Aluno> buscarPorMatricula(@PathVariable String matricula) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorMatricula(matricula);
-        if (alunoOptional.isPresent()) {
-            return ResponseEntity.ok(alunoOptional.get());
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable UUID id) {
+        repostaService.excluirResposta(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Resposta> atualizar(@PathVariable UUID id, @RequestBody Resposta resposta) {
+        Optional<Resposta> respostaExistente = repostaService.buscarRespostaPorId(id);
+        if (respostaExistente.isPresent()) {
+            resposta.setId(id);
+            repostaService.atualizarResposta(resposta);
+            return ResponseEntity.ok(resposta);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PostMapping
-    public ResponseEntity<Aluno> criarAluno(@RequestBody Aluno aluno) {
-        Aluno novoAluno = alunoService.salvar(aluno);
-        return ResponseEntity.status(201).body(novoAluno);
-    }
-
-    /*@PutMapping("/{id}")
-    public ResponseEntity<Aluno> atualizarAluno(@PathVariable UUID id, @RequestBody Aluno aluno) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
-        if (alunoOptional.isPresent()) {
-            aluno.setId(id);
-            Aluno alunoAtualizado = alunoService.salvar(aluno);
-            return ResponseEntity.ok(alunoAtualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
-
-    /*@DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarAluno(@PathVariable UUID id) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorId(id);
-        if (alunoOptional.isPresent()) {
-            alunoService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
-
-    /*@GetMapping("/nome/{nome}")
-    public ResponseEntity<Aluno> buscarPorNome(@PathVariable String nome) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorNome(nome);
-        if (alunoOptional.isPresent()) {
-            return ResponseEntity.ok(alunoOptional.get());
+    @GetMapping("/atividade/{nome}")
+    public ResponseEntity<Map<String, Object>> buscarPorNomeAtividade(@PathVariable String nome) {
+        Optional<Atividade> atividade = atividadeService.buscarPorNome(nome);
+        if (atividade.isPresent()) {
+            List<Resposta> respostas = atividade.get().getRespostas();
+            return ResponseEntity.ok(Map.of("atividade", atividade.get(), "respostas", respostas));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @GetMapping("/email/{email}")
-    public ResponseEntity<Aluno> buscarPorEmail(@PathVariable String email) {
-        Optional<Aluno> alunoOptional = alunoService.buscarPorEmail(email);
-        if (alunoOptional.isPresent()) {
-            return ResponseEntity.ok(alunoOptional.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
+    public Optional<Resposta> buscarPorAlunoEAtividade(Aluno aluno, Atividade atividade) {
+        return repostaService.findByAlunoAndAtividade(aluno, atividade);
+    }
+    public Optional<Resposta> corrigirResposta(UUID idResposta, float nota, String feedback) {
+        return repostaService.corrigirResposta(idResposta, nota, feedback);
+    }
 
 
 }
