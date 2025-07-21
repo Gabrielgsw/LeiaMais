@@ -49,6 +49,7 @@ public class LeituraController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         leituraService.delete(id);
