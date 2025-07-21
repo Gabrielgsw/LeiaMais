@@ -5,6 +5,8 @@ import com.leiamais.models.Cargo;
 import com.leiamais.models.Coordenacao;
 import com.leiamais.models.Professor;
 import com.leiamais.models.Usuario;
+import com.leiamais.models.Livro;
+import com.leiamais.repositories.LivroRepository;
 import com.leiamais.repositories.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class LeiaMaisApplication {
+
+    private final LivroRepository livroRepository;
+
+    LeiaMaisApplication(LivroRepository livroRepository) {
+        this.livroRepository = livroRepository;
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(LeiaMaisApplication.class, args);
@@ -77,6 +85,15 @@ public class LeiaMaisApplication {
 			}
 
 			// Livro, Turma
+			if (livroRepository.findByISBN("9788522005239").isEmpty()) {
+				Livro livro = new Livro();
+				livro.setTitulo("O pequeno príncipe");
+				livro.setISBN("9788522005239");
+				livro.setLivroUrl("1mZa8gQGbms46Uh2_vjUv6riagwUTfLLs");
+				livro.setAutor("Antoine de Saint-Exupéry");
+				
+				livroRepository.save(livro);
+			}
 		};
 	}
 

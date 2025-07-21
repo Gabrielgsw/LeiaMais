@@ -46,7 +46,7 @@ const options = ref([
 
                 <div class="flex  gap-10 items-center mt-4">
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                        @click="abrirPdf('23487234')">
+                        @click="abrirPdf('9788522005239')">
                         Ler agora
                     </button>
 
