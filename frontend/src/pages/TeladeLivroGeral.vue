@@ -33,26 +33,26 @@ const options = ref([
         </header>
         <div class="flex flex-row max-w-5xl mx-auto bg-white rounded-2xl p-6 mt-16">
             <div class="mr-10 flex-shrink-0">
-                <img class="rounded-2xl w-52 h-auto" src="../assets/livros-teste/gameofthrones.webp" alt="">
+                <img class="rounded-2xl w-52 h-auto" src="../assets/livros-teste/O pequeno príncipe.jpg" alt="">
             </div>
             <div class="flex-1 gap-1">
-                <h1 class="text-2xl font-bold text-[28px]">Game of thrones - livro um</h1>
-                <p>"A Guerra dos Tronos", primeiro livro da série "As Crônicas de Gelo e Fogo", de George R. R. Martin,
-                    narra o início de uma intrincada disputa pelo poder nos Sete Reinos de Westeros. O livro apresenta a
-                    chegada do Rei Robert Baratheon a Winterfell, convidando Eddard Stark para ser sua Mão do Rei,
-                    desencadeando uma série de eventos que mergulham a região em uma guerra civil. Paralelamente,
-                    Daenerys Targaryen, exilada, planeja sua vingança e a retomada do Trono de Ferro, enquanto no
-                    extremo norte, Jon Snow enfrenta perigos além da Muralha. </p>
+                <h1 class="text-2xl font-bold text-[28px]">O pequeno príncipe</h1>
+                <p>conta a história de um piloto que cai com seu avião no deserto do Saara e conhece um menino loiro,
+                    vindo de um pequeno planeta distante, o asteroide B-612. O menino, conhecido como o Pequeno
+                    Príncipe, narra suas viagens por outros planetas, onde encontra personagens excêntricos que
+                    representam diferentes aspectos da vida adulta, como a vaidade, a ambição e a solidão. Ao chegar à
+                    Terra, o Pequeno Príncipe faz amizade com uma raposa, que lhe ensina sobre o valor da amizade e do
+                    amor, e a importância de ver com o coração, não apenas com os olhos. </p>
 
                 <div class="flex  gap-10 items-center mt-4">
                     <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
                         @click="abrirPdf('23487234')">
                         Ler agora
                     </button>
-                    
-                        <Rating v-model="value" />
-                        <Select v-model="selectedStatus" :options="options" optionLabel="name"
-                            placeholder="Status do livro" class="w-full md:w-56"  />
+
+                    <Rating v-model="value" />
+                    <Select v-model="selectedStatus" :options="options" optionLabel="name" placeholder="Status do livro"
+                        class="w-full md:w-56" />
 
                 </div>
 
