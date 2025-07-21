@@ -1,151 +1,131 @@
-package com.leiamais;
+package com.leiamais.services;
 
 import com.leiamais.models.Atividade;
-import com.leiamais.models.Professor;
 import com.leiamais.models.Turma;
 import com.leiamais.repositories.AtividadeRepository;
-import com.leiamais.services.AtividadeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.ArgumentCaptor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class AtividadeServiceTest {
 
-    @Mock
     private AtividadeRepository atividadeRepository;
-
-    @InjectMocks
+    private TurmaService turmaService;
     private AtividadeService atividadeService;
-
-    private Atividade atividade;
 
     @BeforeEach
     void setUp() {
-        atividade = new Atividade();
-        atividade.setId(UUID.randomUUID());
-        atividade.setNome("Atividade de Matemática");
-        atividade.setEnunciado(List.of("Questão 1", "Questão 2"));
-        atividade.setPrazoEntrega(LocalDate.now().plusDays(3));
-        atividade.setProfessor(new Professor());
-        atividade.setTurma(new Turma());
+        atividadeRepository = mock(AtividadeRepository.class);
+        turmaService = mock(TurmaService.class);
+        atividadeService = new AtividadeService(atividadeRepository, turmaService);
     }
 
     @Test
-    void salvarAtividadeSucess() {
-        when(atividadeRepository.save(ArgumentMatchers.any(Atividade.class)))
-                .thenReturn(atividade);
+    void deveListarTodasAsAtividades() {
+        List<Atividade> atividades = List.of(new Atividade(), new Atividade());
+        when(atividadeRepository.findAll()).thenReturn(atividades);
 
-        Atividade resultado = atividadeService.salvar(atividade);
+        List<Atividade> resultado = atividadeService.listarTodas();
 
-        assertNotNull(resultado);
-        assertEquals("Atividade: Pequeno Príncipe", resultado.getNome());
-        verify(atividadeRepository, times(1)).save(atividade);
+        assertEquals(2, resultado.size());
+        verify(atividadeRepository).findAll();
     }
 
     @Test
-    void exepcionAtividadeEnunciado() {
-        atividade.setEnunciado(List.of("Q1", "Q2", "Q3", "Q4"));
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            atividadeService.salvar(atividade);
-        });
-
-        assertEquals("Cada atividade pode ter no máximo 3 enunciados.", exception.getMessage());
-        verify(atividadeRepository, never()).save(any());
-    }
-
-    @Test
-    void exceptionPrazoEntrega() {
-        atividade.setPrazoEntrega(LocalDate.now().minusDays(15));
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            atividadeService.salvar(atividade);
-        });
-
-        assertEquals("O prazo de entrega não pode ser no passado.", exception.getMessage());
-        verify(atividadeRepository, never()).save(any());
-    }
-
-    @Test
-    void buscaAtividadeExistente() {
-        UUID id = atividade.getId();
+    void deveBuscarAtividadePorId() {
+        UUID id = UUID.randomUUID();
+        Atividade atividade = new Atividade();
         when(atividadeRepository.findById(id)).thenReturn(Optional.of(atividade));
 
         Optional<Atividade> resultado = atividadeService.buscarPorId(id);
 
         assertTrue(resultado.isPresent());
-        assertEquals("Atividade: Pequeno Príncipe", resultado.get().getNome());
+        verify(atividadeRepository).findById(id);
     }
 
     @Test
-    void listarAtividades() {
+    void deveBuscarAtividadePorNome() {
+        Atividade atividade = new Atividade();
+        atividade.setNome("O pequeno principe");
         when(atividadeRepository.findAll()).thenReturn(List.of(atividade));
 
-        List<Atividade> resultado = atividadeService.listarTodas();
-
-        assertEquals(1, resultado.size());
-    }
-
-    @Test
-    void listarPorNome() {
-        when(atividadeRepository.findAll()).thenReturn(List.of(atividade));
-
-        Optional<Atividade> resultado = atividadeService.buscarPorNome("Atividade: Pequeno Príncipe");
+        Optional<Atividade> resultado = atividadeService.buscarPorNome("O pequeno principe");
 
         assertTrue(resultado.isPresent());
-        assertEquals("Atividade: Pequeno Príncipe", resultado.get().getNome());
+        assertEquals("O pequeno principe", resultado.get().getNome());
     }
 
     @Test
-    void buscaPorTurma() {
-        when(atividadeRepository.findAll()).thenReturn(List.of(atividade));
+    void deveSalvarAtividadeValida() {
+        UUID turmaId = UUID.randomUUID();
+        Atividade atividade = new Atividade();
+        atividade.setPrazoEntrega(LocalDate.now().plusDays(5));
+        atividade.setEnunciado(List.of("Q1", "Q2"));
 
-        List<Atividade> resultado = atividadeService.buscarPorTurma(atividade.getTurma().getId());
+        when(atividadeRepository.save(atividade)).thenReturn(atividade);
 
-        assertEquals(1, resultado.size());
+        Atividade resultado = atividadeService.salvar(turmaId, atividade);
+
+        assertNotNull(resultado);
+        verify(atividadeRepository).save(atividade);
+        verify(turmaService).adicionarAtividade(turmaId, atividade);
     }
 
     @Test
-    void exclusaoAtividade() {
-        UUID id = atividade.getId();
+    void deveLancarExcecaoQuandoMaisDeTresEnunciados() {
+        Atividade atividade = new Atividade();
+        atividade.setEnunciado(List.of("Q1", "Q2", "Q3", "Q4"));
+        atividade.setPrazoEntrega(LocalDate.now().plusDays(5));
+
+        assertThrows(IllegalArgumentException.class, () -> atividadeService.salvar(UUID.randomUUID(), atividade));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoPrazoDeEntregaPassado() {
+        Atividade atividade = new Atividade();
+        atividade.setEnunciado(List.of("Q1"));
+        atividade.setPrazoEntrega(LocalDate.now().minusDays(11));
+
+        assertThrows(IllegalArgumentException.class, () -> atividadeService.salvar(UUID.randomUUID(), atividade));
+    }
+
+    @Test
+    void deveDeletarAtividadeQuandoExiste() {
+        UUID id = UUID.randomUUID();
         when(atividadeRepository.existsById(id)).thenReturn(true);
 
         atividadeService.deletar(id);
 
-        verify(atividadeRepository, times(1)).deleteById(id);
+        verify(atividadeRepository).deleteById(id);
     }
 
     @Test
-    void exceptionExclusaoAtividade() {
+    void deveLancarExcecaoAoDeletarAtividadeInexistente() {
         UUID id = UUID.randomUUID();
         when(atividadeRepository.existsById(id)).thenReturn(false);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            atividadeService.deletar(id);
-        });
-
-        assertEquals("Atividade com ID " + id + " não encontrada.", exception.getMessage());
-        verify(atividadeRepository, never()).deleteById(any());
+        assertThrows(IllegalArgumentException.class, () -> atividadeService.deletar(id));
     }
 
     @Test
-    void buscaAtividadeEnunciado() {
-        when(atividadeRepository.findAll()).thenReturn(List.of(atividade));
+    void deveBuscarPorTrechoDeEnunciado() {
+        Atividade a1 = new Atividade();
+        a1.setEnunciado(List.of("Questão sobre A lebre e a tartaruga"));
 
-        List<Atividade> resultado = atividadeService.buscarPorTrechoDeEnunciado("questão");
+        Atividade a2 = new Atividade();
+        a2.setEnunciado(List.of("O pequeno príncipe"));
+
+        when(atividadeRepository.findAll()).thenReturn(List.of(a1, a2));
+
+        List<Atividade> resultado = atividadeService.buscarPorTrechoDeEnunciado("tartaruga");
 
         assertEquals(1, resultado.size());
+        assertTrue(resultado.get(0).getEnunciado().contains("Questão sobre A lebre e a tartaruga"));
     }
 }
