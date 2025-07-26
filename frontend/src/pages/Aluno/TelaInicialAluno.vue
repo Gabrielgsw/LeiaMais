@@ -1,6 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router';
 import { ref } from 'vue'
+import axios from "axios";
 
 import Turma from '../../components/Turma.vue'
 
@@ -15,6 +16,21 @@ const livros = ref([
     "https://covers.openlibrary.org/b/isbn/9781421806501-M.jpg",
     "https://covers.openlibrary.org/b/isbn/9780316183567-M.jpg",
 ])
+const handleLogout = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/auth/logout",
+      {},
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      alert("Logout realizado com sucesso.");
+      router.push("/");
+    }
+  } catch (error) {
+    console.error("Erro no logout:", error);
+  }
+};
 
 </script>
 

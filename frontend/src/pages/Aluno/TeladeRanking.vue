@@ -12,30 +12,32 @@ import { RouterLink } from 'vue-router'
                 </div>
             </RouterLink>
         </header>
-  
 
 
-            <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-3">
-                        <RouterLink to="/TelaInicial">
-                            <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
-                        </RouterLink>
 
-                        <h2 class="text-[28px] font-bold">Ranking da turma:</h2>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center">
-                    <img src="../../assets/capivara-trofeu.png" alt="">
-                </div>
-                <div>
-                    <h1 class="font-normal mt-4">Turma: <strong>1° ano A - Ensino fundamental</strong></h1>
-                </div>
-                <div>
-                    <span></span>
-                </div>
+        <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <RouterLink to="/TelaInicial">
+                        <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                    </RouterLink>
 
+                    <h2 class="text-[28px] font-bold">Ranking da turma:</h2>
+                </div>
             </div>
+            <div class="flex items-center justify-center">
+                <img src="../../assets/capivara-trofeu.png" alt="">
+            </div>
+            <div>
+                <h1 class="font-normal mt-4 mb-5">Turma: <strong>1° ano A - Ensino fundamental</strong></h1>
+            </div>
+
+            <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
+                <span>Nome</span> <span>CPF</span> <span>Tipo</span>
+                <span class="text-center">Ações</span>
+            </div>
+
+        </div>
     </div>
 
 </template>

@@ -18,6 +18,7 @@ import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAt
 import Telaleitura from './pages/Telaleitura.vue'
 import TelaCorrigirAtividadeCoordenador from './pages/Coordenador/TelaCorrigirAtividadeCoordenador.vue'
 import TeladeRanking from './pages/Aluno/TeladeRanking.vue'
+import TelaDeTurmaCoordenador from './pages/Coordenador/TelaDeTurmaCoordenador.vue';
 
 //import telas de aluno:
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
@@ -45,6 +46,8 @@ const routes = [
   { path: '/Telaleitura', component: Telaleitura },
   { path: '/TelaCorrigirAtividadeCoordenador', component: TelaCorrigirAtividadeCoordenador },
   { path: '/TeladeRanking', component: TeladeRanking },
+  { path: '/TelaDeTurmaCoordenador', component: TelaDeTurmaCoordenador },
+  
    
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno },

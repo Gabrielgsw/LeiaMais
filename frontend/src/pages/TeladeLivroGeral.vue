@@ -33,10 +33,17 @@ const options = ref([
         </header>
         <div class="flex flex-row max-w-5xl mx-auto bg-white rounded-2xl p-6 mt-16">
             <div class="mr-10 flex-shrink-0">
+
                 <img class="rounded-2xl w-52 h-auto" src="../assets/livros-teste/O pequeno príncipe.jpg" alt="">
             </div>
             <div class="flex-1 gap-1">
-                <h1 class="text-2xl font-bold text-[28px]">O pequeno príncipe</h1>
+                <div class="flex gap-5 align-middle items-center">
+                    <RouterLink to="/TelaInicial">
+                        <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
+                    </RouterLink>
+                    <h1 class="text-2xl font-bold text-[28px]">O pequeno príncipe</h1>
+                </div>
+
                 <p>conta a história de um piloto que cai com seu avião no deserto do Saara e conhece um menino loiro,
                     vindo de um pequeno planeta distante, o asteroide B-612. O menino, conhecido como o Pequeno
                     Príncipe, narra suas viagens por outros planetas, onde encontra personagens excêntricos que

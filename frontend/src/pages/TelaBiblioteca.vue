@@ -24,7 +24,7 @@ const livros = ref([
                     <RouterLink to="/TelaInicialAluno">
                         <img src="../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
                     </RouterLink>
-
+                    
                     <h2 class="text-[28px] font-bold">Biblioteca de livros</h2>
                 </div>
             </div>
