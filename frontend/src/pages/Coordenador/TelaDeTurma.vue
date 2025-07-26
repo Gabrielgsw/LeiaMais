@@ -44,6 +44,7 @@ const atividades = ref([]);
 const alunosDaTurma = ref<Aluno[]>([]);
 const alunosDoSistema = ref<(Aluno & { checked: boolean })[]>([]);
 
+
 async function getAlunos() {
   try {
     const response = await axios.get("http://localhost:8080/alunos");
@@ -60,6 +61,7 @@ async function getAlunos() {
       ...aluno,
       checked: false,
     }));
+    
   } catch (error) {
     console.error("Erro ao carregar alunos:", error);
   }
@@ -72,8 +74,9 @@ async function getAlunos() {
 //     )
 // })
 
+
 async function adicionarAlunosNaTurma() {
-  const alunos = alunosDoSistema.value.filter((aluno) => aluno.checked);
+  const alunos = alunosDoSistema.value.filter((aluno) => aluno.checked); 
   if (alunos.length === 0) {
     alert("Nenhum aluno selecionado para adicionar.");
     return;
@@ -127,6 +130,7 @@ async function carregarDadosDaTurma() {
       );
     }
     turma.value = response.data;
+    alunosDaTurma.value = response.data.alunos;
     console.log("Dados da turma carregados:", turma.value);
   } catch (error) {
     console.error("Erro ao carregar dados da turma:", error);
@@ -153,7 +157,7 @@ const carregarAtividades = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(() => {  
   carregarDadosDaTurma();
   carregarAtividades();
   getAlunos();

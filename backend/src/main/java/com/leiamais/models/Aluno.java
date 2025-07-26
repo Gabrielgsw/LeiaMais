@@ -26,6 +26,7 @@ public class Aluno extends Usuario{
     @Column
     private int qtdLivrosFavoritos;
 
+
     public Aluno(String cpf, String nome, String email, String senha, Cargo cargo, Date dataNascimento,UUID id, String matricula, int pontos, int qtdLivrosLidos, int qtdLivrosFavoritos) {
         super(cpf, nome, email, senha, cargo, dataNascimento);
         this.matricula = matricula;
@@ -49,4 +50,6 @@ public class Aluno extends Usuario{
     public void setQtdLivrosFavoritos(int qtdLivrosFavoritos) {
         this.qtdLivrosFavoritos = qtdLivrosFavoritos;
     }
+
+
 }

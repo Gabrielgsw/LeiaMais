@@ -34,12 +34,20 @@ public class AlunoService {
     }
 
     public Optional<Aluno> buscarPorMatricula(String matricula) {
-        return alunoRepository.findByMatricula(matricula);
+        Aluno alunoRetorno = null;
+        for(Aluno aluno : listarTodos()){
+            if(aluno.getMatricula().equals(matricula)){
+                alunoRetorno = aluno;
+            }
+        }
+
+        return Optional.ofNullable(alunoRetorno);
     }
 
     public Aluno salvar(Aluno aluno) {
         return alunoRepository.save(aluno);
     }
+
 
     public void deletar(UUID id) {
         alunoRepository.deleteById(id);

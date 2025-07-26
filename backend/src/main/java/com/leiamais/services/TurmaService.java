@@ -94,9 +94,12 @@ public class TurmaService {
         System.out.println("[SERVICE] Turma encontrada: " + turma.getNome() + ", ID: " + turma.getId());
 
         Optional<Aluno> aluno = alunoService.buscarPorMatricula(matriculaAluno);
-        
+
         System.out.println("[SERVICE] Aluno encontrado: " + (aluno.isPresent() ? aluno.get().getNome() : "Nenhum aluno encontrado com a matrícula: " + matriculaAluno));
         turma.setAlunosMatriculados(aluno.get());
+        alunoService.salvar(aluno.get());
+
+
         return aluno.get();
     }
 

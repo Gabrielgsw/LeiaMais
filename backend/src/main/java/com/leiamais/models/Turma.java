@@ -1,15 +1,19 @@
 package com.leiamais.models;
 
+import com.leiamais.repositories.AlunoRepository;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.leiamais.models.Aluno;
+
 
 @Entity
 public class Turma {
 
     @Id
     @GeneratedValue
+
     private UUID id;
 // nullable = false
     @Column
@@ -28,7 +32,12 @@ public class Turma {
     private List<Atividade> atividades = new ArrayList<>();
 
 
-    public Turma() {}
+    public Turma() {
+        this.alunosMatriculados = new ArrayList<>();
+        this.professores = new ArrayList<>();
+        this.livros = new ArrayList<>();
+        this.atividades = new ArrayList<>();
+    }
 
     public Turma(String nome) {
         this.nome = nome;
@@ -69,14 +78,16 @@ public class Turma {
         for (Aluno aluno : this.alunosMatriculados) {
             System.out.println("[TURMA] Aluno na turma: " + aluno.getNome());
         }
-        
+
         return alunosMatriculados;
     }
 
     public void setAlunosMatriculados(Aluno alunosMatriculado) {
+        System.out.println("Aluno --> "+alunosMatriculado.getNome());
         System.out.println("[TURMA] Adicionando aluno: " + alunosMatriculado.getNome() + " à turma: " + this.nome);
         this.alunosMatriculados.add(alunosMatriculado);
-        System.out.println("[TURMA] Aluno adicionado com sucesso. Total de alunos na turma: " + this.alunosMatriculados.size());  
+        System.out.println("Alunos matriculados -->" + alunosMatriculados.toString());
+        System.out.println("[TURMA] Aluno adicionado com sucesso. Total de alunos na turma: " + this.alunosMatriculados.size());
         for (Aluno aluno : this.alunosMatriculados) {
             System.out.println("[TURMA] Aluno na turma: " + aluno.getNome());
         }
