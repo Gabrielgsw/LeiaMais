@@ -68,6 +68,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("222.222.222-22");
 				aluno.setMatricula("123456789");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(26);
 
 				usuarioRepository.save(aluno);
 			}
@@ -93,6 +94,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("444.444.444-44");
 				aluno.setMatricula("123456710");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(7);
 
 				usuarioRepository.save(aluno);
 			}
@@ -106,6 +108,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("555.555.555-55");
 				aluno.setMatricula("123456711");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(9);
 
 				usuarioRepository.save(aluno);
 			}
@@ -119,6 +122,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("777.777.777-77");
 				aluno.setMatricula("123456712");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(12);
 
 				usuarioRepository.save(aluno);
 			}
@@ -132,6 +136,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("888.888.888-88");
 				aluno.setMatricula("123456713");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(3);
 
 				usuarioRepository.save(aluno);
 			}
@@ -145,6 +150,7 @@ public class LeiaMaisApplication {
 				aluno.setCpf("999.999.999-99");
 				aluno.setMatricula("123456714");
 				aluno.setDataNascimento(null);
+				aluno.setPontos(15);
 
 				usuarioRepository.save(aluno);
 			}
