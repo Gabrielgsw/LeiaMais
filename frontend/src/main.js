@@ -42,7 +42,7 @@ const routes = [
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
   { path: '/TelaTestes', component: TelaTestes },
   { path: '/TelaResolverAtividade', component: TelaResolverAtividade },
-  { path: '/TeladeLivroGeral', component: TeladeLivroGeral },
+  { path: '/livro/:isbn', component: TeladeLivroGeral },
   { path: '/Telaleitura', component: Telaleitura },
   { path: '/TelaCorrigirAtividadeCoordenador', component: TelaCorrigirAtividadeCoordenador },
   { path: '/TeladeRanking', component: TeladeRanking },
@@ -62,6 +62,7 @@ const routes = [
   {path: '/TelaCriarAtividadeProfessor', component: TelaCriarAtividadeProfessor },
   {path: '/TelaAlunosCorrecao', component: TelaAlunosCorrecao },
   {path: '/TelaCorrigirAtividadeProfessor', component: TelaCorrigirAtividadeProfessor },
+
 
 ]
 
