@@ -2,6 +2,7 @@ package com.leiamais.services;
 
 import com.leiamais.models.Aluno;
 import com.leiamais.models.Leitura;
+import com.leiamais.models.Livro;
 import com.leiamais.models.StatusLivro;
 import com.leiamais.repositories.LeituraRepository;
 import com.leiamais.repositories.UsuarioRepository;
@@ -18,6 +19,10 @@ public class LeituraService {
     @Autowired
     private final LeituraRepository leituraRepository;
     private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private AlunoService alunoService;
+    @Autowired
+    private LivroService livroService;
 
     public LeituraService (LeituraRepository leituraRepository, UsuarioRepository usuarioRepository) {
         this.leituraRepository =  leituraRepository;
@@ -32,8 +37,13 @@ public class LeituraService {
         return leituraRepository.findById(id);
     }
 
-    public Leitura criar(Leitura leitura) {
+    public Leitura criar(String matriculaAluno, String ISBN) {
+        Optional<Aluno> aluno = alunoService.buscarPorMatricula(matriculaAluno);
+        Optional<Livro> livro = livroService.findByISBN(ISBN);
+        Leitura leitura = new Leitura();
         leitura.setStatus(StatusLivro.EMLEITURA);
+        leitura.setAluno(aluno.get());
+        leitura.setLivro(livro.get());
         return leituraRepository.save(leitura);
     }
 

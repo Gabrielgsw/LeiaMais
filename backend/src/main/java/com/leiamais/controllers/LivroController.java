@@ -1,7 +1,9 @@
 package com.leiamais.controllers;
 
 import com.leiamais.models.Aluno;
+import com.leiamais.models.Leitura;
 import com.leiamais.models.Livro;
+import com.leiamais.models.StatusLivro;
 import com.leiamais.services.LivroService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

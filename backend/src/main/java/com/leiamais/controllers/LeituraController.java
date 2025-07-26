@@ -33,9 +33,9 @@ public class LeituraController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Leitura> criar(@RequestBody Leitura leitura) {
-        return ResponseEntity.ok(leituraService.criar(leitura));
+    @PostMapping("/{matriculaAluno}/{ISBN}")
+    public ResponseEntity<Leitura> criar(@PathVariable String matriculaAluno, @PathVariable String ISBN) {
+        return ResponseEntity.ok(leituraService.criar(matriculaAluno,ISBN));
     }
 
 
