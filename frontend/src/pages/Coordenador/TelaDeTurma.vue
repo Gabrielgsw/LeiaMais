@@ -9,14 +9,14 @@ import UsuarionaTurma from "@/components/UsuarionaTurma.vue";
 import { Checkbox } from "@/components/ui/checkbox";
 const livros = ref([
   // 'C:\Users\Gabriel Germano\Desktop\Repositorios\LeiaMais\frontend\src\assets\livros-teste',s
-//   "https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
-//   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544102930-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
+  //   "https://covers.openlibrary.org/b/isbn/9788544101636-M.jpg",
 ]);
 import {
   Dialog,
@@ -51,9 +51,9 @@ async function getAlunos() {
     if (response.status !== 200) {
       throw new Error(
         "Erro ao buscar alunos, status: " +
-          response.status +
-          " - " +
-          response.statusText
+        response.status +
+        " - " +
+        response.statusText
       );
     }
     console.log("Alunos carregados:", response.data);
@@ -61,7 +61,7 @@ async function getAlunos() {
       ...aluno,
       checked: false,
     }));
-    
+
   } catch (error) {
     console.error("Erro ao carregar alunos:", error);
   }
@@ -76,7 +76,7 @@ async function getAlunos() {
 
 
 async function adicionarAlunosNaTurma() {
-  const alunos = alunosDoSistema.value.filter((aluno) => aluno.checked); 
+  const alunos = alunosDoSistema.value.filter((aluno) => aluno.checked);
   if (alunos.length === 0) {
     alert("Nenhum aluno selecionado para adicionar.");
     return;
@@ -102,12 +102,12 @@ async function adicionarAlunosNaTurma() {
 
   for (const aluno of alunos) {
     console.log(aluno)
-      try {
-          const response = await axios.post(`http://localhost:8080/turmas/aluno/${turma.value.nome}/${aluno.matricula}`);
-          console.log(`Aluno ${aluno.nome} adicionado com sucesso:`, response.data);
-      } catch (error) {
-          console.error("Erro ao adicionar alunos:", error);
-      }
+    try {
+      const response = await axios.post(`http://localhost:8080/turmas/aluno/${turma.value.nome}/${aluno.matricula}`);
+      console.log(`Aluno ${aluno.nome} adicionado com sucesso:`, response.data);
+    } catch (error) {
+      console.error("Erro ao adicionar alunos:", error);
+    }
   }
 
   carregarDadosDaTurma();
@@ -124,13 +124,13 @@ async function carregarDadosDaTurma() {
     if (response.status !== 200) {
       throw new Error(
         "Erro ao buscar dados da turma, status: " +
-          response.status +
-          " - " +
-          response.statusText
+        response.status +
+        " - " +
+        response.statusText
       );
     }
     turma.value = response.data;
-    alunosDaTurma.value = response.data.alunos;
+    alunosDaTurma.value = response.data.alunosMatriculados;
     console.log("Dados da turma carregados:", turma.value);
   } catch (error) {
     console.error("Erro ao carregar dados da turma:", error);
@@ -145,9 +145,9 @@ const carregarAtividades = async () => {
     if (response.status !== 200) {
       throw new Error(
         "Erro ao buscar dados da turma, status: " +
-          response.status +
-          " - " +
-          response.statusText
+        response.status +
+        " - " +
+        response.statusText
       );
     }
 
@@ -157,7 +157,7 @@ const carregarAtividades = async () => {
   }
 };
 
-onMounted(() => {  
+onMounted(() => {
   carregarDadosDaTurma();
   carregarAtividades();
   getAlunos();
@@ -165,9 +165,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="min-h-screen bg-[#e6f7fa] font-sans">
-    <header
-      class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center"
-    >
+    <header class="text-white bg-[#0f8ebd] flex justify-around py-3 items-center">
       <RouterLink to="/TelaInicial">
         <div class="text-5xl flex">
           <h1>Leia+</h1>
@@ -180,11 +178,7 @@ onMounted(() => {
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <RouterLink to="/TelaInicial">
-            <img
-              src="../../assets/botoes/botao_voltar.svg"
-              alt="Voltar"
-              class="w-8 h-8"
-            />
+            <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
           </RouterLink>
 
           <h2 class="text-[28px] font-bold">
@@ -196,9 +190,7 @@ onMounted(() => {
         <h3 class="text-[20px] font-bold mt-3">Alunos</h3>
         <Dialog v-model:open="isAddAlunoDialogOpen">
           <DialogTrigger as-child>
-            <button
-              class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-            >
+            <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">
               Adicionar aluno
             </button>
           </DialogTrigger>
@@ -215,100 +207,70 @@ onMounted(() => {
             </DialogHeader>
             <div v-for="aluno in alunosDoSistema" class="flex gap-4">
               <Checkbox id="nameAluno" v-model="aluno.checked" />
-              <label
-                for="nameAluno"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
+              <label for="nameAluno"
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {{ aluno.nome }}
               </label>
-              <label
-                for="cpfaluno"
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
+              <label for="cpfaluno"
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {{ aluno.cpf }}
               </label>
             </div>
             <div class="flex items-center justify-between mt-4">
               <button
                 class="bg-white text-[#359DFF] px-4 py-2 rounded shadow ring-1 ring-[#359DFF] hover:bg-black/5 transition-colors"
-                @click="isAddAlunoDialogOpen = false"
-              >
+                @click="isAddAlunoDialogOpen = false">
                 Cancelar
               </button>
-              <Button
-                class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-                @click="adicionarAlunosNaTurma"
-              >
+              <Button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+                @click="adicionarAlunosNaTurma">
                 Adicionar
               </Button>
             </div>
           </DialogContent>
         </Dialog>
       </div>
-      
 
-      <div
-        class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2"
-      >
+
+      <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
         <span>Nome</span> <span>CPF</span> <span>Tipo</span>
         <span class="text-center">Ações</span>
       </div>
-      
-      <UsuarionaTurma
-        v-for="usuario in alunosDaTurma"
-        :key="usuario.id"
-        :id="usuario.id"
-        :nome="usuario.nome"
-        :cpf="usuario.cpf"
-        :tipo="usuario.cargo"
-      />
+
+      <UsuarionaTurma v-for="usuario in alunosDaTurma" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"
+        :cpf="usuario.cpf" :tipo="usuario.cargo" />
+
       <!-- <UsuarionaTurma v-for="aluno in alunos"/> -->
       <div class="flex justify-between items-center text-center mb-3 mt-8">
         <h3 class="text-[20px] font-bold mt-3">Atividades</h3>
-        <RouterLink
-        :to="`/turma/${turma?.id}/criar-atividade`"
-          class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600"
-        >
+        <RouterLink :to="`/turma/${turma?.id}/criar-atividade`"
+          class="bg-[#359DFF] text-white px-4 py-1 rounded hover:bg-blue-600">
           Cadastrar atividade
         </RouterLink>
       </div>
       <!-- <div class="flex justify-between font-bold px-4 py-2 bg-blue-100 rounded-md mb-2"> -->
-      <div
-        class="flex justify-between px-4 py-2 bg-blue-100 rounded-md mb-2 font-bold"
-      >
+      <div class="flex justify-between px-4 py-2 bg-blue-100 rounded-md mb-2 font-bold">
         <span>Nome</span> <span class="text-center">Ações</span>
       </div>
-      <AtividadeRow
-        v-for="atividade in atividades"
-        :key="atividade.id"
-        :numeroatividade="atividade.nome"
-        :atividadename="atividade.nome"
-      />
+      <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
+        :atividadename="atividade.nome" />
 
       <div class="flex justify-between items-center text-center mb-3 mt-8">
         <h3 class="text-[20px] font-bold mt-3">Livros</h3>
       </div>
       <RouterLink to="/TeladeLivroGeral">
         <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-          <img
-            v-for="livro in livros"
-            :src="livro"
-            class="w-[160px] h-[230px] rounded-sm object-cover"
-          />
+          <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
         </div>
       </RouterLink>
       <div class="flex justify-between">
         <router-link to="/TeladeRanking">
-          <button
-            class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors mt-4"
-          >
+          <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors mt-4">
             Ranking geral
           </button>
         </router-link>
         <router-link to="/TelaBiblioteca">
-          <button
-            class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600"
-          >
+          <button class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">
             Ver mais
           </button>
         </router-link>
