@@ -31,9 +31,9 @@ async function getAlunos() {
     }
     console.log("Dados recebidos da API (antes da ordenação):", response.data);
 
-    // --- Lógica de Ordenação Adicionada Aqui ---
-    const sortedAlunos = [...response.data].sort((a, b) => b.pontos - a.pontos);   
-
+    
+    const sortedAlunos = [...response.data].sort((a, b) => b.pontos - a.pontos);
+   
     alunosDaTurma.value = sortedAlunos;
     console.log("Dados ordenados e atribuídos:", alunosDaTurma.value);
 
@@ -111,6 +111,8 @@ onMounted(() => {
         </div>
       </div>
 
+      
+      
     </div>
   </div>
 </template>

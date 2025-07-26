@@ -132,7 +132,7 @@ const handleLogout = async () => {
                     </div>
                 </div>
                 <div class="flex gap-4 mb-6">
-                    <router-link to="/TeladeRanking">
+                    <router-link to="/TeladeRankingAluno">
                         <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking
                             geral</button>
                     </router-link>

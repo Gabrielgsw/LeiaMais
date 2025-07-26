@@ -24,6 +24,7 @@ import TelaDeTurmaCoordenador from './pages/Coordenador/TelaDeTurmaCoordenador.v
 import TelaInicialAluno from './pages/Aluno/TelaInicialAluno.vue'
 import TelaDeTurmaAluno from './pages/Aluno/TelaDeTurmaAluno.vue'
 import TelaBiblioteca from './pages/TelaBiblioteca.vue'
+import TeladeRankingAluno from './pages/Aluno/TeladeRankingAluno.vue';
 
 //import telas de professor:
 import TelaInicialProfessor from './pages/Professor/TelaInicialProfessor.vue';
@@ -54,7 +55,7 @@ const routes = [
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
   { path: '/TelaBiblioteca', component: TelaBiblioteca },
-  
+  { path: '/TeladeRankingAluno', component: TeladeRankingAluno },
 
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },
