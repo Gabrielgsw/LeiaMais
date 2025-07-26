@@ -4,9 +4,11 @@ import com.leiamais.models.Aluno;
 import com.leiamais.models.Cargo;
 import com.leiamais.models.Coordenacao;
 import com.leiamais.models.Professor;
+import com.leiamais.models.Turma;
 import com.leiamais.models.Usuario;
 import com.leiamais.models.Livro;
 import com.leiamais.repositories.LivroRepository;
+import com.leiamais.repositories.TurmaRepository;
 import com.leiamais.repositories.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -60,16 +62,17 @@ public class LeiaMaisApplication {
 			}
 
 			if (usuarioRepository.findByNome("machado").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("machado");
-				aluno.setSenha("senha123");
-				aluno.setEmail("machadodeassis@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("222.222.222-22");
-				aluno.setMatricula("123456789");
-				aluno.setDataNascimento(null);
+				Aluno machado = new Aluno();
+				machado.setNome("machado");
+				machado.setSenha("senha123");
+				machado.setEmail("machadodeassis@example.com");
+				machado.setCargo(Cargo.ALUNO);
+				machado.setCpf("222.222.222-22");
+				machado.setMatricula("123456789");
+				machado.setDataNascimento(null);
+				machado.setPontos(26);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(machado);
 			}
 
 			if (usuarioRepository.findByNome("professor").isEmpty()) {
@@ -85,68 +88,73 @@ public class LeiaMaisApplication {
 			}
 
 			if (usuarioRepository.findByNome("artur").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("artur");
-				aluno.setSenha("senha123");
-				aluno.setEmail("artur@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("444.444.444-44");
-				aluno.setMatricula("123456710");
-				aluno.setDataNascimento(null);
+				Aluno artur = new Aluno();
+				artur.setNome("artur");
+				artur.setSenha("senha123");
+				artur.setEmail("artur@example.com");
+				artur.setCargo(Cargo.ALUNO);
+				artur.setCpf("444.444.444-44");
+				artur.setMatricula("123456710");
+				artur.setDataNascimento(null);
+				artur.setPontos(7);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(artur);
 			}
 
 			if (usuarioRepository.findByNome("aecio").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("aecio");
-				aluno.setSenha("senha123");
-				aluno.setEmail("aecio@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("555.555.555-55");
-				aluno.setMatricula("123456711");
-				aluno.setDataNascimento(null);
+				Aluno aecio = new Aluno();
+				aecio.setNome("aecio");
+				aecio.setSenha("senha123");
+				aecio.setEmail("aecio@example.com");
+				aecio.setCargo(Cargo.ALUNO);
+				aecio.setCpf("555.555.555-55");
+				aecio.setMatricula("123456711");
+				aecio.setDataNascimento(null);
+				aecio.setPontos(9);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(aecio);
 			}
 
 			if (usuarioRepository.findByNome("gabriel").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("gabriel");
-				aluno.setSenha("senha123");
-				aluno.setEmail("gabriel@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("777.777.777-77");
-				aluno.setMatricula("123456712");
-				aluno.setDataNascimento(null);
+				Aluno gabriel = new Aluno();
+				gabriel.setNome("gabriel");
+				gabriel.setSenha("senha123");
+				gabriel.setEmail("gabriel@example.com");
+				gabriel.setCargo(Cargo.ALUNO);
+				gabriel.setCpf("777.777.777-77");
+				gabriel.setMatricula("123456712");
+				gabriel.setDataNascimento(null);
+				gabriel.setPontos(12);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(gabriel);
 			}
 
 			if (usuarioRepository.findByNome("heitor").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("heitor");
-				aluno.setSenha("senha123");
-				aluno.setEmail("heitor@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("888.888.888-88");
-				aluno.setMatricula("123456713");
-				aluno.setDataNascimento(null);
+				Aluno heitor = new Aluno();
+				heitor.setNome("heitor");
+				heitor.setSenha("senha123");
+				heitor.setEmail("heitor@example.com");
+				heitor.setCargo(Cargo.ALUNO);
+				heitor.setCpf("888.888.888-88");
+				heitor.setMatricula("123456713");
+				heitor.setDataNascimento(null);
+				heitor.setPontos(3);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(heitor);
 			}
 
 			if (usuarioRepository.findByNome("giovanna").isEmpty()) {
-				Aluno aluno = new Aluno();
-				aluno.setNome("giovanna");
-				aluno.setSenha("senha123");
-				aluno.setEmail("giovanna@example.com");
-				aluno.setCargo(Cargo.ALUNO);
-				aluno.setCpf("999.999.999-99");
-				aluno.setMatricula("123456714");
-				aluno.setDataNascimento(null);
+				Aluno giovanna = new Aluno();
+				giovanna.setNome("giovanna");
+				giovanna.setSenha("senha123");
+				giovanna.setEmail("giovanna@example.com");
+				giovanna.setCargo(Cargo.ALUNO);
+				giovanna.setCpf("999.999.999-99");
+				giovanna.setMatricula("123456714");
+				giovanna.setDataNascimento(null);
+				giovanna.setPontos(15);
 
-				usuarioRepository.save(aluno);
+				usuarioRepository.save(giovanna);
 			}
 
 			// Livro, Turma
@@ -159,6 +167,8 @@ public class LeiaMaisApplication {
 				
 				livroRepository.save(livro);
 			}
+
+			
 		};
 	}
 
