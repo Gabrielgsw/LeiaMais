@@ -59,11 +59,11 @@ public class LeiaMaisApplication {
 				System.out.println("Initial 'Coordenador' user created: coordenador@example.com/senha123");
 			}
 
-			if (usuarioRepository.findByNome("aluno").isEmpty()) {
+			if (usuarioRepository.findByNome("machado").isEmpty()) {
 				Aluno aluno = new Aluno();
-				aluno.setNome("aluno");
+				aluno.setNome("machado");
 				aluno.setSenha("senha123");
-				aluno.setEmail("aluno@example.com");
+				aluno.setEmail("machadodeassis@example.com");
 				aluno.setCargo(Cargo.ALUNO);
 				aluno.setCpf("222.222.222-22");
 				aluno.setMatricula("123456789");
