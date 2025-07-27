@@ -42,11 +42,11 @@ public class RespostaController {
 
     @PostMapping
     public ResponseEntity<Resposta> salvar(@RequestBody RequisicaoRespostaDTO dto) {
-        Optional<Atividade> atv = atividadeService.buscarPorNome(dto.getNomeAtividade());
+        Optional<Atividade> atv = atividadeService.buscarPorNome(dto.getAtividade().getNome());
         Aluno aluno = alunoService.buscarPorId(dto.getAlunoId());
         Resposta resposta = null;
         if (aluno != null) {
-            resposta = repostaService.responderAtividade(aluno,dto.getNomeAtividade(), dto.getTexto());
+            resposta = repostaService.responderAtividade(aluno,dto);
         }
 
         if (resposta != null) {

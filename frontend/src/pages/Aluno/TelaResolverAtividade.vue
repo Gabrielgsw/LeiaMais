@@ -1,6 +1,10 @@
 <script setup>
 import QuestaoFormulario from '@/components/QuestaoFormulario.vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+
+const id = route.params.id;
 </script>
 
 <!--Essa tela é a tela que o aluno vê-->
@@ -14,10 +18,12 @@ import QuestaoFormulario from '@/components/QuestaoFormulario.vue';
                 </div>
             </RouterLink>
         </header>
-        
+
         <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
-            <QuestaoFormulario/>
-        </div> 
+          <QuestaoFormulario :id-atividade="id" />
+        </div>
+      <div class="p-6"></div> <!-- nao estava conseguindo ajustar a altura, coloquei essa div pra deixar bonitinho por agora. Se conseguirem resolver, obrigado <3-->
+
     </div>
 </template>
 

@@ -135,7 +135,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/atividades/${router.currentRoute.value.params.id}`,
+            `http://localhost:8080/api/atividades/${router.currentRoute.value.params.id}`,
             atividade
         );
         if (response.status >= 200 && response.status < 300) {

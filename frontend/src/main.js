@@ -42,20 +42,19 @@ const routes = [
   { path: '/TelaDeLivrosCadastrados', component: TelaDeLivrosCadastrados },
   { path: '/TelaDeUsuariosCadastrados', component: TelaDeUsuariosCadastrados },
   { path: '/TelaTestes', component: TelaTestes },
-  { path: '/TelaResolverAtividade', component: TelaResolverAtividade },
   { path: '/livro/:isbn', component: TeladeLivroGeral },
   { path: '/Telaleitura', component: Telaleitura },
   { path: '/TelaCorrigirAtividadeCoordenador', component: TelaCorrigirAtividadeCoordenador },
   { path: '/TeladeRanking', component: TeladeRanking },
   { path: '/TelaDeTurmaCoordenador', component: TelaDeTurmaCoordenador },
-  
-   
+
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno },
   { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
   { path: '/TelaBiblioteca', component: TelaBiblioteca },
   { path: '/TeladeRankingAluno', component: TeladeRankingAluno },
+  { path: '/TelaResolverAtividade/:id', component: TelaResolverAtividade },
 
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },

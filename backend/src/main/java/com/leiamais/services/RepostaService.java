@@ -1,5 +1,6 @@
 package com.leiamais.services;
 
+import com.leiamais.dtos.RequisicaoRespostaDTO;
 import com.leiamais.models.Aluno;
 import com.leiamais.models.Atividade;
 import com.leiamais.models.Resposta;
@@ -13,17 +14,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RepostaService {
     private final AlunoRepository alunoRepository;
     private final AtividadeRepository atividadeRepository;
     private final RespostaRepository respostaRepository;
+    private final AtividadeService atividadeService;
 
-    public RepostaService(AlunoRepository alunoRepository, AtividadeRepository atividadeRepository, RespostaRepository respostaRepository) {
+    public RepostaService(AlunoRepository alunoRepository, AtividadeRepository atividadeRepository, RespostaRepository respostaRepository,AtividadeService atividadeService) {
         this.alunoRepository = alunoRepository;
         this.atividadeRepository = atividadeRepository;
         this.respostaRepository = respostaRepository;
+        this.atividadeService = atividadeService;
     }
 
     public List<Resposta> listarRespostas() {
@@ -56,18 +60,24 @@ public class RepostaService {
         return Optional.empty();
     }
 
-    public Resposta responderAtividade(Aluno aluno, String nomeAtividade, String texto){
-        Optional<Atividade> atv = findByNome(nomeAtividade);
-        if(atv.isPresent()) {
-            Resposta resp = new Resposta();
-            resp.setAtividade(atv.get());
-            resp.setAluno(aluno);
-            //resp.setTexto(texto);
-            return resp;
-        }
-        return null;    
+    public Resposta responderAtividade(Aluno aluno, RequisicaoRespostaDTO dto) {
+    Optional<Atividade> atv = atividadeService.buscarPorId(dto.getAtividade().getId());
 
+    if (atv.isPresent()) {
+        Resposta resp = new Resposta();
+        resp.setAtividade(dto.getAtividade());
+        resp.setAluno(aluno);
+        List<String> respostasConvertidas = dto.getRespostas() // convertendo a em List<String>
+            .stream()
+            .map(RequisicaoRespostaDTO.RespostaItemDTO::getResposta)
+            .collect(Collectors.toList());
+
+        resp.setRespostas(respostasConvertidas);
+        return resp;
     }
+
+    return null;
+}
     
     public Optional<Resposta> corrigirResposta(UUID idResposta, float nota, String feedback) {
         Optional<Resposta> respostaOpt = respostaRepository.findById(idResposta);

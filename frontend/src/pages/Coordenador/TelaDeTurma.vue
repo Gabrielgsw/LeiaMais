@@ -140,7 +140,7 @@ async function carregarDadosDaTurma() {
 const carregarAtividades = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/atividades`
+      `http://localhost:8080/api/atividades`
     );
     if (response.status !== 200) {
       throw new Error(

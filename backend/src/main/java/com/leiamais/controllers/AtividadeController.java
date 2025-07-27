@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/atividades")
+@RequestMapping("api/atividades")
 @CrossOrigin(origins = "http://localhost:5173")
 public class AtividadeController {
     private final AtividadeService atividadeService;
