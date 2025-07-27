@@ -32,6 +32,7 @@ import TelaDeTurmaProfessor from './pages/Professor/TelaDeTurmaProfessor.vue';
 import TelaCriarAtividadeProfessor from './pages/Professor/TelaCriarAtividadeProfessor.vue';
 import TelaAlunosCorrecao from './pages/Professor/TelaAlunosCorrecao.vue';
 import TelaCorrigirAtividadeProfessor from './pages/Professor/TelaCorrigirAtividadeProfessor.vue';
+import TelaDeLivroAluno from './pages/Aluno/TelaDeLivroAluno.vue';
 
 const routes = [
   { path: '/', component: BemVindo },
@@ -52,10 +53,11 @@ const routes = [
    
   //telas de aluno:
   { path: '/TelaInicialAluno', component: TelaInicialAluno },
-  { path: '/TelaDeTurmaAluno', component: TelaDeTurmaAluno },
+  { path: '/turma/minhaturma/:id', component: TelaDeTurmaAluno },
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
   { path: '/TelaBiblioteca', component: TelaBiblioteca },
   { path: '/TeladeRankingAluno', component: TeladeRankingAluno },
+  { path: '/livro/aluno/:isbn', component: TelaDeLivroAluno },
 
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },

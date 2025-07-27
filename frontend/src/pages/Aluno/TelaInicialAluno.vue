@@ -156,7 +156,7 @@ onMounted(async () => {
         </div>
         <div class="space-y-4 mb-8">
           <template v-if="turmas.length > 0">
-            <router-link v-for="turma in turmas" :key="turma.id" :to="`/turma/${turma.id}`" class="block">
+            <router-link v-for="turma in turmas" :key="turma.id" :to="`/turma/minhaturma/${turma.id}`" class="block">
               <Turma :nome="turma.nome" />
             </router-link>
           </template>
@@ -168,7 +168,7 @@ onMounted(async () => {
         <div>
           <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
           <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-            <router-link v-for="livro in livros" :key="livro" :to="`/livro/${extrairISBN(livro)}`">
+            <router-link v-for="livro in livros" :key="livro" :to="`/livro/aluno/${extrairISBN(livro)}`">
               <img :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
             </router-link>
           </div>
