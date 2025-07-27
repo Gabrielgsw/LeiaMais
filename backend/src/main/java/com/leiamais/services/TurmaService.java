@@ -56,6 +56,22 @@ public class TurmaService {
         return turmaRepository.save(turma);
     }
 
+    public Turma obterMinhaTurma(UUID idAluno) {
+        List<Turma> turma = listarTurmas();
+        Turma minhaTurma = null;
+
+        for(Turma T : turma) {
+            for(Aluno a : T.getAlunosMatriculados()){
+                if(a.getId().equals(idAluno)){
+                    minhaTurma = T;
+                    break;
+                }
+            }
+
+        }
+        return minhaTurma;
+    }
+
     public Turma atualizarTurma(UUID id, Turma novaTurma) {
         Optional<Turma> optionalTurma = turmaRepository.findById(id);
 

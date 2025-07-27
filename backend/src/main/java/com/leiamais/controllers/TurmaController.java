@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/turmas")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173",allowCredentials = "true")
 public class TurmaController {
 
     private final TurmaService turmaService;
@@ -35,6 +35,11 @@ public class TurmaController {
     @GetMapping("/{id}")
     public ResponseEntity<Turma> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(turmaService.buscarPorId(id));
+    }
+
+    @GetMapping("/minhaturma/{idAluno}")
+    public ResponseEntity<Turma> buscarMinhaTurma(@PathVariable UUID idAluno) {
+        return ResponseEntity.ok(turmaService.obterMinhaTurma(idAluno));
     }
 
     @PutMapping("/{id}")

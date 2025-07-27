@@ -1,12 +1,17 @@
 package com.leiamais.controllers;
 
+import com.leiamais.models.Aluno;
 import com.leiamais.models.Leitura;
+import com.leiamais.models.Usuario;
+import com.leiamais.services.AlunoService;
 import com.leiamais.services.LeituraService;
+import com.leiamais.services.UsuarioSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -15,6 +20,8 @@ public class LeituraController {
 
     @Autowired
     private final LeituraService leituraService;
+    @Autowired
+    private AlunoService alunoService;
 
     public LeituraController(LeituraService leituraService) {
         this.leituraService = leituraService;
@@ -33,8 +40,11 @@ public class LeituraController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/{matriculaAluno}/{ISBN}")
-    public ResponseEntity<Leitura> criar(@PathVariable String matriculaAluno, @PathVariable String ISBN) {
+    @PostMapping("/{ISBN}")
+    public ResponseEntity<Leitura> criar(@PathVariable String ISBN) {
+       UUID idUser = UsuarioSession.getInstance().getLoggedInUsuario().getId();
+       Optional<Aluno> aluno = Optional.ofNullable(alunoService.buscarPorId(idUser));
+       String matriculaAluno = aluno != null ? aluno.get().getMatricula() : null;
         return ResponseEntity.ok(leituraService.criar(matriculaAluno,ISBN));
     }
 

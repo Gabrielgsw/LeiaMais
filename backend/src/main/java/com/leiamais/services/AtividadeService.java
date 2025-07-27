@@ -44,6 +44,7 @@ public class AtividadeService {
 
 
     public Atividade salvar(UUID idTurma, Atividade atividade) {
+
         if (atividade.getEnunciado() != null && atividade.getEnunciado().size() > 3) {
             throw new IllegalArgumentException("Cada atividade pode ter no máximo 3 enunciados.");
         }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(value = "http://localhost:5173",allowCredentials = "true")
@@ -38,6 +39,7 @@ public class LoginController {
         Usuario foundUsuario = usuarioOptional.get();
         if (foundUsuario.getSenha().equals(password)) {
             UsuarioSession.getInstance().setLoggedInUsuario(foundUsuario);
+            System.out.println(UsuarioSession.getInstance().getLoggedInUsuario().getNome());
             return ResponseEntity.ok("Login realizado com sucesso como " + foundUsuario.getNome() + ", Cargo: " + cargo + "!");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas: Senha incorreta");
@@ -52,6 +54,16 @@ public class LoginController {
             return ResponseEntity.ok("Usuario atual:"+  loggedInUsuario.getNome() + ", Cargo: " + loggedInUsuario.getCargo().name());
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario atual nao encontrado.");
+    }
+
+    @GetMapping("/me/id")
+    public ResponseEntity<UUID> getIdCurrentUser(){
+        UsuarioSession session = UsuarioSession.getInstance();
+        if (session.isLoggedIn()) {
+            Usuario loggedInUsuario = session.getLoggedInUsuario();
+            return ResponseEntity.ok(loggedInUsuario.getId());
+        }
+        return null;
     }
 
     @PostMapping("/logout")
