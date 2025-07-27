@@ -42,7 +42,8 @@ public class LeiaMaisApplication {
 				registry.addMapping("/**")
 						.allowedOrigins("/**")
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
-						.allowedHeaders("*");
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}

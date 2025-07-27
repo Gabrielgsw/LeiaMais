@@ -66,6 +66,11 @@ public class AlunoController {
         }
     }
 
+    @GetMapping("/turma/{idAluno}")
+    public ResponseEntity<List<Aluno>> listarTodos(@PathVariable UUID idAluno) {
+        return ResponseEntity.ok(alunoService.buscarAlunosMinhaTurma(idAluno));
+    }
+
     @PostMapping
     public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno) {
         Aluno salvo = alunoService.salvar(aluno);

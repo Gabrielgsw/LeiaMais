@@ -3,6 +3,10 @@ import { ref, onMounted } from "vue";
 import { RouterLink } from 'vue-router';
 import axios from "axios";
 
+// Configuração global do axios
+axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.withCredentials = true;
+
 interface Aluno {
   id: string;
   cpf: string;
@@ -20,23 +24,34 @@ interface Aluno {
 const alunosDaTurma = ref<Aluno[]>([]);
 const isLoading = ref(true);
 const hasError = ref(false);
+const idCurrentUser = ref<string>("");
+
+async function getUserId() {
+  try {
+    const response = await axios.get("/api/auth/me/id");
+    if (response.status === 200) {
+      idCurrentUser.value = response.data;
+      console.log("ID do usuário atual:", idCurrentUser.value);
+    } else {
+      console.error("Erro ao obter ID do usuário:", response.status, response.statusText);
+    }
+  } catch (error) {
+    console.error("Erro ao obter ID do usuário:", error);
+  }
+}
 
 async function getAlunos() {
   isLoading.value = true;
   hasError.value = false;
   try {
-    const response = await axios.get<Aluno[]>("http://localhost:8080/alunos");
+    const response = await axios.get<Aluno[]>(`/alunos/turma/${idCurrentUser.value}`);
     if (response.status !== 200) {
       throw new Error(`Erro ao buscar alunos: ${response.status} - ${response.statusText}`);
     }
-    console.log("Dados recebidos da API (antes da ordenação):", response.data);
 
-    
     const sortedAlunos = [...response.data].sort((a, b) => b.pontos - a.pontos);
-   
     alunosDaTurma.value = sortedAlunos;
     console.log("Dados ordenados e atribuídos:", alunosDaTurma.value);
-
   } catch (error) {
     console.error("Erro ao carregar alunos:", error);
     hasError.value = true;
@@ -45,11 +60,18 @@ async function getAlunos() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   console.log("Componente Ranking montado no DOM.");
-  getAlunos();
+  await getUserId();
+
+  if (idCurrentUser.value) {
+    await getAlunos();
+  } else {
+    console.error("ID do usuário está vazio. Não foi possível buscar os alunos.");
+  }
 });
 </script>
+
 
 <template>
   <div class="min-h-screen bg-[#e6f7fa] font-sans">
@@ -65,7 +87,7 @@ onMounted(() => {
     <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
-          <RouterLink to="/TelaInicial">
+          <RouterLink to="/TelaInicialAluno">
             <img src="../../assets/botoes/botao_voltar.svg" alt="Botão Voltar" class="w-8 h-8" />
           </RouterLink>
           <h2 class="text-[28px] font-bold">Ranking da turma:</h2>
