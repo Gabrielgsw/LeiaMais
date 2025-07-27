@@ -22,10 +22,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class LeiaMaisApplication {
 
     private final LivroRepository livroRepository;
+	private final TurmaRepository turmaRepository;
 
-    LeiaMaisApplication(LivroRepository livroRepository) {
-        this.livroRepository = livroRepository;
-    }
+	public LeiaMaisApplication(LivroRepository livroRepository, TurmaRepository turmaRepository) {
+		this.livroRepository = livroRepository;
+		this.turmaRepository = turmaRepository;
+	}
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(LeiaMaisApplication.class, args);
@@ -168,7 +171,16 @@ public class LeiaMaisApplication {
 				livroRepository.save(livro);
 			}
 
-			
+			if (turmaRepository.findByNome("Turma A").isEmpty()) {
+				Turma turma = new Turma();
+				turma.setNome("Turma A");
+				//turma.setAlunosMatriculados(new ArrayList<>());
+				//turma.setProfessores(new ArrayList<>());
+				//turma.setLivros(new ArrayList<>());
+				//turma.setAtividades(new ArrayList<>());
+
+				turmaRepository.save(turma);
+			}
 		};
 	}
 
