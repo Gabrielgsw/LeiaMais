@@ -28,6 +28,9 @@ public class Leitura {
     @Column
     private StatusLivro status;
 
+    @Column
+    private int avaliacao;
+
     public UUID getId() {
         return id;
     }
@@ -55,5 +58,13 @@ public class Leitura {
 
     public void setStatus(StatusLivro status) {
         this.status = status;
+    }
+
+    public int getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(int avaliacao) {
+        this.avaliacao = avaliacao;
     }
 }
