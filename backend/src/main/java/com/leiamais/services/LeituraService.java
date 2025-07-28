@@ -37,17 +37,36 @@ public class LeituraService {
         return leituraRepository.findById(id);
     }
 
-    public Leitura criar(String matriculaAluno, String ISBN) {
-        Optional<Aluno> aluno = alunoService.buscarPorMatricula(matriculaAluno);
+    public Leitura criar(UUID idUser, String ISBN) {
+        Optional<Aluno> aluno = Optional.ofNullable(alunoService.buscarPorId(idUser));
         Optional<Livro> livro = livroService.findByISBN(ISBN);
+        Optional<Leitura> l = Optional.ofNullable(buscarLeitura(idUser, ISBN));
         Leitura leitura = new Leitura();
-        leitura.setStatus(StatusLivro.EMLEITURA);
-        leitura.setAluno(aluno.get());
-        leitura.setLivro(livro.get());
+        if(!l.isPresent()) {
+            leitura.setStatus(StatusLivro.EMLEITURA);
+            leitura.setAluno(aluno.get());
+            leitura.setLivro(livro.get());
+            aluno.get().setPontos(aluno.get().getPontos() + 1);
+        }
+
         return leituraRepository.save(leitura);
     }
 
-    public Leitura update(UUID id, String status) {
+
+
+    public Leitura buscarLeitura(UUID idUser, String isbn){
+        Leitura leituraRetorno = null;
+        //Aluno a = alunoService.buscarPorId(idUser);
+        for(Leitura leitura :leituraRepository.findAll()){
+            if(leitura.getAluno().getId().equals(idUser) && leitura.getLivro().getISBN().equals(isbn)){
+                leituraRetorno = leitura;
+            }
+        }
+
+        return leituraRetorno;
+    }
+
+    public Leitura update(UUID id, String status,int avaliacao) {
         Optional<Leitura> leituraOptional = leituraRepository.findById(id);
 
         if (leituraOptional.isEmpty()) {
@@ -60,6 +79,7 @@ public class LeituraService {
         //leituraExistente.setLivro(leituraAtualizada.getLivro());
         //leituraExistente.setAluno(leituraAtualizada.getAluno());
         leituraAtualizada.setStatus(StatusLivro.valueOf(status));
+        leituraAtualizada.setAvaliacao(avaliacao);
         if(leituraAtualizada.getStatus() == StatusLivro.CONCLUIDO){
             Aluno aluno = leituraAtualizada.getAluno();
             aluno.setQtdLivrosLidos(aluno.getQtdLivrosLidos() + 1 ); // incrementando quantidade de livros

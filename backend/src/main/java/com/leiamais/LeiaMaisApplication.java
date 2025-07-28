@@ -43,6 +43,7 @@ public class LeiaMaisApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:5173")
+						.allowedOrigins("/**")
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*")
 						.allowCredentials(true);
@@ -173,6 +174,47 @@ public class LeiaMaisApplication {
 				
 				livroRepository.save(livro);
 			}
+
+			if (livroRepository.findByISBN("8538048201").isEmpty()) {
+				Livro livro = new Livro();
+				livro.setTitulo("O mágico de Oz");
+				livro.setISBN("8538048201");
+				livro.setLivroUrl("1vzMHK32diYyYv6TJKdr7PgZyIuT5S0bx");
+				livro.setAutor("Frank Baum");
+
+				livroRepository.save(livro);
+			}
+
+			if (livroRepository.findByISBN("9780316183567").isEmpty()) {
+				Livro livro = new Livro();
+				livro.setTitulo("A lebre e a tartaruga");
+				livro.setISBN("9780316183567");
+				livro.setLivroUrl("16BcFfG93hR_BPPJS0V1DCp0rVm1cFDmZ");
+				livro.setAutor("La Fontaine");
+
+				livroRepository.save(livro);
+			}
+
+			if (livroRepository.findByISBN("8538083724").isEmpty()) {
+				Livro livro = new Livro();
+				livro.setTitulo("A lebre e a tartaruga");
+				livro.setISBN("8538083724");
+				livro.setLivroUrl("1nzX5B0xpXnR4ctuwFe3q9KVlvSTs0pQB");
+				livro.setAutor("Lewis Carroll");
+
+				livroRepository.save(livro);
+			}
+
+			if (livroRepository.findByISBN("8478646795").isEmpty()) {
+				Livro livro = new Livro();
+				livro.setTitulo("A menina vendedora de fósforos");
+				livro.setISBN("8478646795");
+				livro.setLivroUrl("1lJssLPZYUm_gIXhyOiH8LXN-b-mgx9S4");
+				livro.setAutor("Hans Christian Andersen");
+
+				livroRepository.save(livro);
+			}
+
 
 			if (turmaRepository.findByNome("Turma A").isEmpty()) {
 				Turma turma = new Turma();

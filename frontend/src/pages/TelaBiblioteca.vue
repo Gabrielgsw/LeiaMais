@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const livros = ref([
     "https://covers.openlibrary.org/b/isbn/9788522005239-M.jpg",
-    "https://covers.openlibrary.org/b/isbn/9781421806501-M.jpg",
+    "https://covers.openlibrary.org/b/isbn/8538048201-M.jpg",
     "https://covers.openlibrary.org/b/isbn/9780316183567-M.jpg",
 ])
 </script>

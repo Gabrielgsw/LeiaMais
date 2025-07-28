@@ -27,6 +27,8 @@ public class Livro {
     private String editora;
     @Column
     private String livroUrl;
+    @Column
+    private String descricao;
 
     public String getLivroUrl() {
         return livroUrl;
@@ -74,5 +76,13 @@ public class Livro {
 
     public void setEditora(String editora) {
         this.editora = editora;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

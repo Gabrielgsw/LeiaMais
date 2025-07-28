@@ -40,20 +40,30 @@ public class LeituraController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/leitura/{idUser}/{isbn}")
+    public ResponseEntity<Leitura> listarLeituraAtual(@PathVariable UUID idUser, @PathVariable String isbn) {
+        Optional<Leitura> leitura = Optional.ofNullable(leituraService.buscarLeitura(idUser, isbn));
+        if(leitura.isPresent()){
+            return ResponseEntity.ok(leitura.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/{ISBN}")
     public ResponseEntity<Leitura> criar(@PathVariable String ISBN) {
        UUID idUser = UsuarioSession.getInstance().getLoggedInUsuario().getId();
        Optional<Aluno> aluno = Optional.ofNullable(alunoService.buscarPorId(idUser));
        String matriculaAluno = aluno != null ? aluno.get().getMatricula() : null;
-        return ResponseEntity.ok(leituraService.criar(matriculaAluno,ISBN));
+        return ResponseEntity.ok(leituraService.criar(idUser,ISBN));
     }
 
 
 
-    @PutMapping("/{id}/{status}")
-    public ResponseEntity<Leitura> atualizarStatus(@PathVariable UUID id, @PathVariable String status) {
+    @PutMapping("/{id}/{status}/{avalicao}")
+    public ResponseEntity<Leitura> atualizarStatus(@PathVariable UUID id, @PathVariable String status,@PathVariable int avaliacao) {
         try {
-            return ResponseEntity.ok(leituraService.update(id, status));
+            return ResponseEntity.ok(leituraService.update(id, status,avaliacao));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
