@@ -45,6 +45,7 @@ public class RespostaController {
         System.out.println("id da atividade: " + dto.getAtividade().getId());
         Optional<Atividade> atv = atividadeService.buscarPorId(dto.getAtividade().getId());
         Aluno aluno = alunoService.buscarPorId(dto.getAlunoId());
+        aluno.setPontos(aluno.getPontos() + 2);
         Resposta resposta = null;
         if (aluno != null) {
             resposta = repostaService.responderAtividade(dto);

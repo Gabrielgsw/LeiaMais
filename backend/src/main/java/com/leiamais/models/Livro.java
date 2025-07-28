@@ -27,7 +27,8 @@ public class Livro {
     private String editora;
     @Column
     private String livroUrl;
-    @Column
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String descricao;
 
     public String getLivroUrl() {

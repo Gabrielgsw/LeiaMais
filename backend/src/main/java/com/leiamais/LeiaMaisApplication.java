@@ -171,6 +171,7 @@ public class LeiaMaisApplication {
 				livro.setISBN("9788522005239");
 				livro.setLivroUrl("1mZa8gQGbms46Uh2_vjUv6riagwUTfLLs");
 				livro.setAutor("Antoine de Saint-Exupéry");
+				livro.setDescricao("Um piloto cai com seu avião no deserto e ali encontra uma criança loura e frágil. Ela diz ter vindo de um pequeno planeta distante. E ali, na convivência com o piloto perdido, os dois repensam os seus valores e encontram o sentido da vida.");
 				
 				livroRepository.save(livro);
 			}
@@ -181,6 +182,7 @@ public class LeiaMaisApplication {
 				livro.setISBN("8538048201");
 				livro.setLivroUrl("1vzMHK32diYyYv6TJKdr7PgZyIuT5S0bx");
 				livro.setAutor("Frank Baum");
+				livro.setDescricao("Dorothy e seu cachorro Totó são levados para a terra mágica de Oz quando um ciclone passa pela fazenda de seus avós no Kansas. Eles viajam em direção à Cidade Esmeralda para encontrar o Mago Oz e no caminho encontram um Espantalho, que precisa de um cérebro, um Homem de Lata sem um coração e um Leão Covarde que quer coragem. O Mago pede ao grupo que tragam a vassoura da Bruxa Malvada do Oeste a fim de ganharem sua juda");
 
 				livroRepository.save(livro);
 			}
@@ -201,16 +203,18 @@ public class LeiaMaisApplication {
 				livro.setISBN("8538083724");
 				livro.setLivroUrl("1nzX5B0xpXnR4ctuwFe3q9KVlvSTs0pQB");
 				livro.setAutor("Lewis Carroll");
+				livro.setDescricao("Baseado na obra de Esopo, a lebre esnobou a tartaruga, pois se achava muito esperta e veloz. Porém sua autoconfiança não a ajudou, e a tartaruga mostrou que somos capazes e não devemos menosprezar os outros. Conheça essa linda fábula, e descubra o que aprender com essa história.");
 
 				livroRepository.save(livro);
 			}
 
 			if (livroRepository.findByISBN("8478646795").isEmpty()) {
 				Livro livro = new Livro();
-				livro.setTitulo("A menina vendedora de fósforos");
+				livro.setTitulo("A pequena vendedora de fósforos");
 				livro.setISBN("8478646795");
 				livro.setLivroUrl("1lJssLPZYUm_gIXhyOiH8LXN-b-mgx9S4");
 				livro.setAutor("Hans Christian Andersen");
+				livro.setDescricao("No último dia do ano, uma menininha caminha descalça pelas ruas cobertas de neve. Tenta vender fósforos, sem sucesso. Como não conseguiu sequer um centavo, teme levar uma surra do pai ao voltar para casa, e decide continuar onde está. Encostadinha a uma parede, cansada e com fome, tremendo de frio, acende um dos fósforos para se aquecer. E então tem visões maravilhosas");
 
 				livroRepository.save(livro);
 			}
