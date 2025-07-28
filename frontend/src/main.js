@@ -17,7 +17,7 @@ import TeladeLivroGeral from './pages/TeladeLivroGeral.vue'
 import TelaResolverAtividadeCoordenador from './pages/Coordenador/TelaResolverAtividadeCoordenador.vue'
 import Telaleitura from './pages/Telaleitura.vue'
 import TelaCorrigirAtividadeCoordenador from './pages/Coordenador/TelaCorrigirAtividadeCoordenador.vue'
-import TeladeRanking from './pages/Aluno/TeladeRanking.vue'
+import TeladeRanking from './pages/Coordenador/TeladeRanking.vue'
 import TelaDeTurmaCoordenador from './pages/Coordenador/TelaDeTurmaCoordenador.vue';
 
 //import telas de aluno:
@@ -33,6 +33,8 @@ import TelaCriarAtividadeProfessor from './pages/Professor/TelaCriarAtividadePro
 import TelaAlunosCorrecao from './pages/Professor/TelaAlunosCorrecao.vue';
 import TelaCorrigirAtividadeProfessor from './pages/Professor/TelaCorrigirAtividadeProfessor.vue';
 import TelaDeLivroAluno from './pages/Aluno/TelaDeLivroAluno.vue';
+import TelaDeRankingProfessor from './pages/Professor/TelaDeRankingProfessor.vue';
+import TelaDeLivroProfessor from './pages/Professor/TelaDeLivroProfessor.vue';
 
 const routes = [
   { path: '/', component: BemVindo },
@@ -62,10 +64,11 @@ const routes = [
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },
   { path: '/TelaDeTurmaProfessor', component: TelaDeTurmaProfessor },
-  {path: '/TelaCriarAtividadeProfessor', component: TelaCriarAtividadeProfessor },
+  {path: '/TelaCriarAtividadeProfessor/:id/criar-atividade', component: TelaCriarAtividadeProfessor },
   {path: '/TelaAlunosCorrecao', component: TelaAlunosCorrecao },
   {path: '/TelaCorrigirAtividadeProfessor', component: TelaCorrigirAtividadeProfessor },
-
+  {path: '/TelaDeRankingProfessor', component: TelaDeRankingProfessor },
+  { path: '/livro/professor/:isbn', component: TelaDeLivroProfessor},
 
 ]
 
