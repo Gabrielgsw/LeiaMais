@@ -23,8 +23,8 @@ public class RequisicaoRespostaDTO {
         return atividade;
     }
 
-    public void setAtividadeId(Atividade atividadeId) {
-        this.atividade = atividadeId;
+    public void setAtividade(Atividade atividade) {
+        this.atividade = atividade;
     }
 
     public List<RespostaItemDTO> getRespostas() {

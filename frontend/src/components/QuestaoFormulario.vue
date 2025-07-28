@@ -3,7 +3,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
-// 1. Definição de Tipos (sem alterações)
+// 1. Definição de Tipos
 interface Atividade {
   id: string;
   nome: string;
@@ -14,15 +14,19 @@ interface Atividade {
   enunciado: string[];
 }
 
+// A interface Usuario não é mais necessária aqui
+// interface Usuario { ... }
+
+// Interface para o payload de envio
 interface RespostaPayload {
-  atividadeId: string;
+  alunoId: string;
+  atividade: Atividade;
   respostas: {
-    enunciadoTexto: string;
     resposta: string;
   }[];
 }
 
-// 2. Props para receber o ID da atividade (sem alterações)
+// 2. Props para receber o ID da atividade
 const props = defineProps({
   idAtividade: {
     type: String,
@@ -32,8 +36,9 @@ const props = defineProps({
 
 const router = useRouter();
 
-// 3. Estado reativo (sem alterações)
+// 3. Estado reativo
 const atividade = ref<Atividade | null>(null);
+const alunoId = ref<string | null>(null); // Estado para armazenar apenas o ID do aluno
 const answers = ref<string[]>([]);
 const loading = ref<boolean>(true);
 const error = ref<string | null>(null);
@@ -46,28 +51,35 @@ async function carregarAtividade() {
   console.log(`Buscando atividade com ID: ${props.idAtividade}`);
 
   try {
-    // --- CORREÇÃO FINAL ---
-    // 1. Voltamos a usar o endpoint correto que busca por ID.
-    // 2. O tipo de resposta esperado agora é um único objeto 'Atividade', e não 'Atividade[]'.
-    const response = await axios.get<Atividade>(`http://localhost:8080/api/atividades/${props.idAtividade}`);
+    // Fazendo as duas requisições em paralelo
+    const [atividadeResponse, idUsuarioResponse] = await Promise.all([
+      axios.get<Atividade>(`http://localhost:8080/api/atividades/${props.idAtividade}`),
+      // --- ALTERAÇÃO APLICADA AQUI ---
+      // 1. URL alterada para /api/auth/me/id
+      // 2. O tipo de resposta esperado é uma string (o UUID)
+      axios.get<string>(`http://localhost:8080/api/auth/me/id`, { withCredentials: true })
+    ]);
+    
+    if (atividadeResponse.data && idUsuarioResponse.data) {
+      console.log("Atividade recebida da API:", atividadeResponse.data);
+      console.log("ID do Aluno recebido pela API:", idUsuarioResponse.data);
+      
+      // Populando os estados com os dados recebidos
+      atividade.value = atividadeResponse.data;
+      alunoId.value = idUsuarioResponse.data; // Armazenando o UUID diretamente
 
-    // 3. Como a resposta já é o objeto da atividade, podemos usá-la diretamente.
-    if (response.data) {
-      console.log("Atividade recebida da API:", response.data);
-      atividade.value = response.data;
-      if (response.data.enunciado) {
-        answers.value = Array(response.data.enunciado.length).fill('');
+      if (atividadeResponse.data.enunciado) {
+        answers.value = Array(atividadeResponse.data.enunciado.length).fill('');
       }
     } else {
-      // Este 'else' provavelmente nunca será atingido se a API retornar 404,
-      // pois isso cairá no bloco 'catch'. Mas é uma boa prática manter.
       throw new Error("A API retornou uma resposta vazia.");
     }
   } catch (err: any) {
-    // O erro 404 (Not Found) do backend será capturado aqui.
-    console.error("Erro ao carregar atividade:", err);
-    if (err.response && err.response.status === 404) {
-      error.value = `Atividade com o ID especificado não foi encontrada.`;
+    console.error("Erro ao carregar dados:", err);
+    if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+        error.value = `Não autorizado. Por favor, faça o login antes de aceder a esta página.`;
+    } else if (err.response && err.response.status === 404) {
+      error.value = `Atividade ou usuário não encontrado.`;
     } else {
       error.value = err.message || "Falha ao conectar com a API.";
     }
@@ -77,7 +89,11 @@ async function carregarAtividade() {
 }
 
 async function submitAnswers() {
-  if (!atividade.value) return;
+  // Verificação atualizada para usar alunoId
+  if (!atividade.value || !alunoId.value) {
+    error.value = "Não foi possível enviar as respostas. Dados de atividade ou ID do aluno ausentes.";
+    return;
+  }
 
   const algumaRespostaVazia = answers.value.some(answer => answer.trim() === '');
   if (algumaRespostaVazia) {
@@ -85,32 +101,35 @@ async function submitAnswers() {
     return;
   }
 
+  // Construindo o payload com o ID do aluno
   const payload: RespostaPayload = {
-    atividadeId: props.idAtividade,
-    respostas: atividade.value.enunciado.map((textoDoEnunciado, index) => ({
-      enunciadoTexto: textoDoEnunciado,
-      resposta: answers.value[index],
+    alunoId: alunoId.value, // Usando o ID que foi buscado na API
+    atividade: atividade.value,
+    respostas: answers.value.map((answer) => ({
+      resposta: answer,
     })),
   };
 
-  console.log("Enviando payload:", payload);
+  console.log("Enviando payload final:", payload);
 
   try {
-    await axios.post('http://localhost:8080/respostas', payload);
+    await axios.post('http://localhost:8080/respostas', payload, { withCredentials: true });
     submitted.value = true;
-  } catch (err) {
+  } catch (err: any) {
     console.error("Erro ao enviar respostas:", err);
-    error.value = "Falha ao enviar as respostas.";
+    if (err.response) {
+      error.value = `Falha ao enviar: ${err.response.status}. Verifique o console do backend para mais detalhes.`;
+    } else {
+      error.value = "Falha ao enviar as respostas. Verifique a conexão com a API.";
+    }
   }
 }
 
 // 5. Hooks do ciclo de vida
 onMounted(carregarAtividade);
 watch(() => props.idAtividade, carregarAtividade);
-
 </script>
 
-<!-- O Template não precisa de alterações -->
 <template>
   <div class="bg-gray-50 min-h-screen">
     <div class="container mx-auto p-4 sm:p-6 md:p-8">
@@ -132,8 +151,7 @@ watch(() => props.idAtividade, carregarAtividade);
             <strong>Pergunta {{ idx + 1 }}:</strong> {{ resp }}
           </li>
         </ul>
-        <button @click="router.push('/')"
-          class="mt-8 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-sm">
+        <button @click="router.push('/TelaInicialAluno')" class="mt-8 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-sm">
           Voltar para o Início
         </button>
       </div>
@@ -148,8 +166,7 @@ watch(() => props.idAtividade, carregarAtividade);
             <div class="flex-grow">
               <div class="flex gap-4 items-center mb-6">
                 <button @click="$router.back()" class="text-gray-500 hover:text-gray-800 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -168,31 +185,24 @@ watch(() => props.idAtividade, carregarAtividade);
             </div>
             <!-- Capa do Livro -->
             <div class="shrink-0 self-center sm:self-start">
-              <img class="w-28 h-40 rounded-md shadow-lg object-cover border" :src="'/img/placeholder.jpg'"
-                onerror="this.onerror=null;this.src='https://placehold.co/112x160/e0e0e0/757575?text=Capa'"
-                alt="Capa do livro">
+              <img class="w-28 h-40 rounded-md shadow-lg object-cover border" :src="'/img/placeholder.jpg'" onerror="this.onerror=null;this.src='https://placehold.co/112x160/e0e0e0/757575?text=Capa'" alt="Capa do livro">
             </div>
           </div>
         </div>
 
         <!-- Formulário de Respostas -->
         <form @submit.prevent="submitAnswers" class="space-y-6">
-          <div v-for="(textoDoEnunciado, index) in atividade.enunciado" :key="index"
-            class="bg-white shadow-sm p-6 rounded-xl border border-gray-200">
+          <div v-for="(textoDoEnunciado, index) in atividade.enunciado" :key="index" class="bg-white shadow-sm p-6 rounded-xl border border-gray-200">
             <p class="font-semibold text-lg mb-4 text-gray-800">{{ index + 1 }}. {{ textoDoEnunciado }}</p>
-            <textarea v-model="answers[index]" placeholder="Digite sua resposta aqui..."
-              class="w-full p-3 border border-gray-300 rounded-lg resize-y min-h-[120px] focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-shadow"
-              required></textarea>
+            <textarea v-model="answers[index]" placeholder="Digite sua resposta aqui..." class="w-full p-3 border border-gray-300 rounded-lg resize-y min-h-[120px] focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-shadow" required></textarea>
           </div>
 
           <!-- Botões de Ação -->
           <div class="flex flex-col-reverse sm:flex-row justify-end gap-4 pt-4">
-            <button type="button" @click="router.back()"
-              class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
+            <button type="button" @click="router.back()" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
               Cancelar
             </button>
-            <button type="submit"
-              class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
               Enviar Respostas
             </button>
           </div>

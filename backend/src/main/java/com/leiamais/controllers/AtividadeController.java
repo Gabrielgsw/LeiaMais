@@ -57,6 +57,16 @@ public class AtividadeController {
         }
     }
 
+    @GetMapping("/livro/{isbn}")
+    public ResponseEntity<Atividade> buscarPorLivro(@PathVariable String isbn) {
+        Optional<Atividade> ativiadOptional = atividadeService.buscarPorLivro(isbn); 
+        if(ativiadOptional.isPresent()) {
+            return ResponseEntity.ok(ativiadOptional.get());
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     /*@GetMapping("/buscarPorTurma/{turmaId}")
     public ResponseEntity<List<Atividade>> buscarPorTurma(@PathVariable UUID turmaId) {
         List<Atividade> atividadeOptional = atividadeService.buscarPorTurma(turmaId);

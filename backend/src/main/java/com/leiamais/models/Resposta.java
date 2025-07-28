@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Resposta {
 
-    @Id
+     @Id
     @GeneratedValue
     private UUID id;
 
@@ -25,8 +27,12 @@ public class Resposta {
     @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;
 
-    @OneToOne
+    // --- CORREÇÃO APLICADA ---
+    // Em vez de 'private UUID atividadeId;', usamos a referência ao objeto completo.
+    // A anotação @ManyToOne define que muitas Respostas pertencem a uma Atividade.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atividade_id", nullable = false)
+    @JsonBackReference // Evita loops infinitos ao converter para JSON
     private Atividade atividade;
 
     @Column

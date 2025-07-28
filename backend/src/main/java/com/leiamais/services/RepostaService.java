@@ -7,9 +7,12 @@ import com.leiamais.models.Resposta;
 import com.leiamais.repositories.AlunoRepository;
 import com.leiamais.repositories.AtividadeRepository;
 import com.leiamais.repositories.RespostaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.transaction.annotation.Transactional; 
+
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -50,34 +53,35 @@ public class RepostaService {
         respostaRepository.save(resposta);
     }
 
-    public Optional<Atividade> findByNome(String nome) {
-        List<Atividade> atividades = atividadeRepository.findAll();
-        for(Atividade a : atividades) {
-            if(a.getNome().equals(nome)) {
-                return Optional.of(a);
-            }
+    
+
+    @Transactional
+    public Resposta responderAtividade(RequisicaoRespostaDTO dto) {
+        // 1. Busca as entidades dentro da transação para garantir que estão "vivas" (managed).
+        Aluno aluno = alunoRepository.findById(dto.getAlunoId())
+                .orElseThrow(() -> new RuntimeException("Aluno com ID " + dto.getAlunoId() + " não encontrado."));
+
+        Atividade atividade = atividadeService.buscarPorId(dto.getAtividade().getId())
+                .orElseThrow(() -> new RuntimeException("Atividade com ID " + dto.getAtividade().getId() + " não encontrada."));
+
+        Resposta novaResposta = new Resposta();
+        novaResposta.setAluno(aluno);
+        novaResposta.setAtividade(atividade);
+
+        List<String> respostasTexto = dto.getRespostas()
+                .stream()
+                .map(RequisicaoRespostaDTO.RespostaItemDTO::getResposta)
+                .collect(Collectors.toList());
+        novaResposta.setRespostas(respostasTexto);
+
+        Resposta respostaSalva = respostaRepository.save(novaResposta);
+        if (atividade.getRespostas() == null) {
+            atividade.setRespostas(new ArrayList<>());
         }
-        return Optional.empty();
+        atividade.getRespostas().add(respostaSalva);
+        
+        return respostaSalva;
     }
-
-    public Resposta responderAtividade(Aluno aluno, RequisicaoRespostaDTO dto) {
-    Optional<Atividade> atv = atividadeService.buscarPorId(dto.getAtividade().getId());
-
-    if (atv.isPresent()) {
-        Resposta resp = new Resposta();
-        resp.setAtividade(dto.getAtividade());
-        resp.setAluno(aluno);
-        List<String> respostasConvertidas = dto.getRespostas() // convertendo a em List<String>
-            .stream()
-            .map(RequisicaoRespostaDTO.RespostaItemDTO::getResposta)
-            .collect(Collectors.toList());
-
-        resp.setRespostas(respostasConvertidas);
-        return resp;
-    }
-
-    return null;
-}
     
     public Optional<Resposta> corrigirResposta(UUID idResposta, float nota, String feedback) {
         Optional<Resposta> respostaOpt = respostaRepository.findById(idResposta);
@@ -92,7 +96,7 @@ public class RepostaService {
     }
     public Optional<Resposta> findByAlunoAndAtividade(Aluno aluno, Atividade atividade){
         return findAll().stream()
-                .filter(resposta -> resposta.getAluno().equals(aluno) && resposta.getAtividade().equals(atividade))
+                .filter(resposta -> resposta.getAluno().equals(aluno) && resposta.getAtividade().getId().equals(atividade.getId()))
                 .findFirst();
     }
     public Collection<Resposta> findAll() {

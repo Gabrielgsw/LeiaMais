@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/resposta")
+@RequestMapping("/respostas")
 @CrossOrigin(origins = "http://localhost:5173")
 public class RespostaController {
     private final AlunoService alunoService;
@@ -42,11 +42,12 @@ public class RespostaController {
 
     @PostMapping
     public ResponseEntity<Resposta> salvar(@RequestBody RequisicaoRespostaDTO dto) {
-        Optional<Atividade> atv = atividadeService.buscarPorNome(dto.getAtividade().getNome());
+        System.out.println("id da atividade: " + dto.getAtividade().getId());
+        Optional<Atividade> atv = atividadeService.buscarPorId(dto.getAtividade().getId());
         Aluno aluno = alunoService.buscarPorId(dto.getAlunoId());
         Resposta resposta = null;
         if (aluno != null) {
-            resposta = repostaService.responderAtividade(aluno,dto);
+            resposta = repostaService.responderAtividade(dto);
         }
 
         if (resposta != null) {

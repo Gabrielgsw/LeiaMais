@@ -3,6 +3,8 @@ package com.leiamais.services;
 import com.leiamais.models.Atividade;
 import com.leiamais.models.Turma;
 import com.leiamais.repositories.AtividadeRepository;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,14 +28,30 @@ public class AtividadeService {
         return atividadeRepository.findAll();
     }
 
+    @EntityGraph(attributePaths = "respostas")
     public Optional<Atividade> buscarPorId(UUID id) {
-        return atividadeRepository.findById(id);
+        return atividadeRepository.findByIdComRespostas(id);
     }
 
     public Optional<Atividade> buscarPorNome(String nome) {
         return atividadeRepository.findAll().stream()
                 .filter(atividade -> atividade.getNome().equalsIgnoreCase(nome))
                 .findFirst();
+    }
+
+    public Optional<Atividade> buscarPorLivro(String isbn) {
+        return atividadeRepository.findAll().stream()
+                .filter(atividade -> atividade.getLivro() != null && atividade.getLivro().getISBN().equals(isbn))
+                .findFirst();
+    }
+    public Optional<Atividade> findByNome(String nome) {
+        List<Atividade> atividades = atividadeRepository.findAll();
+        for(Atividade a : atividades) {
+            if(a.getNome().equals(nome)) {
+                return Optional.of(a);
+            }
+        }
+        return Optional.empty();
     }
 
     /*public List<Atividade> buscarPorTurma(UUID turmaId) {
