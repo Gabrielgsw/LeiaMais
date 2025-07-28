@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface AtividadeRepository extends JpaRepository<Atividade, UUID> {
     Optional<Atividade> findByEnunciado(String enunciado);
-    Optional<Atividade> findById(String id);
+    Optional<Atividade> findById(UUID id);
     // Outros métodos de consulta podem ser adicionados aqui conforme necessário
 }
