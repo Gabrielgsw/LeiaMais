@@ -60,6 +60,5 @@ const isDialogOpenEdit = ref(false);
     <span>{{ nome }}</span>
     <span>{{ cpf }}</span>
     <span>{{ tipo }}</span>
-    <span class="text-center">teste</span>
   </div>
 </template>

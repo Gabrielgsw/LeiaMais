@@ -258,7 +258,7 @@ onMounted(() => {
 
       <div class="grid grid-cols-4 font-bold px-4 py-2 bg-blue-100 rounded-md mb-2">
         <span>Nome</span> <span>CPF</span> <span>Tipo</span>
-        <span class="text-center">Ações</span>
+        
       </div>
 
       <UsuarionaTurma v-for="usuario in alunosDaTurma" :key="usuario.id" :id="usuario.id" :nome="usuario.nome"

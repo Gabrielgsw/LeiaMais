@@ -57,11 +57,8 @@ const routes = [
   { path: '/TelaResolverAtividadeCoordenador', component: TelaResolverAtividadeCoordenador },
   { path: '/TelaBiblioteca', component: TelaBiblioteca },
   { path: '/TeladeRankingAluno', component: TeladeRankingAluno },
-<<<<<<< HEAD
-  { path: '/TelaResolverAtividade/:id', component: TelaResolverAtividade },
-=======
+  { path: '/TelaResolverAtividade', component: TelaResolverAtividade },
   { path: '/livro/aluno/:isbn', component: TelaDeLivroAluno },
->>>>>>> 83ee0c73db1cc6acd3e6ca73fead7de60d5d9312
 
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },

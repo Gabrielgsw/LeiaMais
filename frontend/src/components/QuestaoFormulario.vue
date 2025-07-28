@@ -5,29 +5,29 @@ import axios from 'axios';
 
 // 1. Definição de Tipos (sem alterações)
 interface Atividade {
-  id: string;
-  nome: string;
-  livro: {
-    id: string;
-    titulo: string;
-  };
-  enunciado: string[];
+  id: string;
+  nome: string;
+  livro: {
+    id: string;
+    titulo: string;
+  };
+  enunciado: string[];
 }
 
 interface RespostaPayload {
-  atividadeId: string;
-  respostas: {
-    enunciadoTexto: string;
-    resposta: string;
-  }[];
+  atividadeId: string;
+  respostas: {
+    enunciadoTexto: string;
+    resposta: string;
+  }[];
 }
 
 // 2. Props para receber o ID da atividade (sem alterações)
 const props = defineProps({
-  idAtividade: {
-    type: String,
-    required: true,
-  },
+  idAtividade: {
+    type: String,
+    required: true,
+  },
 });
 
 const router = useRouter();
@@ -41,16 +41,16 @@ const submitted = ref<boolean>(false);
 
 // 4. Funções para buscar e enviar dados
 async function carregarAtividade() {
-  loading.value = true;
-  error.value = null;
+  loading.value = true;
+  error.value = null;
   console.log(`Buscando atividade com ID: ${props.idAtividade}`);
 
-  try {
+  try {
     // --- CORREÇÃO FINAL ---
     // 1. Voltamos a usar o endpoint correto que busca por ID.
     // 2. O tipo de resposta esperado agora é um único objeto 'Atividade', e não 'Atividade[]'.
-    const response = await axios.get<Atividade>(`http://localhost:8080/api/atividades/${props.idAtividade}`);
-    
+    const response = await axios.get<Atividade>(`http://localhost:8080/api/atividades/${props.idAtividade}`);
+
     // 3. Como a resposta já é o objeto da atividade, podemos usá-la diretamente.
     if (response.data) {
       console.log("Atividade recebida da API:", response.data);
@@ -63,45 +63,45 @@ async function carregarAtividade() {
       // pois isso cairá no bloco 'catch'. Mas é uma boa prática manter.
       throw new Error("A API retornou uma resposta vazia.");
     }
-  } catch (err: any) {
+  } catch (err: any) {
     // O erro 404 (Not Found) do backend será capturado aqui.
-    console.error("Erro ao carregar atividade:", err);
+    console.error("Erro ao carregar atividade:", err);
     if (err.response && err.response.status === 404) {
       error.value = `Atividade com o ID especificado não foi encontrada.`;
     } else {
       error.value = err.message || "Falha ao conectar com a API.";
     }
-  } finally {
-    loading.value = false;
-  }
+  } finally {
+    loading.value = false;
+  }
 }
 
 async function submitAnswers() {
-  if (!atividade.value) return;
+  if (!atividade.value) return;
 
-  const algumaRespostaVazia = answers.value.some(answer => answer.trim() === '');
-  if (algumaRespostaVazia) {
-    alert('Por favor, responda todas as questões.');
-    return;
-  }
+  const algumaRespostaVazia = answers.value.some(answer => answer.trim() === '');
+  if (algumaRespostaVazia) {
+    alert('Por favor, responda todas as questões.');
+    return;
+  }
 
-  const payload: RespostaPayload = {
-    atividadeId: props.idAtividade,
-    respostas: atividade.value.enunciado.map((textoDoEnunciado, index) => ({
-      enunciadoTexto: textoDoEnunciado,
-      resposta: answers.value[index],
-    })),
-  };
+  const payload: RespostaPayload = {
+    atividadeId: props.idAtividade,
+    respostas: atividade.value.enunciado.map((textoDoEnunciado, index) => ({
+      enunciadoTexto: textoDoEnunciado,
+      resposta: answers.value[index],
+    })),
+  };
 
   console.log("Enviando payload:", payload);
 
-  try {
-    await axios.post('http://localhost:8080/respostas', payload);
-    submitted.value = true;
-  } catch (err) {
-    console.error("Erro ao enviar respostas:", err);
-    error.value = "Falha ao enviar as respostas.";
-  }
+  try {
+    await axios.post('http://localhost:8080/respostas', payload);
+    submitted.value = true;
+  } catch (err) {
+    console.error("Erro ao enviar respostas:", err);
+    error.value = "Falha ao enviar as respostas.";
+  }
 }
 
 // 5. Hooks do ciclo de vida
@@ -132,7 +132,8 @@ watch(() => props.idAtividade, carregarAtividade);
             <strong>Pergunta {{ idx + 1 }}:</strong> {{ resp }}
           </li>
         </ul>
-        <button @click="router.push('/')" class="mt-8 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-sm">
+        <button @click="router.push('/')"
+          class="mt-8 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-sm">
           Voltar para o Início
         </button>
       </div>
@@ -147,7 +148,10 @@ watch(() => props.idAtividade, carregarAtividade);
             <div class="flex-grow">
               <div class="flex gap-4 items-center mb-6">
                 <button @click="$router.back()" class="text-gray-500 hover:text-gray-800 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                  </svg>
                 </button>
                 <h1 class="text-3xl font-bold text-gray-800">Atividade</h1>
               </div>
@@ -164,32 +168,31 @@ watch(() => props.idAtividade, carregarAtividade);
             </div>
             <!-- Capa do Livro -->
             <div class="shrink-0 self-center sm:self-start">
-              <img class="w-28 h-40 rounded-md shadow-lg object-cover border" 
-                   :src="'/img/placeholder.jpg'" 
-                   onerror="this.onerror=null;this.src='https://placehold.co/112x160/e0e0e0/757575?text=Capa'"
-                   alt="Capa do livro">
+              <img class="w-28 h-40 rounded-md shadow-lg object-cover border" :src="'/img/placeholder.jpg'"
+                onerror="this.onerror=null;this.src='https://placehold.co/112x160/e0e0e0/757575?text=Capa'"
+                alt="Capa do livro">
             </div>
           </div>
         </div>
 
         <!-- Formulário de Respostas -->
         <form @submit.prevent="submitAnswers" class="space-y-6">
-          <div v-for="(textoDoEnunciado, index) in atividade.enunciado" :key="index" class="bg-white shadow-sm p-6 rounded-xl border border-gray-200">
+          <div v-for="(textoDoEnunciado, index) in atividade.enunciado" :key="index"
+            class="bg-white shadow-sm p-6 rounded-xl border border-gray-200">
             <p class="font-semibold text-lg mb-4 text-gray-800">{{ index + 1 }}. {{ textoDoEnunciado }}</p>
-            <textarea
-              v-model="answers[index]"
-              placeholder="Digite sua resposta aqui..."
+            <textarea v-model="answers[index]" placeholder="Digite sua resposta aqui..."
               class="w-full p-3 border border-gray-300 rounded-lg resize-y min-h-[120px] focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-shadow"
-              required
-            ></textarea>
+              required></textarea>
           </div>
 
           <!-- Botões de Ação -->
           <div class="flex flex-col-reverse sm:flex-row justify-end gap-4 pt-4">
-            <button type="button" @click="router.back()" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
+            <button type="button" @click="router.back()"
+              class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
               Cancelar
             </button>
-            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+            <button type="submit"
+              class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
               Enviar Respostas
             </button>
           </div>
