@@ -16,7 +16,7 @@ type Aluno = {
     nome: string
     cargo: string
 }
-
+const turma = ref();
 const atividades = ref([
     { id: '1', nome: 'Leitura do Livro - Pequeno Príncipe' }
 ]);
@@ -98,7 +98,7 @@ const excluirAtividade = () => {
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="text-[20px] font-bold">Atividades</h3>
                     <RouterLink 
-                        to="/TelaCriarAtividadeProfessor"
+                       :to="`/turma/${turma?.id}/criar-atividade`"
                         class="bg-[#359DFF] text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
                         Cadastrar atividade

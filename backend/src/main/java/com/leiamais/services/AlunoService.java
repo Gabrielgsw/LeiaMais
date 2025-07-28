@@ -1,10 +1,13 @@
 package com.leiamais.services;
 
 import com.leiamais.models.Aluno;
+import com.leiamais.models.Turma;
 import com.leiamais.repositories.AlunoRepository;
+import com.leiamais.repositories.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,9 +17,13 @@ public class AlunoService {
 
 
     private final AlunoRepository alunoRepository;
+    TurmaRepository turmaRepository;
+    //private final TurmaService turmaService;
 
-    public AlunoService(AlunoRepository alunoRepository) {
+    public AlunoService(AlunoRepository alunoRepository, TurmaRepository turmaRepository) {
         this.alunoRepository = alunoRepository;
+        this.turmaRepository = turmaRepository;
+        //this.turmaService = turmaService;
     }
 
     public List<Aluno> listarTodos() {
@@ -51,6 +58,20 @@ public class AlunoService {
 
     public void deletar(UUID id) {
         alunoRepository.deleteById(id);
+    }
+
+    public List<Aluno> buscarAlunosMinhaTurma(UUID idAluno) {
+        List<Aluno> alunosRetorno = new ArrayList<>();
+        Aluno aluno = buscarPorId(idAluno);
+
+        for(Turma t : turmaRepository.findAll()){
+            for(Aluno a : t.getAlunosMatriculados()){
+                if(t.getAlunosMatriculados().contains(aluno)){
+                    alunosRetorno.add(a);
+                }
+            }
+        }
+        return alunosRetorno;
     }
 
     public Aluno atualizarAluno(UUID id, Aluno novoAluno) {

@@ -1,5 +1,6 @@
 <script setup>
 import FormularioBuilder from '@/components/FormularioBuilder.vue';
+import FormularioBuilderProfessor from '@/components/FormularioBuilderProfessor.vue';
 </script>
 
 <template>
@@ -21,7 +22,7 @@ import FormularioBuilder from '@/components/FormularioBuilder.vue';
                     <h2 class="text-[28px] font-bold">Criar atividade</h2>
                 </div>
             </div>
-            <FormularioBuilder/>
+            <FormularioBuilderProfessor/>
             
         </div>
     </div>

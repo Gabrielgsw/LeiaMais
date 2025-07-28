@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router';
 import { ref } from 'vue'
 
@@ -11,12 +11,18 @@ const turmas = ref([
     { id: 1, nome: '1º ano - Ensino Fundamental' },
 ])
 
+
+
+
 const livros = ref([
     "https://covers.openlibrary.org/b/isbn/9788522005239-M.jpg",
     "https://covers.openlibrary.org/b/isbn/9781421806501-M.jpg",
     "https://covers.openlibrary.org/b/isbn/9780316183567-M.jpg",
 ])
-
+function extrairISBN(url: string): string {
+  const match = url.match(/isbn\/(\d+)-/);
+  return match ? match[1] : "";
+}
 const handleLogout = async () => {
     try {
         const response = await axios.post('http://localhost:8080/api/auth/logout', {}, { withCredentials: true });
@@ -54,7 +60,7 @@ const handleLogout = async () => {
                 </div>
 
                 <div class="flex gap-4 mb-6">
-                    <router-link to="/TeladeRanking">
+                    <router-link to="/TeladeRankingProfessor">
                         <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600">Ranking
                             geral</button>
                     </router-link>
@@ -71,20 +77,12 @@ const handleLogout = async () => {
 
                 <div>
                     <h2 class="text-lg font-bold mb-4">Biblioteca Geral:</h2>
-                    <RouterLink to="/TeladeLivroGeral">
-                        <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-                            <img v-for="livro in livros" :src="livro"
-                                class="w-[160px] h-[230px] rounded-sm object-cover" />
-                        </div>
-                    </RouterLink>
-                    <div class="flex justify-end">
-                        <router-link to="/TelaBiblioteca">
-                            <button
-                                class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">
-                                Ver mais
-                            </button>
+                    <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
+                        <router-link v-for="livro in livros" :key="livro" :to="`/livro/professor/${extrairISBN(livro)}`">
+                            <img :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
                         </router-link>
                     </div>
+                    
                 </div>
             </div>
         </main>

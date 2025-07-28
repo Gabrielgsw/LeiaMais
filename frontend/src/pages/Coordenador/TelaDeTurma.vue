@@ -39,11 +39,35 @@ type Aluno = {
   qtdLivrosLidos: number;
   qtdLivrosFavoritos: number;
 };
-
-const atividades = ref([]);
+const atividades = ref([
+  { id: '1', nome: 'Leitura do Livro - Pequeno Príncipe' }
+]);
 const alunosDaTurma = ref<Aluno[]>([]);
 const alunosDoSistema = ref<(Aluno & { checked: boolean })[]>([]);
+const mostrarPopupExclusao = ref(false);
+const atividadeParaExcluir = ref<string | null>(null);
 
+const confirmarExclusao = (atividadeId: string) => {
+  atividadeParaExcluir.value = atividadeId;
+  mostrarPopupExclusao.value = true;
+};
+
+const cancelarExclusao = () => {
+  mostrarPopupExclusao.value = false;
+  atividadeParaExcluir.value = null;
+};
+
+const excluirAtividade = () => {
+  if (atividadeParaExcluir.value) {
+    // Como ainda não há banco de dados, vamos apenas simular a exclusão
+    // removendo a atividade da lista (ou você pode apenas fechar o popup)
+    console.log('Atividade excluída:', atividadeParaExcluir.value);
+    // Para simular, você pode esvaziar a lista ou manter como está
+    // atividades.value = [];
+  }
+  mostrarPopupExclusao.value = false;
+  atividadeParaExcluir.value = null;
+};
 
 async function getAlunos() {
   try {
@@ -252,17 +276,25 @@ onMounted(() => {
       <div class="flex justify-between px-4 py-2 bg-blue-100 rounded-md mb-2 font-bold">
         <span>Nome</span> <span class="text-center">Ações</span>
       </div>
-      <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
-        :atividadename="atividade.nome" />
-
-      <div class="flex justify-between items-center text-center mb-3 mt-8">
-        <h3 class="text-[20px] font-bold mt-3">Livros</h3>
-      </div>
-      <RouterLink to="/TeladeLivroGeral">
-        <div class="flex overflow-x-auto gap-4 bg-blue-100 p-4 rounded">
-          <img v-for="livro in livros" :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
+      <div v-for="atividade in atividades" :key="atividade.id"
+        class="flex justify-between items-center px-4 py-2 bg-white border-b">
+        <span>{{ atividade.nome }}</span>
+        <div class="flex gap-2">
+          <RouterLink :to="`/TelaAlunosCorrecao/${atividade.id}`"
+            class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600">
+            Corrigir
+          </RouterLink>
+          <RouterLink :to="`/TelaCriarAtividadeProfessor/${atividade.id}`"
+            class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600">
+            Editar
+          </RouterLink>
+          <button @click="confirmarExclusao(atividade.id)"
+            class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+            Excluir
+          </button>
         </div>
-      </RouterLink>
+      </div>
+
       <div class="flex justify-between">
         <router-link to="/TeladeRanking">
           <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors mt-4">

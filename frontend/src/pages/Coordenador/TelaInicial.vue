@@ -286,13 +286,7 @@ onMounted(() => {
             </router-link>
           </div>
 
-          <div class="flex justify-end">
-            <router-link to="/TelaBiblioteca">
-              <button class="bg-[#359DFF] text-white mt-4 items-end px-4 py-2 rounded shadow hover:bg-blue-600">
-                Ver mais
-              </button>
-            </router-link>
-          </div>
+          
         </div>
       </div>
     </main>
