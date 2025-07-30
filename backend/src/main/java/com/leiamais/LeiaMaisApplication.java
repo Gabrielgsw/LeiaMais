@@ -43,7 +43,6 @@ public class LeiaMaisApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:5173")
-						.allowedOrigins("/**")
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*")
 						.allowCredentials(true);
@@ -193,17 +192,17 @@ public class LeiaMaisApplication {
 				livro.setISBN("9780316183567");
 				livro.setLivroUrl("16BcFfG93hR_BPPJS0V1DCp0rVm1cFDmZ");
 				livro.setAutor("La Fontaine");
-
+				livro.setDescricao("Baseado na obra de Esopo, a lebre esnobou a tartaruga, pois se achava muito esperta e veloz. Porém sua autoconfiança não a ajudou, e a tartaruga mostrou que somos capazes e não devemos menosprezar os outros. Conheça essa linda fábula, e descubra o que aprender com essa história.");
 				livroRepository.save(livro);
 			}
 
 			if (livroRepository.findByISBN("8538083724").isEmpty()) {
 				Livro livro = new Livro();
-				livro.setTitulo("A lebre e a tartaruga");
+				livro.setTitulo("Alice no país das maravilhas");
 				livro.setISBN("8538083724");
 				livro.setLivroUrl("1nzX5B0xpXnR4ctuwFe3q9KVlvSTs0pQB");
 				livro.setAutor("Lewis Carroll");
-				livro.setDescricao("Baseado na obra de Esopo, a lebre esnobou a tartaruga, pois se achava muito esperta e veloz. Porém sua autoconfiança não a ajudou, e a tartaruga mostrou que somos capazes e não devemos menosprezar os outros. Conheça essa linda fábula, e descubra o que aprender com essa história.");
+				livro.setDescricao("Ainda garotinha, Alice Kingsleigh visitou um lugar mágico pela primeira vez e não tinha mais lembranças sobre o local a não ser em seus sonhos. Em uma festa da nobreza, a jovem vê um coelho branco. Alice o segue e cai em um buraco, indo parar em um mundo estranho: o País das Maravilhas. Lá, ela reencontra personagens que estavam guardados em sua memória através dos sonhos.");
 
 				livroRepository.save(livro);
 			}

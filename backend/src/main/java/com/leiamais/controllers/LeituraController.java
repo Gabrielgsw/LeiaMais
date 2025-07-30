@@ -60,7 +60,7 @@ public class LeituraController {
 
 
 
-    @PutMapping("/{id}/{status}/{avalicao}")
+    @PutMapping("/{id}/{status}/{avaliacao}")
     public ResponseEntity<Leitura> atualizarStatus(@PathVariable UUID id, @PathVariable String status,@PathVariable int avaliacao) {
         try {
             return ResponseEntity.ok(leituraService.update(id, status,avaliacao));

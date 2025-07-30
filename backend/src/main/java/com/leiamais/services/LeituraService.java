@@ -84,6 +84,9 @@ public class LeituraService {
             Aluno aluno = leituraAtualizada.getAluno();
             aluno.setQtdLivrosLidos(aluno.getQtdLivrosLidos() + 1 ); // incrementando quantidade de livros
             aluno.setPontos(aluno.getPontos() + 2 ); // adicionando 2 pontos por leitura concluida
+        }else if(leituraAtualizada.getStatus() == StatusLivro.EMLEITURA){
+            Aluno aluno = leituraAtualizada.getAluno();
+            aluno.setPontos(aluno.getPontos() + 1);
         }
 
         return leituraRepository.save(leituraAtualizada);
