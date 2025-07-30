@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties; // Importe esta anotação
 
 @Entity
 public class Resposta {
 
-     @Id
+    @Id
     @GeneratedValue
     private UUID id;
 
@@ -23,16 +23,17 @@ public class Resposta {
     @Column
     private float nota;
 
-    @OneToOne
+    // --- CORREÇÃO APLICADA ---
+    // Adicionada a anotação @JsonIgnoreProperties para evitar erros de serialização
+    // quando o objeto Aluno é carregado de forma "preguiçosa" (lazy).
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aluno_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Aluno aluno;
 
-    // --- CORREÇÃO APLICADA ---
-    // Em vez de 'private UUID atividadeId;', usamos a referência ao objeto completo.
-    // A anotação @ManyToOne define que muitas Respostas pertencem a uma Atividade.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atividade_id", nullable = false)
-    @JsonBackReference // Evita loops infinitos ao converter para JSON
+    @JsonBackReference
     private Atividade atividade;
 
     @Column
@@ -46,9 +47,11 @@ public class Resposta {
         this.dataEntrega = LocalDateTime.now();
     }
 
+    // --- Construtores, Getters e Setters ---
+    // (O seu código aqui já estava bom)
+
     public Resposta() {
     }
-
 
     public Resposta(UUID id, List<String> respostas, float nota, Aluno aluno, Atividade atividade, String feedback) {
         this.id = id;
@@ -58,8 +61,6 @@ public class Resposta {
         this.atividade = atividade;
         this.feedback = feedback;
     }
-
-
 
     public UUID getId() {
         return id;
@@ -75,26 +76,6 @@ public class Resposta {
 
     public void setRespostas(List<String> respostas) {
         this.respostas = respostas;
-    }
-
-    public void adicionarResposta(String resposta) {
-        this.respostas.add(resposta);
-    }
-
-    public void adicionarRespostas(List<String> respostas) {
-        this.respostas.addAll(respostas);
-    }
-
-    public void removerResposta(int index) {
-        if (index >= 0 && index < respostas.size()) {
-            this.respostas.remove(index);
-        } else {
-            throw new IndexOutOfBoundsException("Índice fora dos limites da lista de respostas.");
-        }
-    }
-
-    public void removerResposta(String resposta) {
-        this.respostas.remove(resposta);
     }
 
     public float getNota() {

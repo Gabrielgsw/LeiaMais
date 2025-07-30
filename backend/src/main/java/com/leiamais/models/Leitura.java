@@ -1,5 +1,7 @@
 package com.leiamais.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +11,8 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Getter // Lombok irá gerar todos os getters
+@Setter // Lombok irá gerar todos os setters
 @AllArgsConstructor
 @NoArgsConstructor
 public class Leitura {
@@ -19,52 +21,25 @@ public class Leitura {
     @GeneratedValue
     private UUID id;
 
-    @OneToOne
+    // Adicionada a anotação @JsonIgnoreProperties para evitar erros de serialização
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Livro livro;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Aluno aluno;
 
-    @Column
+    @Enumerated(EnumType.STRING) // Boa prática para guardar a string da enum em vez do número
     private StatusLivro status;
+
+    @Column(nullable = false)
+    private boolean pontoEmLeituraConcedido = false;
+
+    @Column(nullable = false)
+    private boolean pontoConcluidoConcedido = false;
 
     @Column
     private int avaliacao;
 
-    public UUID getId() {
-        return id;
-    }
-
-
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
-    public Aluno getAluno() {
-        return aluno;
-    }
-
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
-    }
-
-    public StatusLivro getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusLivro status) {
-        this.status = status;
-    }
-
-    public int getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(int avaliacao) {
-        this.avaliacao = avaliacao;
-    }
 }

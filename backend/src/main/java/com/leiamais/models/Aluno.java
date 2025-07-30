@@ -6,8 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Getter
@@ -25,7 +29,10 @@ public class Aluno extends Usuario{
     private int qtdLivrosLidos;
     @Column
     private int qtdLivrosFavoritos;
-
+    
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Leitura> leituras = new ArrayList<>();
 
     public Aluno(String cpf, String nome, String email, String senha, Cargo cargo, Date dataNascimento,UUID id, String matricula, int pontos, int qtdLivrosLidos, int qtdLivrosFavoritos) {
         super(cpf, nome, email, senha, cargo, dataNascimento);

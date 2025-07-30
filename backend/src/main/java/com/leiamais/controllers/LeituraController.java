@@ -42,7 +42,7 @@ public class LeituraController {
 
     @GetMapping("/leitura/{idUser}/{isbn}")
     public ResponseEntity<Leitura> listarLeituraAtual(@PathVariable UUID idUser, @PathVariable String isbn) {
-        Optional<Leitura> leitura = Optional.ofNullable(leituraService.buscarLeitura(idUser, isbn));
+        Optional<Leitura> leitura = leituraService.buscarLeitura(idUser, isbn);
         if(leitura.isPresent()){
             return ResponseEntity.ok(leitura.get());
         }
