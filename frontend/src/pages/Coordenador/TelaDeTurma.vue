@@ -199,7 +199,7 @@ onMounted(() => {
     </header>
 
     <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
-      <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center justify-between ">
         <div class="flex items-center gap-3">
           <RouterLink to="/TelaInicial">
             <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />

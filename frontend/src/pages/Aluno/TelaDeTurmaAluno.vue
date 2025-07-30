@@ -174,8 +174,8 @@ onMounted(() => {
       </RouterLink>
     </header>
 
-    <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16">
-      <div class="flex items-center justify-between mb-6">
+    <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6 mt-16 mb-5">
+      <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
           <RouterLink to="/TelaInicialAluno">
             <img src="../../assets/botoes/botao_voltar.svg" alt="Voltar" class="w-8 h-8" />
@@ -212,15 +212,7 @@ onMounted(() => {
       <AtividadeRow v-for="atividade in atividades" :key="atividade.id" :numeroatividade="atividade.nome"
         :atividadename="atividade.nome" />
 
-      
-      <div class="flex justify-between">
-        <router-link to="/TeladeRanking">
-          <button class="bg-[#359DFF] text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition-colors mt-4">
-            Ranking geral
-          </button>
-        </router-link>
     
-      </div>
     </div>
   </div>
 </template>

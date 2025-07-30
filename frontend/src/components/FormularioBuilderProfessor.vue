@@ -135,12 +135,12 @@ const onSubmit = handleSubmit(async (values) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/atividades/${router.currentRoute.value.params.id}`,
+            `http://localhost:8080/api/atividades/${router.currentRoute.value.params.id}`,
             atividade
         );
         if (response.status >= 200 && response.status < 300) {
             console.log("Atividade criada com sucesso:", response.data);
-            router.push(`/turma/${turmaId}`);
+            router.push(`/turmaprofessor/${turmaId}`);
         } else {
             console.error("Erro ao criar atividade:", response.statusText);
         }

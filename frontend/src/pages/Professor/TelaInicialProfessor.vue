@@ -1,28 +1,31 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router';
-import { ref } from 'vue'
-
+import { ref, onMounted } from 'vue' // Importe 'onMounted'
 import Turma from '../../components/Turma.vue'
 import axios from "axios";
 
 const router = useRouter();
 
-const turmas = ref([
-    { id: 1, nome: '1º ano - Ensino Fundamental' },
-])
-
-
-
+// Defina o tipo para 'turmas' para garantir a consistência dos dados
+const turmas = ref<
+    { id: string; nome: string; alunosMatriculados: []; professores: []; livros: []; atividades: [] }[]
+>([]);
 
 const livros = ref([
-    "https://covers.openlibrary.org/b/isbn/9788522005239-M.jpg",
-    "https://covers.openlibrary.org/b/isbn/9781421806501-M.jpg",
-    "https://covers.openlibrary.org/b/isbn/9780316183567-M.jpg",
-])
+  "https://covers.openlibrary.org/b/isbn/9788522005239-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/8538048201-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/9780316183567-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/8538083724-M.jpg",
+  "https://covers.openlibrary.org/b/isbn/8478646795-M.jpg"
+ 
+]);
+
 function extrairISBN(url: string): string {
-  const match = url.match(/isbn\/(\d+)-/);
-  return match ? match[1] : "";
+    const match = url.match(/isbn\/(\d+)-/);
+    return match ? match[1] : "";
 }
+
+
 const handleLogout = async () => {
     try {
         const response = await axios.post('http://localhost:8080/api/auth/logout', {}, { withCredentials: true });
@@ -34,6 +37,26 @@ const handleLogout = async () => {
         console.error("Erro no logout:", error);
     }
 }
+
+// Função para buscar as turmas, similar à página do coordenador
+async function getTurmas() {
+    try {
+        const response = await axios.get("http://localhost:8080/turmas");
+        if (response.status >= 200 && response.status < 300) {
+            turmas.value = response.data;
+            console.log("Turmas carregadas para o professor:", turmas.value);
+        } else {
+            console.error("Erro ao buscar turmas para o professor:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Erro ao buscar turmas para o professor:", error);
+    }
+}
+
+// Chame getTurmas quando o componente for montado
+onMounted(() => {
+    getTurmas();
+});
 </script>
 
 <template>
@@ -70,7 +93,8 @@ const handleLogout = async () => {
                 </div>
 
                 <div class="space-y-4 mb-8">
-                    <router-link v-for="turma in turmas" to="/TelaDeTurmaProfessor" class="block">
+                    <router-link v-for="turma in turmas" :key="turma.id" :to="`/turmaprofessor/${turma.id}`"
+                        class="block">
                         <Turma :nome="turma.nome" />
                     </router-link>
                 </div>
@@ -82,7 +106,6 @@ const handleLogout = async () => {
                             <img :src="livro" class="w-[160px] h-[230px] rounded-sm object-cover" />
                         </router-link>
                     </div>
-                    
                 </div>
             </div>
         </main>

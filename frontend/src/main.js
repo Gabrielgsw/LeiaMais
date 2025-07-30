@@ -62,7 +62,7 @@ const routes = [
 
   //telas de professor:
   { path: '/TelaInicialProfessor', component: TelaInicialProfessor },
-  { path: '/TelaDeTurmaProfessor', component: TelaDeTurmaProfessor },
+  { path: '/turmaprofessor/:id', component: TelaDeTurmaProfessor },
   {path: '/TelaCriarAtividadeProfessor/:id/criar-atividade', component: TelaCriarAtividadeProfessor },
   {path: '/TelaAlunosCorrecao', component: TelaAlunosCorrecao },
   {path: '/TelaCorrigirAtividadeProfessor', component: TelaCorrigirAtividadeProfessor },
