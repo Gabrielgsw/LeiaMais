@@ -33,7 +33,7 @@
     "zod": "^3.25.74"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^6.3.5"
   }
 }
